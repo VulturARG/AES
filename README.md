@@ -30,6 +30,10 @@ Enemy System Arga (ESA) allows mission designers to create zones to defend or at
 
 ## Versions
 
+### v2.0 (Not working yet)
+-    Greater refactoring (rewritten) of code. 
+-    Separation of the single block of code into different individual functions
+
 ### v1.5
 -    Parachute troops from helicopters and HALO jump were added
 -    New functions and modernization of the scripts. Using params instead of private ... this select ...
