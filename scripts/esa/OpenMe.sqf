@@ -63,12 +63,12 @@ params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 
 'Open Me' call BIS_fnc_log;
 
-EOS_Spawn           = compile preprocessfile "scripts\eos\core\eos_launch.sqf";
-Bastion_Spawn       = compile preprocessfile "scripts\eos\core\b_launch.sqf";
-Bastion_Redirect_WP = compile preprocessfile "scripts\eos\core\b_redirijoUnidades.sqf";
-null=[] execVM "scripts\eos\core\spawn_fnc.sqf";
+EOS_Spawn           = compile preprocessfile "scripts\esa\core\eos_launch.sqf";
+Bastion_Spawn       = compile preprocessfile "scripts\esa\core\b_launch.sqf";
+Bastion_Redirect_WP = compile preprocessfile "scripts\esa\core\b_redirijoUnidades.sqf";
+null=[] execVM "scripts\esa\core\spawn_fnc.sqf";
 
-onplayerConnected {[] execVM "scripts\eos\Functions\EOS_Markers.sqf";};
+onplayerConnected {[] execVM "scripts\esa\Functions\EOS_Markers.sqf";};
 
 IsVCOM_MOD = true;
 publicVariable "IsVCOM_MOD";

@@ -21,7 +21,7 @@ if (_debug) then {0= [_mkr,_counter,"Lanzamiento Paracaidas", _pos] call EOS_deb
 _wp1 = _grp addWaypoint [_pos, 0];
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointType "MOVE";
-_wp1 setWaypointStatements ["true", "0 = [(vehicle this),150] execvm 'scripts\eos\functions\eject_paratrooper.sqf'"];
+_wp1 setWaypointStatements ["true", "0 = [(vehicle this),150] execvm 'scripts\esa\functions\eject_paratrooper.sqf'"];
 
 if (_debug) then {hint "Transport unloaded";};
 

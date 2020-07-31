@@ -65,6 +65,6 @@ if (isServer) then {
 			[_PApatrols, _PAgroupArray],
 			[_LVehGroups, _LVgroupArray],
 			[_AVehGroups, _SVehGroups, _CHGroups, _CHgroupArray], _settings
-		] execVM "scripts\eos\core\EOS_Core.sqf";
+		] execVM "scripts\esa\core\EOS_Core.sqf";
 	}foreach _JIPmkr;
 };

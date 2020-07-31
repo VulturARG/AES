@@ -237,7 +237,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             0 = [_cargoGrp, "INFskill"] call eos_fnc_grouphandlers;
             _cargoGrp setGroupId[format["%1 CP %2", _mkr, _counter]]; //AV Chopper patrol
             _fGroup set[count _fGroup, _cargoGrp];
-            null = [_mkr, _fGroup, _counter] execvm "scripts\eos\functions\TransportUnload_fnc.sqf";
+            null = [_mkr, _fGroup, _counter] execvm "scripts\esa\functions\TransportUnload_fnc.sqf";
         } else {
             _wp1 = (_fGroup select 2) addWaypoint[(markerpos _mkr), 0];
             _wp1 setWaypointSpeed "FULL";
@@ -489,7 +489,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             [_bGrps, _bSize],
             [_cGrps, _cSize],
             [_dGrps, _eGrps, _fGrps, _fSize], _settings, true
-        ] execVM "scripts\eos\core\eos_core.sqf";
+        ] execVM "scripts\esa\core\eos_core.sqf";
     } else {
         _Mkr setmarkeralpha 0;
     };

@@ -1,17 +1,17 @@
 IF (isnil "server")then{hint "YOU MUST PLACE A GAME LOGIC NAMED SERVER!";};
-eos_fnc_spawnvehicle=compile preprocessfilelinenumbers "scripts\eos\functions\eos_SpawnVehicle.sqf";
-eos_fnc_grouphandlers=compile preprocessfilelinenumbers "scripts\eos\functions\setSkill.sqf";
-eos_fnc_findsafepos=compile preprocessfilelinenumbers "scripts\eos\functions\findSafePos.sqf";
-eos_fnc_spawngroup= compile preprocessfile "scripts\eos\functions\infantry_fnc.sqf";
-eos_fnc_setcargo = compile preprocessfile "scripts\eos\functions\cargo_fnc.sqf";
-eos_fnc_taskpatrol= compile preprocessfile "scripts\eos\functions\shk_patrol.sqf";
-SHK_pos= compile preprocessfile "scripts\eos\functions\shk_pos.sqf";
-shk_fnc_fillhouse = compile preprocessFileLineNumbers "scripts\eos\Functions\SHK_buildingpos.sqf";
-eos_fnc_getunitpool= compile preprocessfilelinenumbers "scripts\eos\UnitPools.sqf";
-call compile preprocessfilelinenumbers "scripts\eos\AI_Skill.sqf";
+eos_fnc_spawnvehicle=compile preprocessfilelinenumbers "scripts\esa\functions\eos_SpawnVehicle.sqf";
+eos_fnc_grouphandlers=compile preprocessfilelinenumbers "scripts\esa\functions\setSkill.sqf";
+eos_fnc_findsafepos=compile preprocessfilelinenumbers "scripts\esa\functions\findSafePos.sqf";
+eos_fnc_spawngroup= compile preprocessfile "scripts\esa\functions\infantry_fnc.sqf";
+eos_fnc_setcargo = compile preprocessfile "scripts\esa\functions\cargo_fnc.sqf";
+eos_fnc_taskpatrol= compile preprocessfile "scripts\esa\functions\shk_patrol.sqf";
+SHK_pos= compile preprocessfile "scripts\esa\functions\shk_pos.sqf";
+shk_fnc_fillhouse = compile preprocessFileLineNumbers "scripts\esa\Functions\SHK_buildingpos.sqf";
+eos_fnc_getunitpool= compile preprocessfilelinenumbers "scripts\esa\UnitPools.sqf";
+call compile preprocessfilelinenumbers "scripts\esa\AI_Skill.sqf";
 // Vultur /////////////////////////////////////////////////////
-eos_fnc_infInv= compile preprocessfile "scripts\eos\functions\infantry_inventory.sqf";
-FNC_newWaypoint=compile preprocessfilelinenumbers "scripts\eos\functions\FNC_newWaypoint.sqf";
+eos_fnc_infInv= compile preprocessfile "scripts\esa\functions\infantry_inventory.sqf";
+FNC_newWaypoint=compile preprocessfilelinenumbers "scripts\esa\functions\FNC_newWaypoint.sqf";
 ///////////////////////////////////////////////////////////////
 
 EOS_Deactivate = {
