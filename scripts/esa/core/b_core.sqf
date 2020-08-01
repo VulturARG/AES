@@ -11,13 +11,15 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
-private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]];
+private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[vehType,cargoType]
 private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
+private _groups                    = [];
 
 ESA_bastionTrigger    = compile preprocessfile "scripts\esa\functions\ESA_bastionTrigger.sqf";
 ESA_deleteUnits       = compile preprocessfile "scripts\esa\functions\ESA_deleteUnits.sqf";
+ESA_b_spawnUnits      = compile preprocessfile "scripts\esa\core\b_spawnUnits.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,39 +70,20 @@ if (_pause > 0 and !_initialLaunch) then {
 	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call ESA_log;};
 
 	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
-/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Delete all unconscious IAs
-	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call ESA_log;};
-	{
-		_x setDamage 1;
-	} forEach _unconscious;
-	if (_debugLog) then {
-		_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_marker,"Wave", _waves,"Inconscientes(Post)",count _unconscious,_side]] call ESA_log;
-	};
 
-	//Borro las unidades que estan a mas de una determinada distancia 
-	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE",count _enemigos,_side]] call ESA_log;};
-	{ 
-		if (!(isPlayer _x))then { 
-			_x setDamage 1 
-		} 
-	}foreach _enemigos;
-	if (_debugLog) then {
-		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)",count _enemigos,_side]] call ESA_log;
-	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 };
 
-/* TODO refactor of spawn units
+//TODO refactor of spawn units
+_aGroup=[];
 {
-	
+	format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
+	format ["%1",_x] call BIS_fnc_log;
+	_groups pushBack ([_marker,_x,_angle,_typeVehicle select _forEachIndex select 0,_typeVehicle select _forEachIndex select 0,_forEachIndex,_side,_faction,_typeMessage select _forEachIndex] call ESA_b_spawnUnits);
 	
 } forEach _unitsArrays;
-*/
+
+_aGroup = _groups select 0;
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SPAWN PATROLS
 _aGroup=[];
 _troupsPA = 0;
@@ -291,6 +274,8 @@ if (_debugLog) then {
 	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call ESA_log;
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 // ADD WAYPOINTS PATROLS
 {
 	_getToMarker = _x addWaypoint [_markerPos, 0];
@@ -301,7 +286,7 @@ if (_debugLog) then {
 	_getToMarker setWaypointCompletionRadius 15;
 	_getToMarker setWaypointCombatMode "RED";
 }foreach _aGroup;
-
+/*
 // ADD WAYPOINTS LIGHT VEHICLES
 {
 	_dir_atk= _markerPos getDir (_x select 0);
@@ -346,7 +331,7 @@ if (_debugLog) then {
 	_getToMarker setWaypointCompletionRadius 50;
 	_getToMarker setWaypointCombatMode "RED";
 }foreach _HAGroup;
-
+*/
 waituntil {triggeractivated _bastActive};
 
 _waves=(_waves - 1);
@@ -377,29 +362,6 @@ if (_waves >= 1) then {
 	
 	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
 	
-	/*/ Busco todas las IAs inconcientes
-	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes_2",count _unconscious,_side]] call ESA_log;};
-	{
-		_x setDamage 1;
-	} forEach _unconscious;
-	if (_debugLog) then {
-		_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_marker,"Wave", _waves,"Inconscientes_2(Post)",count _unconscious,_side]] call ESA_log;
-	};
-
-	//Borro las unidades que estan a mas de una determinada distancia 
-	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE_2",count _enemigos,_side]] call ESA_log;};
-	{ 
-		if (!(isPlayer _x))then { 
-			_x setDamage 1 
-		} 
-	}foreach _enemigos;
-	if (_debugLog) then {
-		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)_2",count _enemigos,_side]] call DELETE_DISTANCE;
-	}*/
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
@@ -418,6 +380,10 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 
 waituntil {getmarkercolor _marker == "colorblack" OR getmarkercolor _marker == VictoryColor OR getmarkercolor _marker == hostileColor or !triggeractivated  _bastActive};
 if (_debug) then {systemChat "delete units";};
+
+
+
+
 
 //hint "Ataques finalizados"; //TODO Borrar
 

@@ -38,7 +38,7 @@ EOS_debug = {
 	_mkrID setMarkerType "Mil_dot";
 	_mkrID setMarkercolor "colorBlue";
 	_mkrID setMarkerText _mkrID;
-_mkrID setMarkerAlpha 0.5;
+	_mkrID setMarkerAlpha 0.5;
 };
 
 /*
@@ -77,22 +77,6 @@ paraLandSafeHA = {
 	//}
 	_unit allowdamage true;// Now you can take damage.
 };
-
-/*******************************************************************************
-                            Created by |ArgA|Vultur|Cbo¹
-*******************************************************************************/
-/*ESA_log = {
-	params ["_strData"];
-	private _data = MissionName;
-	//systemChat format["%1",_strData];
-	_strData = _strData apply {if (typeName _x != "STRING") then {str _x} else {_x}};
-	{
-		_data = _data + " " + _x;	
-	} forEach _strData;
-	//systemChat format["%1",_data];
-	[format ["%1",_data]] call BIS_fnc_logFormat;
-};
-*/
 
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
