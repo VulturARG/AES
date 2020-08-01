@@ -15,8 +15,6 @@ eos_fnc_taskpatrol    = compile preprocessfile "scripts\esa\functions\shk_patrol
 SHK_pos               = compile preprocessfile "scripts\esa\functions\shk_pos.sqf";
 shk_fnc_fillhouse     = compile preprocessFile "scripts\esa\Functions\SHK_buildingpos.sqf";
 eos_fnc_getunitpool   = compile preprocessfile "scripts\esa\UnitPools.sqf";
-
-// Vultur /////////////////////////////////////////////////////
 ESA_fnc_infInv        = compile preprocessfile "scripts\esa\functions\ESA_infantry_inventory.sqf";
 ESA_newWaypoint       = compile preprocessfile "scripts\esa\functions\ESA_newWaypoint.sqf";
 ESA_log               = compile preprocessfile "scripts\esa\functions\ESA_log.sqf";

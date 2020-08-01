@@ -47,7 +47,7 @@ if (!_cache) then {
     };
 
     _eosActivated = createTrigger["EmptyDetector", _mPos];
-    _eosActivated setTriggerArea[(_distance + _mkrX), (_distance + _mkrY), _mkrAgl, FALSE];
+    _eosActivated setTriggerArea[(_distance + _mkrX), (_distance + _mkrY), _mkrAgl, false];
     _eosActivated setTriggerActivation["ANY", "PRESENT", true];
     _eosActivated setTriggerTimeout[1, 1, 1, true];
     _eosActivated setTriggerStatements[_actCond, "", ""];
@@ -254,11 +254,11 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
 
     //SPAWN ALT TRIGGERS
     _clear = createTrigger["EmptyDetector", _mPos];
-    _clear setTriggerArea[_mkrX, _mkrY, _mkrAgl, FALSE];
+    _clear setTriggerArea[_mkrX, _mkrY, _mkrAgl, false];
     _clear setTriggerActivation[_enemyFaction, "NOT PRESENT", true];
     _clear setTriggerStatements["this", "", ""];
     _taken = createTrigger["EmptyDetector", _mPos];
-    _taken setTriggerArea[_mkrX, _mkrY, _mkrAgl, FALSE];
+    _taken setTriggerArea[_mkrX, _mkrY, _mkrAgl, false];
     _taken setTriggerActivation["ANY", "PRESENT", true];
     _taken setTriggerStatements["{vehicle _x in thisList && isplayer _x && ((getPosATL _x) select 2) < 5} count allUnits > 0", "", ""];
     _eosAct = true;

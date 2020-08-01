@@ -47,7 +47,7 @@ if ismultiplayer then {
 };
 
 _basActivated = createTrigger ["EmptyDetector",_mPos];
-_basActivated setTriggerArea [_mkrX,_mkrY,_mkrAgl,FALSE];
+_basActivated setTriggerArea [_mkrX,_mkrY,_mkrAgl,false];
 _basActivated setTriggerActivation ["ANY","PRESENT",true];
 _basActivated setTriggerStatements [_actCond,"",""];
 
@@ -59,13 +59,13 @@ _mkr setmarkercolor bastionColor;
 _mkr setmarkeralpha _mAH;
 
 _bastActive = createTrigger ["EmptyDetector",_mPos];
-_bastActive setTriggerArea [_mkrX,_mkrY,_mkrAgl,FALSE];
+_bastActive setTriggerArea [_mkrX,_mkrY,_mkrAgl,false];
 _bastActive setTriggerActivation ["any","PRESENT",true];
 _bastActive setTriggerTimeout [1, 1, 1, true];
 _bastActive setTriggerStatements [_actCond,"",""];
 
 _bastClear = createTrigger ["EmptyDetector",_mPos];
-_bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mkrAgl,FALSE];
+_bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mkrAgl,false];
 _bastClear setTriggerActivation [_enemyFaction,"NOT PRESENT",true];
 _bastClear setTriggerStatements ["this","",""];
 

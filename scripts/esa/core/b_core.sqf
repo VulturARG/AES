@@ -16,18 +16,21 @@ private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
 
+ESA_bastionTrigger    = compile preprocessfile "scripts\esa\functions\ESA_bastionTrigger.sqf";
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 private ["_ptGroup","_fGroup","_cargoType","_vehType","_CHside","_mkrAngle","_pause","_eosZone","_hints","_waves","_aGroup","_side"];
-private ["_actCond","_enemyFaction",/*"_mAH","_mAN",*/"_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
+private ["_actCond","_enemyFaction","_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
 private ["_troupsPA","_troupsLV","_troupsAV","_troupsHT","_troupsPT","_troupsHA"];
 private ["_enemigos","_unconscious"];
 
 _markerPos = getMarkerPos _marker;
 getMarkerSize _marker params ["_mkrX","_mkrY"];
-_mkrAngle=markerDir _marker;
+_mkrAngle = markerDir _marker;
 
-//TODO remove. Legacy codo
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//TODO remove. Legacy code
 _unitsArrays params["_infantry","_LVeh","_AVeh","_SVeh","_borrar","_PTrooper","_HAtrooper"];
 
 _infantry params["_PApatrols","_PAgroupSize","_PAminDist"];
@@ -36,24 +39,20 @@ _AVeh params["_AVehGroups","_AVminDist"];
 _SVeh params["_CHGroups","_fsize","_CHminDist"];
 _PTrooper params["_ptNumGroups","_PTSize","_PTminDist","_PTAltSalto"];
 _HAtrooper params["_HApatrols","_HAgroupSize","_HAminDist","_HAAltSalto"];
-//*/
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 _settings params["_faction","_markerType","_side",["_heightLimit",false],["_debug",false],["_debugLog",false]];
 _basSettings params["_pause","_waves","_timeout","_eosZone",["_hints",false]];
 
-_Placement=(_mkrX + 500);
-
-//_mAH marquer alpha Value bastionColor                           -> _bastionMarquerAlphaValue
-//_mAN marquer alpha Value VictoryColor hostileColor bastionColor -> _multipleMarquerAlphaValue
-
-/*
-if (_markerType==0) then {_mAH = 1;_mAN = 0.5;};
-if (_markerType==1) then {_mAH = 0;_mAN = 0;};
-if (_markerType==2) then {_mAH = 0.5;_mAN = 0.5;};
-*/
 if (_side==EAST) then {_enemyFaction="east";};
 if (_side==WEST) then {_enemyFaction="west";};
 if (_side==INDEPENDENT) then {_enemyFaction="GUER";};
 if (_side==CIVILIAN) then {_enemyFaction="civ";};
+
+_bastActive = [_marker,_heightLimit,_multipleMarquerAlphaValue select _markerType,_bastionMarquerAlphaValue select _markerType,_enemyFaction] call ESA_bastionTrigger;
+/*
+_Placement=(_mkrX + 500);
 
 if ismultiplayer then {
 	if (_heightLimit) then{
@@ -70,7 +69,7 @@ if ismultiplayer then {
 };
 
 _basActivated = createTrigger ["EmptyDetector",_markerPos];
-_basActivated setTriggerArea [_mkrX,_mkrY,_mkrAngle,FALSE];
+_basActivated setTriggerArea [_mkrX,_mkrY,_mkrAngle,false];
 _basActivated setTriggerActivation ["ANY","PRESENT",true];
 _basActivated setTriggerStatements [_actCond,"",""];
 
@@ -82,15 +81,17 @@ _marker setmarkercolor bastionColor;
 _marker setmarkeralpha (_bastionMarquerAlphaValue select _markerType);
 
 _bastActive = createTrigger ["EmptyDetector",_markerPos];
-_bastActive setTriggerArea [_mkrX,_mkrY,_mkrAngle,FALSE];
+_bastActive setTriggerArea [_mkrX,_mkrY,_mkrAngle,false];
 _bastActive setTriggerActivation ["any","PRESENT",true];
 _bastActive setTriggerTimeout [1, 1, 1, true];
 _bastActive setTriggerStatements [_actCond,"",""];
 
 _bastClear = createTrigger ["EmptyDetector",_markerPos];
-_bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mkrAngle,FALSE];
+_bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mkrAngle,false];
 _bastClear setTriggerActivation [_enemyFaction,"NOT PRESENT",true];
 _bastClear setTriggerStatements ["this","",""];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
