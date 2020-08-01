@@ -17,11 +17,12 @@ private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
 
 ESA_bastionTrigger    = compile preprocessfile "scripts\esa\functions\ESA_bastionTrigger.sqf";
+ESA_deleteUnits       = compile preprocessfile "scripts\esa\functions\ESA_deleteUnits.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 private ["_ptGroup","_fGroup","_cargoType","_vehType","_CHside","_mkrAngle","_pause","_eosZone","_hints","_waves","_aGroup","_side"];
-private ["_actCond","_enemyFaction","_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
+private ["_enemyFaction","_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
 private ["_troupsPA","_troupsLV","_troupsAV","_troupsHT","_troupsPT","_troupsHA"];
 private ["_enemigos","_unconscious"];
 
@@ -31,11 +32,11 @@ _mkrAngle = markerDir _marker;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //TODO remove. Legacy code
-_unitsArrays params["_infantry","_LVeh","_AVeh","_SVeh","_borrar","_PTrooper","_HAtrooper"];
-
+_unitsArrays params["_infantry","_LVeh"   ,  "_AVeh" ,   "_SVeh", "_borrar",   "_PTrooper", "_HAtrooper"];
+//                    [1,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,5000]
 _infantry params["_PApatrols","_PAgroupSize","_PAminDist"];
 _LVeh params["_LVehGroups","_LVgroupSize","_LVminDist"];
-_AVeh params["_AVehGroups","_AVminDist"];
+_AVeh params["_AVehGroups","_AVminDist","_nada"];
 _SVeh params["_CHGroups","_fsize","_CHminDist"];
 _PTrooper params["_ptNumGroups","_PTSize","_PTminDist","_PTAltSalto"];
 _HAtrooper params["_HApatrols","_HAgroupSize","_HAminDist","_HAAltSalto"];
@@ -50,48 +51,8 @@ if (_side==WEST) then {_enemyFaction="west";};
 if (_side==INDEPENDENT) then {_enemyFaction="GUER";};
 if (_side==CIVILIAN) then {_enemyFaction="civ";};
 
-_bastActive = [_marker,_heightLimit,_multipleMarquerAlphaValue select _markerType,_bastionMarquerAlphaValue select _markerType,_enemyFaction] call ESA_bastionTrigger;
-/*
-_Placement=(_mkrX + 500);
-
-if ismultiplayer then {
-	if (_heightLimit) then{
-		_actCond="{vehicle _x in thisList && isplayer _x && ((getPosATL _x) select 2) < 5} count playableunits > 0";
-	} else	{
-		_actCond="{vehicle _x in thisList && isplayer _x} count playableunits > 0";
-	};
-} else {
-	if (_heightLimit) then {
-		_actCond="{vehicle _x in thisList && isplayer _x && ((getPosATL _x) select 2) < 5} count allUnits > 0";
-	}else {
-		_actCond="{vehicle _x in thisList && isplayer _x} count allUnits > 0";
-	};
-};
-
-_basActivated = createTrigger ["EmptyDetector",_markerPos];
-_basActivated setTriggerArea [_mkrX,_mkrY,_mkrAngle,false];
-_basActivated setTriggerActivation ["ANY","PRESENT",true];
-_basActivated setTriggerStatements [_actCond,"",""];
-
-_marker setmarkercolor bastionColor;
-_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
-
-waituntil {triggeractivated _basActivated};
-_marker setmarkercolor bastionColor;
-_marker setmarkeralpha (_bastionMarquerAlphaValue select _markerType);
-
-_bastActive = createTrigger ["EmptyDetector",_markerPos];
-_bastActive setTriggerArea [_mkrX,_mkrY,_mkrAngle,false];
-_bastActive setTriggerActivation ["any","PRESENT",true];
-_bastActive setTriggerTimeout [1, 1, 1, true];
-_bastActive setTriggerStatements [_actCond,"",""];
-
-_bastClear = createTrigger ["EmptyDetector",_markerPos];
-_bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mkrAngle,false];
-_bastClear setTriggerActivation [_enemyFaction,"NOT PRESENT",true];
-_bastClear setTriggerStatements ["this","",""];
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+private _bastionTriggerReturn = [_marker,_heightLimit,_multipleMarquerAlphaValue select _markerType,_bastionMarquerAlphaValue select _markerType,_enemyFaction] call ESA_bastionTrigger;
+_bastionTriggerReturn params ["_bastActive","_bastclear","_basActivated"];
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
@@ -105,7 +66,9 @@ if (_pause > 0 and !_initialLaunch) then {
 		time > _espera
 	};
 	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call ESA_log;};
-	
+
+	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Delete all unconscious IAs
 	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
 	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call ESA_log;};
@@ -129,6 +92,7 @@ if (_pause > 0 and !_initialLaunch) then {
 		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
 		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)",count _enemigos,_side]] call ESA_log;
 	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 };
 
 /* TODO refactor of spawn units
@@ -410,7 +374,10 @@ if (_waves >= 1) then {
 		time > _espera
 	};
 	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call ESA_log;};
-	// Busco todas las IAs inconcientes
+	
+	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
+	
+	/*/ Busco todas las IAs inconcientes
 	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
 	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes_2",count _unconscious,_side]] call ESA_log;};
 	{
@@ -432,7 +399,7 @@ if (_waves >= 1) then {
 	if (_debugLog) then {
 		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
 		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)_2",count _enemigos,_side]] call DELETE_DISTANCE;
-	}
+	}*/
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
@@ -444,7 +411,8 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};
 		//null = [_marker,[_PApatrols,_PAgroupSize],         [_LVehGroups,_LVgroupSize],           [_AVehGroups],           [_CHGroups,_fSize]                                                                                                      ,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "eos\core\b_core.sqf";
-		null = [_marker,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
+		//null = [_marker,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
+		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
 	};
 };
 

@@ -49,7 +49,7 @@ _bastClear setTriggerArea [(_mkrX+(_Placement*0.3)),(_mkrY+(_Placement*0.3)),_mk
 _bastClear setTriggerActivation [_enemyFaction,"NOT PRESENT",true];
 _bastClear setTriggerStatements ["this","",""];
 
-_bastActive
+[_bastActive,_bastclear,_basActivated]
 
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
