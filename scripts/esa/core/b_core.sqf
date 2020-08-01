@@ -76,8 +76,8 @@ if (_pause > 0 and !_initialLaunch) then {
 //TODO refactor of spawn units
 _aGroup=[];
 {
-	format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
-	format ["%1",_x] call BIS_fnc_log;
+	//format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
+	//mformat ["%1",_x] call BIS_fnc_log;
 	_groups pushBack ([_marker,_x,_angle,_typeVehicle select _forEachIndex select 0,_typeVehicle select _forEachIndex select 0,_forEachIndex,_side,_faction,_typeMessage select _forEachIndex] call ESA_b_spawnUnits);
 	
 } forEach _unitsArrays;

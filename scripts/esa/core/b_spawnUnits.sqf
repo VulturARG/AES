@@ -47,7 +47,6 @@ for "_counter" from 1 to (_unitData select 0) do {
         _grp=[_position,_unitData select 1,_faction,_side] call EOS_fnc_spawngroup;
         _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
-        //_groups set [count _aGroup,_grp];
 		_groups pushBack _grp;
     };
     /*    
