@@ -8,13 +8,19 @@ if (!isServer) exitWith {};
 
 params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialLaunch",false]];
 
-private _typeVehicle  = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]];
-private _typeMessage = ["PA","LV","AV","AH","TH","PT","HA"];
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Refactor
+private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]];
+private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
+private _bastionMarquerAlphaValue  = [1,0,0.5];
+private _multipleMarquerAlphaValue = [0.5,0,0.5];
+_multipleMarquerAlphaValue call ESA_log;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 private ["_ptGroup","_fGroup","_cargoType","_vehType","_CHside","_mkrAngle","_pause","_eosZone","_hints","_waves","_aGroup","_side"];
-private ["_actCond","_enemyFaction","_mAH","_mAN","_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
+private ["_actCond","_enemyFaction",/*"_mAH","_mAN",*/"_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
 private ["_troupsPA","_troupsLV","_troupsAV","_troupsHT","_troupsPT","_troupsHA"];
 private ["_enemigos","_unconscious"];
 
@@ -30,15 +36,19 @@ _SVeh params["_CHGroups","_fsize","_CHminDist"];
 _PTrooper params["_ptNumGroups","_PTSize","_PTminDist","_PTAltSalto"];
 _HAtrooper params["_HApatrols","_HAgroupSize","_HAminDist","_HAAltSalto"];
 */
-_settings params["_faction","_mA","_side",["_heightLimit",false],["_debug",false],["_debugLog",false]];
+_settings params["_faction","_markerType","_side",["_heightLimit",false],["_debug",false],["_debugLog",false]];
 _basSettings params["_pause","_waves","_timeout","_eosZone",["_hints",false]];
 
 _Placement=(_mkrX + 500);
 
-if (_mA==0) then {_mAH = 1;_mAN = 0.5;};
-if (_mA==1) then {_mAH = 0;_mAN = 0;};
-if (_mA==2) then {_mAH = 0.5;_mAN = 0.5;};
+//_mAH marquer alpha Value bastionColor                           -> _bastionMarquerAlphaValue
+//_mAN marquer alpha Value VictoryColor hostileColor bastionColor -> _multipleMarquerAlphaValue
 
+/*
+if (_markerType==0) then {_mAH = 1;_mAN = 0.5;};
+if (_markerType==1) then {_mAH = 0;_mAN = 0;};
+if (_markerType==2) then {_mAH = 0.5;_mAN = 0.5;};
+*/
 if (_side==EAST) then {_enemyFaction="east";};
 if (_side==WEST) then {_enemyFaction="west";};
 if (_side==INDEPENDENT) then {_enemyFaction="GUER";};
@@ -64,11 +74,11 @@ _basActivated setTriggerActivation ["ANY","PRESENT",true];
 _basActivated setTriggerStatements [_actCond,"",""];
 
 _marker setmarkercolor bastionColor;
-_marker setmarkeralpha _mAN;
+_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
 
 waituntil {triggeractivated _basActivated};
 _marker setmarkercolor bastionColor;
-_marker setmarkeralpha _mAH;
+_marker setmarkeralpha _bastionMarquerAlphaValue select _markerType;
 
 _bastActive = createTrigger ["EmptyDetector",_markerPos];
 _bastActive setTriggerArea [_mkrX,_mkrY,_mkrAngle,FALSE];
@@ -83,7 +93,7 @@ _bastClear setTriggerStatements ["this","",""];
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call ESA_log;};
 	_espera = time + _pause;
 	_counter = 1;
 	waitUntil { 
@@ -92,22 +102,22 @@ if (_pause > 0 and !_initialLaunch) then {
 		_counter = _counter +1;
 		time > _espera
 	};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call ESA_log;};
 	
 	// Delete all unconscious IAs
 	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call ESA_log;};
 	{
 		_x setDamage 1;
 	} forEach _unconscious;
 	if (_debugLog) then {
 		_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_marker,"Wave", _waves,"Inconscientes(Post)",count _unconscious,_side]] call EOS_VUL_Debug;
+		[[_marker,"Wave", _waves,"Inconscientes(Post)",count _unconscious,_side]] call ESA_log;
 	};
 
 	//Borro las unidades que estan a mas de una determinada distancia 
 	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE",count _enemigos,_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE",count _enemigos,_side]] call ESA_log;};
 	{ 
 		if (!(isPlayer _x))then { 
 			_x setDamage 1 
@@ -115,16 +125,16 @@ if (_pause > 0 and !_initialLaunch) then {
 	}foreach _enemigos;
 	if (_debugLog) then {
 		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)",count _enemigos,_side]] call EOS_VUL_Debug;
+		[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE(Post)",count _enemigos,_side]] call ESA_log;
 	}
 };
 
-
+/* TODO refactor of spawn units
 {
 	
 	
 } forEach _unitsArrays;
-
+*/
 // SPAWN PATROLS
 _aGroup=[];
 _troupsPA = 0;
@@ -153,7 +163,7 @@ for "_counter" from 1 to _PApatrols do {
 	};
 	
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call EOS_VUL_Debug;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call ESA_log;};
 
 //SPAWN LIGHT VEHICLES
 _bGrp=[];
@@ -181,7 +191,7 @@ for "_counter" from 1 to _LVehGroups do {
 		0= [_marker,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call EOS_VUL_Debug;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call ESA_log;};
 
 //SPAWN ARMOURED VEHICLES
 _cGrp=[];
@@ -205,7 +215,7 @@ for "_counter" from 1 to _AVehGroups do {
 		0= [_marker,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call EOS_VUL_Debug;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call ESA_log;};
 
 //SPAWN HELICOPTERS (ataque o transporte)
 _fGrp=[];
@@ -242,7 +252,7 @@ for "_counter" from 1 to _CHGroups do {
 			0= [_marker,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call EOS_VUL_Debug;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call ESA_log;};
 
 //SPAWN HELICOPTERS WITH PARATROOPERS (New)
 _ptGrp=[];
@@ -267,7 +277,7 @@ for "_counter" from 1 to _ptNumGroups do {
 			0= [_marker,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call EOS_VUL_Debug;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call ESA_log;};
 
 // SPAWN HALO (New)
 _HAGroup=[];
@@ -311,8 +321,8 @@ for "_counter" from 1 to _HApatrols do {
 	} forEach units _grp;
 };
 if (_debugLog) then {
-	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call EOS_VUL_Debug;
-	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call EOS_VUL_Debug;
+	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call ESA_log;
+	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call ESA_log;
 };
 
 // ADD WAYPOINTS PATROLS
@@ -375,7 +385,7 @@ waituntil {triggeractivated _bastActive};
 
 _waves=(_waves - 1);
 if (_waves >= 1) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call ESA_log;};
 	
 	_espera = time + _timeout;
 	waitUntil { 
@@ -388,30 +398,30 @@ if (_waves >= 1) then {
 		if (!triggeractivated _bastActive || getmarkercolor _marker == "colorblack") exitwith {
 			if (_debug) then {hint "Zone lost. You must re-capture it";};
 			_marker setmarkercolor hostileColor;
-			_marker setmarkeralpha _mAN;
+			_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
 			// TODO Revisar el tema de la EOS Zone
 			if (_eosZone) then {
-				null = [_marker,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_mA,350,_CHside]] execVM "scripts\esa\core\EOS_Core.sqf";
+				null = [_marker,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_markerType,350,_CHside]] execVM "scripts\esa\core\EOS_Core.sqf";
 			};
 			_waves=0;
 		};
 		time > _espera
 	};
-	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call ESA_log;};
 	// Busco todas las IAs inconcientes
 	_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes_2",count _unconscious,_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes_2",count _unconscious,_side]] call ESA_log;};
 	{
 		_x setDamage 1;
 	} forEach _unconscious;
 	if (_debugLog) then {
 		_unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_marker,"Wave", _waves,"Inconscientes_2(Post)",count _unconscious,_side]] call EOS_VUL_Debug;
+		[[_marker,"Wave", _waves,"Inconscientes_2(Post)",count _unconscious,_side]] call ESA_log;
 	};
 
 	//Borro las unidades que estan a mas de una determinada distancia 
 	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_markerPos distance2D _x) > DELETE_DISTANCE}; 
-	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE_2",count _enemigos,_side]] call EOS_VUL_Debug;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE_2",count _enemigos,_side]] call ESA_log;};
 	{ 
 		if (!(isPlayer _x))then { 
 			_x setDamage 1 
@@ -424,10 +434,10 @@ if (_waves >= 1) then {
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
-		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call EOS_VUL_Debug;};
+		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call ESA_log;};
 		if (_hints) then  {hint "Waves complete";};
 		_marker setmarkercolor VictoryColor;
-		_marker setmarkeralpha _mAN;
+		_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
 }else{
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};
@@ -525,7 +535,7 @@ if (count _cGrp > 0) then
 hint "Borro Helis PT";
 {
 	systemChat format ["_vehicle %1 _crew %2 %3",_vehicle,_crew,time];
-	[[_marker,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call EOS_VUL_Debug;
+	[[_marker,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call ESA_log;
 	_vehicle = _x select 0;_crew = _x select 1;//_grp = _x select 2; _cargoGrp = _x select 3;
 	{deleteVehicle _x} forEach (_crew);
 	if (!(vehicle player == _vehicle)) then {{deleteVehicle _x} forEach[_vehicle];};

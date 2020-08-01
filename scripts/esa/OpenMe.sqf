@@ -90,7 +90,7 @@ DEFAULT_CHOPPER_JUMP_HEIGHT     =  400;
 DEFAULT_HALO_MIN_DIST           =  200;
 DEFAULT_HALO_JUMP_HEIGHT        =  600;
 
-DELETE_DISTANCE               =  950;  //Delete _EOS_FACCION unit outside this distance from marker's center 
+DELETE_DISTANCE                 =  950;  //Delete _EOS_FACCION unit outside this distance from marker's center 
 
 //_players = 31; // TODO Comentar
 //hint format["%1",_players];
