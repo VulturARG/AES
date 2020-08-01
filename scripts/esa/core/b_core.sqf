@@ -15,7 +15,6 @@ private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]
 private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
-_multipleMarquerAlphaValue call ESA_log;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,14 +27,16 @@ _markerPos = getMarkerPos _marker;
 getMarkerSize _marker params ["_mkrX","_mkrY"];
 _mkrAngle=markerDir _marker;
 
-/*
+//TODO remove. Legacy codo
+_unitsArrays params["_infantry","_LVeh","_AVeh","_SVeh","_borrar","_PTrooper","_HAtrooper"];
+
 _infantry params["_PApatrols","_PAgroupSize","_PAminDist"];
 _LVeh params["_LVehGroups","_LVgroupSize","_LVminDist"];
 _AVeh params["_AVehGroups","_AVminDist"];
 _SVeh params["_CHGroups","_fsize","_CHminDist"];
 _PTrooper params["_ptNumGroups","_PTSize","_PTminDist","_PTAltSalto"];
 _HAtrooper params["_HApatrols","_HAgroupSize","_HAminDist","_HAAltSalto"];
-*/
+//*/
 _settings params["_faction","_markerType","_side",["_heightLimit",false],["_debug",false],["_debugLog",false]];
 _basSettings params["_pause","_waves","_timeout","_eosZone",["_hints",false]];
 
@@ -74,11 +75,11 @@ _basActivated setTriggerActivation ["ANY","PRESENT",true];
 _basActivated setTriggerStatements [_actCond,"",""];
 
 _marker setmarkercolor bastionColor;
-_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
+_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
 
 waituntil {triggeractivated _basActivated};
 _marker setmarkercolor bastionColor;
-_marker setmarkeralpha _bastionMarquerAlphaValue select _markerType;
+_marker setmarkeralpha (_bastionMarquerAlphaValue select _markerType);
 
 _bastActive = createTrigger ["EmptyDetector",_markerPos];
 _bastActive setTriggerArea [_mkrX,_mkrY,_mkrAngle,FALSE];
@@ -398,7 +399,7 @@ if (_waves >= 1) then {
 		if (!triggeractivated _bastActive || getmarkercolor _marker == "colorblack") exitwith {
 			if (_debug) then {hint "Zone lost. You must re-capture it";};
 			_marker setmarkercolor hostileColor;
-			_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
+			_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
 			// TODO Revisar el tema de la EOS Zone
 			if (_eosZone) then {
 				null = [_marker,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_markerType,350,_CHside]] execVM "scripts\esa\core\EOS_Core.sqf";
@@ -437,7 +438,7 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call ESA_log;};
 		if (_hints) then  {hint "Waves complete";};
 		_marker setmarkercolor VictoryColor;
-		_marker setmarkeralpha _multipleMarquerAlphaValue select _markerType;
+		_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
 }else{
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};

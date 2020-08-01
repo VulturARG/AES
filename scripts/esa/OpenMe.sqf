@@ -61,11 +61,11 @@ params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 //systemChat format ["_marker %1 _waves  %2 _players %3 _angle %4",_marker,_waves,_players,_angle];
 /////////////////////////////////////////////////////////////////*/
 
-'Open Me' call BIS_fnc_log;
 
 EOS_Spawn           = compile preprocessfile "scripts\esa\core\eos_launch.sqf";
 Bastion_Spawn       = compile preprocessfile "scripts\esa\core\b_launch.sqf";
 Bastion_Redirect_WP = compile preprocessfile "scripts\esa\core\b_redirijoUnidades.sqf";
+
 null=[] execVM "scripts\esa\core\spawn_fnc.sqf";
 
 onplayerConnected {[] execVM "scripts\esa\Functions\EOS_Markers.sqf";};
@@ -92,6 +92,10 @@ DEFAULT_HALO_JUMP_HEIGHT        =  600;
 
 DELETE_DISTANCE                 =  950;  //Delete _EOS_FACCION unit outside this distance from marker's center 
 
+//'Open Me' call BIS_fnc_log;
+//['Open Me'] call ESA_log;
+
+
 //_players = 31; // TODO Comentar
 //hint format["%1",_players];
 
@@ -113,7 +117,7 @@ if (_players <= 10) then {
 };// */
 
 //null = [["marker_0"],[[5,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,3,1500,600],[0,3,300,5000]],[5,1,EAST,FALSE,FALSE],[120,6,600,FALSE,FALSE],[360]] call Bastion_Spawn;
-null = [["marker_0"],[[5,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,5000]],[5,1,EAST,FALSE,FALSE],[120,6,600,FALSE,FALSE],[360]] call Bastion_Spawn;
+null = [["marker_0"],[[5,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,5000]],[5,1,EAST,FALSE,FALSE],[1,6,600,FALSE,FALSE],360] call Bastion_Spawn;
 
 if (_players > 10 && _players <= 15) then {
 

@@ -1,13 +1,12 @@
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
 
 params ["_strData"];
 _strData = _this;
-/*
-hint 'BIS_fnc_log '+ _strData;
-'BIS_fnc_log '+ _strData call BIS_fnc_log;
-*/
+
+hint "ESA Log";
+
 private _data = "";
 
 if (typeName _strData != "ARRAY") then {
@@ -29,5 +28,5 @@ _strData = _strData apply {
 _data call BIS_fnc_log;
 
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/

@@ -17,8 +17,8 @@ shk_fnc_fillhouse     = compile preprocessFile "scripts\esa\Functions\SHK_buildi
 eos_fnc_getunitpool   = compile preprocessfile "scripts\esa\UnitPools.sqf";
 
 // Vultur /////////////////////////////////////////////////////
-eos_fnc_infInv        = compile preprocessfile "scripts\esa\functions\infantry_inventory.sqf";
-FNC_newWaypoint       = compile preprocessfile "scripts\esa\functions\FNC_newWaypoint.sqf";
+ESA_fnc_infInv        = compile preprocessfile "scripts\esa\functions\ESA_infantry_inventory.sqf";
+ESA_newWaypoint       = compile preprocessfile "scripts\esa\functions\ESA_newWaypoint.sqf";
 ESA_log               = compile preprocessfile "scripts\esa\functions\ESA_log.sqf";
 
 ///////////////////////////////////////////////////////////////
