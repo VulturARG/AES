@@ -1,10 +1,18 @@
-params ["_mkr","_HouseInfantry","_infantry","_LVeh","_vehicles","_settings",["_cache",false]];
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/
+
+//params ["_mkr","_HouseInfantry","_infantry","_LVeh","_vehicles","_settings",["_cache",false]];
+params ["_mkr","_HouseInfantry","_infantry","_LVeh","_vehicles","_settings"];
+
 if (!isServer) exitWith {};
 private ["_newpos","_cargoType","_vehType","_dGrp","_mkrAgl","_bGroup","_civZone","_bGrp",
 		 "_eGrp","_fGrp","_aMin","_aGrp","_bMin","_units","_trig","_cache","_grp","_crew",
 		 "_vehicle","_actCond","_mAN","_mAH","_mA","_cGrp","_taken","_clear","_enemyFaction",
 		 "_n","_eosAct","_eosActivated","_mPos","_mkrX","_mkrY"
 		];
+//TODO chequear cache
+_cache = true;
 
 _HouseInfantry params["_aGrps","_aSize"];
 _infantry params["_bGrps","_bSize"];
@@ -494,3 +502,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
         _Mkr setmarkeralpha 0;
     };
 };
+
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/

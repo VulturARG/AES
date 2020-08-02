@@ -16,7 +16,7 @@ private _position     = [];
 
 //format ["%1",_unitData select 2] call BIS_fnc_log;
 
-for "_counter" from 1 to (_unitData select 0) do {
+for "_counter" from 1 to (_unitData select 1) do {
 	_position = [_marker,_unitData select 2,_angle] call AES_enemiesPosition;
     if (_index < 3) then {
         while {(surfaceiswater _position)} do {

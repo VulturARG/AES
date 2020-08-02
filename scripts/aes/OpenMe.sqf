@@ -12,36 +12,57 @@ GROUP SIZES
  5 = 16,20
 
 EXAMPLE CALL - AES
- null = [["M1","M2","M3"],[2,1,70],[0,1],[1,2,30],[2,60],[2],[1,1,10],[1,1,250,WEST]] call EOS_Spawn;
+ null = [["M1","M2","M3"],[[2,1,70],[0,1],[1,2,30],[2,60],[2],[1,1,10]],[1,1,250,WEST]] call EOS_Spawn;
  
 null=
 [
   ["M1","M2","M3"],
-  [HOUSE GROUPS,SIZE OF GROUPS,PROBABILITY],
-  [PATROL GROUPS,SIZE OF GROUPS,PROBABILITY],
-  [LIGHT VEHICLES,SIZE OF CARGO,PROBABILITY],
-  [ARMOURED VEHICLES,PROBABILITY],
-  [STATIC VEHICLES,PROBABILITY],
-  [HELICOPTERS,SIZE OF HELICOPTER CARGO,PROBABILITY],
+  [
+    [HOUSE GROUPS,SIZE OF GROUPS,PROBABILITY],
+    [PATROL GROUPS,SIZE OF GROUPS,PROBABILITY],
+    [LIGHT VEHICLES,SIZE OF CARGO,PROBABILITY],
+    [ARMOURED VEHICLES,PROBABILITY],
+    [STATIC VEHICLES,PROBABILITY],
+    [HELICOPTERS,SIZE OF HELICOPTER CARGO,PROBABILITY]
+  ],
   [FACTION,MARKERTYPE,DISTANCE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG]
 ] call EOS_Spawn;
 
-//EXAMPLE CALL - BASTION
+//EXAMPLE Defend a position
+
 null=
 [
+  ["type"],            <- Must be toAttack or toDefend
   ["M1","M2","M3"],
   [
-    [PATROL GROUPS,SIZE OF GROUPS,APPEARANCE DISTANCE],
-    [LIGHT VEHICLES,SIZE OF CARGO,APPEARANCE DISTANCE],
-    [ARMOURED VEHICLES,null,APPEARANCE DISTANCE],
-    [ATTACK HELI,null,APPEARANCE DISTANCE], 
-    [HELICOPTERS,SIZE OF HELICOPTER CARGO,APPEARANCE DISTANCE], 
-    [PARACAIDISTAS,SIZE OF HELICOPTER CARGO,APPEARANCE DISTANCE,JUMP HEIGHT],
-    [HALO,SIZE OF GROUPS,APPEARANCE DISTANCE,JUMP HEIGHT]
-  ]
+    ["type",quantity,spawn distance (m), (number of units in each group,(jump height meters))], <---Must go a comma if there is another element
+    [...]  <-- Last element without comma
+  ],
   [FACTION,MARKERTYPE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG],
   [INITIAL PAUSE, NUMBER OF WAVES, DELAY BETWEEN WAVES, INTEGRATE EOS, SHOW HINTS],
-  [angle]
+  angle       <-- Last element without comma
+] call Bastion_Spawn;
+
+Armor and Attack Helo have no units number of units in each group.
+Only Para Helo and HALO jump have jump height
+
+Example:
+null=
+[
+  "toDefend",
+  ["M1","M2","M3"],
+  [
+    ["patrol",3,500,2],       <---Must go a comma if there is another element, and so on
+    ["light vehicles",2,800,2], 
+    ["armor",1,650],
+    ["attack helo",0,700],    <-- The unit does not appear if its type is not set or if it is done with zero units.
+    ["cargo helo",3,500,2],
+    ["para helo",1,600,100],
+    ["halo",3,100,3000]       <-- Last element without comma
+  ],
+  [FACTION,MARKERTYPE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG],
+  [INITIAL PAUSE, NUMBER OF WAVES, DELAY BETWEEN WAVES, INTEGRATE EOS, SHOW HINTS],
+  angle    <-- Last element without comma
 ] call Bastion_Spawn;
 
 //EXAMPLE CALL - REDIRECT WP BASTION
@@ -60,8 +81,7 @@ null=
 
 params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 
-EOS_Spawn           = compile preprocessfile "scripts\AES\core\eos_launch.sqf";
-Bastion_Spawn       = compile preprocessfile "scripts\AES\core\b_launch.sqf";
+Launch              = compile preprocessfile "scripts\AES\core\launch.sqf";
 Bastion_Redirect_WP = compile preprocessfile "scripts\AES\core\b_redirijoUnidades.sqf";
 
 null=[] execVM "scripts\AES\core\spawn_fnc.sqf";
@@ -78,7 +98,8 @@ bastionColor="colorBLUFOR";	// Colour for bastion marker
 EOS_DAMAGE_MULTIPLIER=1;	// 1 is default
 EOS_KILLCOUNTER=false;		// Counts killed units
 
-DEFAULT_INFANTERY_MIN_DIST      =  500;
+//Distances (DIST) in meters
+DEFAULT_INFANTERY_MIN_DIST      =  500;  
 DEFAULT_VEHICLES_MIN_DIST       =  800;
 DEFAULT_ARMOR_MIN_DIST          =  800;
 DEFAULT_ATTACK_CHOPPER_MIN_DIST = 1400;
@@ -88,7 +109,7 @@ DEFAULT_CHOPPER_JUMP_HEIGHT     =  400;
 DEFAULT_HALO_MIN_DIST           =  200;
 DEFAULT_HALO_JUMP_HEIGHT        =  600;
 
-DELETE_DISTANCE                 =  950;  //Delete _EOS_FACCION unit outside this distance from marker's center 
+DELETE_DISTANCE                 =  950;  //Delete units outside this distance from marker's center 
 
 //'Open Me' call BIS_fnc_log;
 
@@ -96,7 +117,7 @@ private _EOS_FACCION = EAST;
 
 //null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
 
-null = [["marker_0"],[[0,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,500]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Bastion_Spawn;
+null = ["toDefend",["marker_0"],[["patrol",3,500,2],["light vehicles",2,800],["armor",1,650],["attack helo",0,700],["cargo helo",3,500],["para helo",1,600,100],["halo",3,100,3000]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Launch;
 
 if (_players > 10 && _players <= 15) then {
 
