@@ -7,9 +7,6 @@ params ["_side","_debugLog","_marker","_waves"];
 private _unconscious = [];
 private _enemies     = [];
 
-hint "Borro unidades wave: "+str _waves;
-format ["Borro unidades wave: %1",_waves] call BIS_fnc_log;
-
 _unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
 if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call ESA_log;};
 
@@ -18,7 +15,6 @@ if (_debugLog) then {[[_marker,"Wave", _waves,"IAs>DELETE_DISTANCE",count _enemi
 
 { 
 	if (!(isPlayer _x))then { 
-		//_x setDamage 1;
 		deletevehicle _x;
 	} 
 }foreach (_enemies + _unconscious);

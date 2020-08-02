@@ -96,7 +96,7 @@ private _EOS_FACCION = EAST;
 
 //null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
 
-null = [["marker_0"],[[1,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,5000]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Bastion_Spawn;
+null = [["marker_0"],[[0,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[3,3,300,500]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Bastion_Spawn;
 
 if (_players > 10 && _players <= 15) then {
 

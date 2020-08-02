@@ -57,27 +57,6 @@ EOS_debug = {
    0 = [vehicle, altitude] execVM "eject.sqf"
 */
 
-OpenPlayerChuteHA = {
-	params ["_paraUnit","_chuteheight"];
-	waitUntil {(position _paraUnit select 2) <= _chuteheight};
-	_paraUnit action ["openParachute", _paraUnit];
-};
-
-paraLandSafeHA = {
-	params ["_unit","_chuteheight"];
-	_unit allowDamage false;
-	[_unit,_chuteheight] spawn OpenPlayerchuteHA;
-	//_unit allowdamage true;// Now you can take damage.
-	waitUntil { isTouchingGround _unit || (position _unit select 2) < 1 };
-	_unit allowdamage true;// Now you can take damage.
-	sleep 1;
-	//if (alive _unit){
-		_inv = name _unit;
-		[_unit, [missionNamespace, format["%1%2", "Inventory",_inv]]] call BIS_fnc_loadInventory;// Reload Loadout.
-	//}
-	_unit allowdamage true;// Now you can take damage.
-};
-
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
