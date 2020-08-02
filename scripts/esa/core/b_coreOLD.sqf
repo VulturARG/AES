@@ -71,7 +71,7 @@ _bastClear setTriggerStatements ["this","",""];
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call AES_log;};
 	_espera = time + _pause;
 	_counter = 1;
 	waitUntil { 
@@ -80,22 +80,22 @@ if (_pause > 0 and !_initialLaunch) then {
 		_counter = _counter +1;
 		time > _espera
 	};
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call AES_log;};
 	
 	// Busco todas las IAs inconcientes
 	_inconcientes = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inconscientes",count _inconcientes,_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inconscientes",count _inconcientes,_side]] call AES_log;};
 	{
 		_x setDamage 1;
 	} forEach _inconcientes;
 	if (_debugLog) then {
 		_inconcientes = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_mkr,"Wave", _waves,"Inconscientes(Post)",count _inconcientes,_side]] call ESA_log;
+		[[_mkr,"Wave", _waves,"Inconscientes(Post)",count _inconcientes,_side]] call AES_log;
 	};
 
 	//Borro las unidades que estan a mas de una determinada distancia 
 	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_mPos distance2D _x) > 950}; 
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"IAs>950",count _enemigos,_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"IAs>950",count _enemigos,_side]] call AES_log;};
 	{ 
 		if (!(isPlayer _x))then { 
 			_x setDamage 1 
@@ -103,7 +103,7 @@ if (_pause > 0 and !_initialLaunch) then {
 	}foreach _enemigos;
 	if (_debugLog) then {
 		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_mPos distance2D _x) > 950}; 
-		[[_mkr,"Wave", _waves,"IAs>950(Post)",count _enemigos,_side]] call ESA_log;
+		[[_mkr,"Wave", _waves,"IAs>950(Post)",count _enemigos,_side]] call AES_log;
 	}
 };
 
@@ -135,7 +135,7 @@ for "_counter" from 1 to _PApatrols do {
 	};
 	
 };
-if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call ESA_log;};
+if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call AES_log;};
 
 //SPAWN LIGHT VEHICLES
 _bGrp=[];
@@ -163,7 +163,7 @@ for "_counter" from 1 to _LVehGroups do {
 		0= [_mkr,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call ESA_log;};
+if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call AES_log;};
 
 //SPAWN ARMOURED VEHICLES
 _cGrp=[];
@@ -187,7 +187,7 @@ for "_counter" from 1 to _AVehGroups do {
 		0= [_mkr,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call ESA_log;};
+if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call AES_log;};
 
 //SPAWN HELICOPTERS (ataque o transporte)
 _fGrp=[];
@@ -211,7 +211,7 @@ for "_counter" from 1 to _CHGroups do {
 		_cargoGrp setGroupId [format ["%1 HT %2-%3",_mkr,_waves,_counter]];
 		_troupsHT = _troupsHT + count units _cargoGrp;
 		_fGroup set [count _fGroup,_cargoGrp];
-		null = [_mkr,_fGroup,_counter] execvm "scripts\esa\functions\TransportUnload_fnc.sqf";
+		null = [_mkr,_fGroup,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
 	} else {
 		_wp1 = (_fGroup select 2) addWaypoint [(markerpos _mkr), 0];
 		_wp1 setWaypointSpeed "FULL";
@@ -224,7 +224,7 @@ for "_counter" from 1 to _CHGroups do {
 			0= [_mkr,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call ESA_log;};
+if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call AES_log;};
 
 //SPAWN HELICOPTERS WITH PARATROOPERS (New)
 _ptGrp=[];
@@ -243,13 +243,13 @@ for "_counter" from 1 to _ptNumGroups do {
 	_cargoGrpPT setGroupId [format ["%1 PT %2-%3",_mkr,_waves,_counter]];
 	_troupsPT = _troupsPT + count units _cargoGrpPT;
 	_ptGroup set [count _ptGroup,_cargoGrpPT];
-	null = [_mkr,_ptGroup,_counter,_PTAltSalto] execvm "scripts\esa\functions\TransportParachute_fnc.sqf";
+	null = [_mkr,_ptGroup,_counter,_PTAltSalto] execvm "scripts\AES\functions\TransportParachute_fnc.sqf";
 	if (_debug) then {
 			systemChat format ["Chopper:%1",_counter];
 			0= [_mkr,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call ESA_log;};
+if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call AES_log;};
 
 // SPAWN HALO (New)
 _HAGroup=[];
@@ -293,8 +293,8 @@ for "_counter" from 1 to _HApatrols do {
 	} forEach units _grp;
 };
 if (_debugLog) then {
-	[[_mkr,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call ESA_log;
-	[[_mkr,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call ESA_log;
+	[[_mkr,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call AES_log;
+	[[_mkr,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call AES_log;
 };
 
 // ADD WAYPOINTS PATROLS
@@ -357,7 +357,7 @@ waituntil {triggeractivated _bastActive};
 
 _waves=(_waves - 1);
 if (_waves >= 1) then {
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
 	_espera = time + _timeout;
 	waitUntil { 
@@ -373,27 +373,27 @@ if (_waves >= 1) then {
 			_mkr setmarkeralpha _mAN;
 			// TODO Revisar el tema de la EOS Zone
 			if (_eosZone) then {
-				null = [_mkr,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_mA,350,_CHside]] execVM "scripts\esa\core\EOS_Core.sqf";
+				null = [_mkr,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_mA,350,_CHside]] execVM "scripts\AES\core\EOS_Core.sqf";
 			};
 			_waves=0;
 		};
 		time > _espera
 	};
-	if (_debugLog) then { [[_mkr,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call ESA_log;};
+	if (_debugLog) then { [[_mkr,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call AES_log;};
 	// Busco todas las IAs inconcientes
 	_inconcientes = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inconscientes_2",count _inconcientes,_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"Inconscientes_2",count _inconcientes,_side]] call AES_log;};
 	{
 		_x setDamage 1;
 	} forEach _inconcientes;
 	if (_debugLog) then {
 		_inconcientes = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
-		[[_mkr,"Wave", _waves,"Inconscientes_2(Post)",count _inconcientes,_side]] call ESA_log;
+		[[_mkr,"Wave", _waves,"Inconscientes_2(Post)",count _inconcientes,_side]] call AES_log;
 	};
 
 	//Borro las unidades que estan a mas de una determinada distancia 
 	_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_mPos distance2D _x) > 950}; 
-	if (_debugLog) then {[[_mkr,"Wave", _waves,"IAs>950_2",count _enemigos,_side]] call ESA_log;};
+	if (_debugLog) then {[[_mkr,"Wave", _waves,"IAs>950_2",count _enemigos,_side]] call AES_log;};
 	{ 
 		if (!(isPlayer _x))then { 
 			_x setDamage 1 
@@ -401,12 +401,12 @@ if (_waves >= 1) then {
 	}foreach _enemigos;
 	if (_debugLog) then {
 		_enemigos = allUnits select {side _x == _side && _x iskindof "Man" && (_mPos distance2D _x) > 950}; 
-		[[_mkr,"Wave", _waves,"IAs>950(Post)_2",count _enemigos,_side]] call ESA_log;
+		[[_mkr,"Wave", _waves,"IAs>950(Post)_2",count _enemigos,_side]] call AES_log;
 	}
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
-		if (_debugLog) then {[[_mkr,"Wave", _waves,"Fin_ataques"]] call ESA_log;};
+		if (_debugLog) then {[[_mkr,"Wave", _waves,"Fin_ataques"]] call AES_log;};
 		if (_hints) then  {hint "Waves complete";};
 		_mkr setmarkercolor VictoryColor;
 		_mkr setmarkeralpha _mAN;
@@ -414,7 +414,7 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};
 		//null = [_mkr,[_PApatrols,_PAgroupSize],         [_LVehGroups,_LVgroupSize],           [_AVehGroups],           [_CHGroups,_fSize]                                                                                                      ,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "eos\core\b_core.sqf";
-		null = [_mkr,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
+		null = [_mkr,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\b_core.sqf";
 	};
 };
 
@@ -507,7 +507,7 @@ if (count _cGrp > 0) then
 hint "Borro Helis PT";
 {
 	systemChat format ["_vehicle %1 _crew %2 %3",_vehicle,_crew,time];
-	[[_mkr,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call ESA_log;
+	[[_mkr,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call AES_log;
 	_vehicle = _x select 0;_crew = _x select 1;//_grp = _x select 2; _cargoGrp = _x select 3;
 	{deleteVehicle _x} forEach (_crew);
 	if (!(vehicle player == _vehicle)) then {{deleteVehicle _x} forEach[_vehicle];};

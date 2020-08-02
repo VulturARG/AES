@@ -21,11 +21,11 @@ if (_debug) then {0= [_mkr,_counter,"Lanzamiento Paracaidas", _pos] call EOS_deb
 _wp1 = _grp addWaypoint [_pos, 0];
 _wp1 setWaypointSpeed "FULL";
 _wp1 setWaypointType "MOVE";
-_wp1 setWaypointStatements ["true", "0 = [(vehicle this),150] execvm 'scripts\esa\functions\eject_paratrooper.sqf'"];
+_wp1 setWaypointStatements ["true", "0 = [(vehicle this),150] execvm 'scripts\AES\functions\eject_paratrooper.sqf'"];
 
 if (_debug) then {hint "Transport unloaded";};
 
-[_cargoGrp,_mkr,"center"] call ESA_newWaypoint;
+[_cargoGrp,_mkr,"center"] call AES_newWaypoint;
 
 _dir_atk=random 360;
 _Place= 1300;

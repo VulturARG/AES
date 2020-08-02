@@ -11,15 +11,15 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
-private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[vehType,cargoType]
+private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[[vehType,cargoType],...]
 private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
 private _groups                    = [];
 
-ESA_bastionTrigger    = compile preprocessfile "scripts\esa\functions\ESA_bastionTrigger.sqf";
-ESA_deleteUnits       = compile preprocessfile "scripts\esa\functions\ESA_deleteUnits.sqf";
-ESA_b_spawnUnits      = compile preprocessfile "scripts\esa\core\b_spawnUnits.sqf";
+AES_bastionTrigger    = compile preprocessfile "scripts\AES\functions\AES_bastionTrigger.sqf";
+AES_deleteUnits       = compile preprocessfile "scripts\AES\functions\AES_deleteUnits.sqf";
+AES_b_spawnUnits      = compile preprocessfile "scripts\AES\core\b_spawnUnits.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,9 +33,8 @@ getMarkerSize _marker params ["_mkrX","_mkrY"];
 _mkrAngle = markerDir _marker;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//TODO remove. Legacy code
+//TODO Code to remove. Legacy code
 _unitsArrays params["_infantry","_LVeh"   ,  "_AVeh" ,   "_SVeh", "_borrar",   "_PTrooper", "_HAtrooper"];
-//                    [1,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,5000]
 _infantry params["_PApatrols","_PAgroupSize","_PAminDist"];
 _LVeh params["_LVehGroups","_LVgroupSize","_LVminDist"];
 _AVeh params["_AVehGroups","_AVminDist","_nada"];
@@ -53,12 +52,12 @@ if (_side==WEST) then {_enemyFaction="west";};
 if (_side==INDEPENDENT) then {_enemyFaction="GUER";};
 if (_side==CIVILIAN) then {_enemyFaction="civ";};
 
-private _bastionTriggerReturn = [_marker,_heightLimit,_multipleMarquerAlphaValue select _markerType,_bastionMarquerAlphaValue select _markerType,_enemyFaction] call ESA_bastionTrigger;
+private _bastionTriggerReturn = [_marker,_heightLimit,_multipleMarquerAlphaValue select _markerType,_bastionMarquerAlphaValue select _markerType,_enemyFaction] call AES_bastionTrigger;
 _bastionTriggerReturn params ["_bastActive","_bastclear","_basActivated"];
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call AES_log;};
 	_espera = time + _pause;
 	_counter = 1;
 	waitUntil { 
@@ -67,9 +66,9 @@ if (_pause > 0 and !_initialLaunch) then {
 		_counter = _counter +1;
 		time > _espera
 	};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call AES_log;};
 
-	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
+	[_side,_debugLog,_marker,_waves] call AES_deleteUnits;
 
 };
 
@@ -78,7 +77,7 @@ _aGroup=[];
 {
 	//format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
 	//mformat ["%1",_x] call BIS_fnc_log;
-	_groups pushBack ([_marker,_x,_angle,_typeVehicle select _forEachIndex select 0,_typeVehicle select _forEachIndex select 0,_forEachIndex,_side,_faction,_typeMessage select _forEachIndex] call ESA_b_spawnUnits);
+	_groups pushBack ([_marker,_x,_angle,_typeVehicle select _forEachIndex select 0,_typeVehicle select _forEachIndex select 1,_forEachIndex,_side,_faction,_typeMessage select _forEachIndex] call AES_b_spawnUnits);
 	
 } forEach _unitsArrays;
 
@@ -112,7 +111,7 @@ for "_counter" from 1 to _PApatrols do {
 	};
 	
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call ESA_log;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call AES_log;};
 
 //SPAWN LIGHT VEHICLES
 _bGrp=[];
@@ -140,7 +139,7 @@ for "_counter" from 1 to _LVehGroups do {
 		0= [_marker,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call ESA_log;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call AES_log;};
 
 //SPAWN ARMOURED VEHICLES
 _cGrp=[];
@@ -164,7 +163,7 @@ for "_counter" from 1 to _AVehGroups do {
 		0= [_marker,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call ESA_log;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call AES_log;};
 
 //SPAWN HELICOPTERS (ataque o transporte)
 _fGrp=[];
@@ -188,7 +187,7 @@ for "_counter" from 1 to _CHGroups do {
 		_cargoGrp setGroupId [format ["%1 HT %2-%3",_marker,_waves,_counter]];
 		_troupsHT = _troupsHT + count units _cargoGrp;
 		_fGroup set [count _fGroup,_cargoGrp];
-		null = [_marker,_fGroup,_counter] execvm "scripts\esa\functions\TransportUnload_fnc.sqf";
+		null = [_marker,_fGroup,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
 	} else {
 		_wp1 = (_fGroup select 2) addWaypoint [(markerpos _marker), 0];
 		_wp1 setWaypointSpeed "FULL";
@@ -201,7 +200,7 @@ for "_counter" from 1 to _CHGroups do {
 			0= [_marker,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call ESA_log;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call AES_log;};
 
 //SPAWN HELICOPTERS WITH PARATROOPERS (New)
 _ptGrp=[];
@@ -220,13 +219,13 @@ for "_counter" from 1 to _ptNumGroups do {
 	_cargoGrpPT setGroupId [format ["%1 PT %2-%3",_marker,_waves,_counter]];
 	_troupsPT = _troupsPT + count units _cargoGrpPT;
 	_ptGroup set [count _ptGroup,_cargoGrpPT];
-	null = [_marker,_ptGroup,_counter,_PTAltSalto] execvm "scripts\esa\functions\TransportParachute_fnc.sqf";
+	null = [_marker,_ptGroup,_counter,_PTAltSalto] execvm "scripts\AES\functions\TransportParachute_fnc.sqf";
 	if (_debug) then {
 			systemChat format ["Chopper:%1",_counter];
 			0= [_marker,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
 	};
 };
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call ESA_log;};
+if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call AES_log;};
 
 // SPAWN HALO (New)
 _HAGroup=[];
@@ -270,8 +269,8 @@ for "_counter" from 1 to _HApatrols do {
 	} forEach units _grp;
 };
 if (_debugLog) then {
-	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call ESA_log;
-	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call ESA_log;
+	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call AES_log;
+	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call AES_log;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -336,7 +335,7 @@ waituntil {triggeractivated _bastActive};
 
 _waves=(_waves - 1);
 if (_waves >= 1) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call ESA_log;};
+	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
 	_espera = time + _timeout;
 	waitUntil { 
@@ -352,20 +351,20 @@ if (_waves >= 1) then {
 			_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
 			// TODO Revisar el tema de la EOS Zone
 			if (_eosZone) then {
-				null = [_marker,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_markerType,350,_CHside]] execVM "scripts\esa\core\EOS_Core.sqf";
+				null = [_marker,[_PApatrols,_PAgroupSize],[_PApatrols,_PAgroupSize],[_LVehGroups,_LVgroupSize],[_AVehGroups,0,0,0],[_faction,_markerType,350,_CHside]] execVM "scripts\AES\core\EOS_Core.sqf";
 			};
 			_waves=0;
 		};
 		time > _espera
 	};
-	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call ESA_log;};
+	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
-	[_side,_debugLog,_marker,_waves] call ESA_deleteUnits;
+	[_side,_debugLog,_marker,_waves] call AES_deleteUnits;
 	
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
-		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call ESA_log;};
+		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call AES_log;};
 		if (_hints) then  {hint "Waves complete";};
 		_marker setmarkercolor VictoryColor;
 		_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
@@ -373,8 +372,8 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};
 		//null = [_marker,[_PApatrols,_PAgroupSize],         [_LVehGroups,_LVgroupSize],           [_AVehGroups],           [_CHGroups,_fSize]                                                                                                      ,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "eos\core\b_core.sqf";
-		//null = [_marker,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
-		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\esa\core\b_core.sqf";
+		//null = [_marker,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\b_core.sqf";
+		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\b_core.sqf";
 	};
 };
 
@@ -471,7 +470,7 @@ if (count _cGrp > 0) then
 hint "Borro Helis PT";
 {
 	systemChat format ["_vehicle %1 _crew %2 %3",_vehicle,_crew,time];
-	[[_marker,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call ESA_log;
+	[[_marker,"Wave", _waves,"_vehicle",_vehicle,_side,_crew]] call AES_log;
 	_vehicle = _x select 0;_crew = _x select 1;//_grp = _x select 2; _cargoGrp = _x select 3;
 	{deleteVehicle _x} forEach (_crew);
 	if (!(vehicle player == _vehicle)) then {{deleteVehicle _x} forEach[_vehicle];};

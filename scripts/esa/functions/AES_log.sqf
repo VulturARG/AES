@@ -5,7 +5,7 @@
 params ["_strData"];
 _strData = _this;
 
-hint "ESA Log";
+hint "AES Log";
 
 private _data = "";
 

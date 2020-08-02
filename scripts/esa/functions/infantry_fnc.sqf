@@ -27,7 +27,7 @@ for "_x" from 1 to _grpSize do {
 	// Vultur /////////////////////////////////////////////////////
 	// Comment this line if you do not want to change the equipment of the AI
 	// Comentar esta línea si no desea cambiar el equipamiento de la IA
-	_unit=[_unit,_unitType] call ESA_fnc_infInv;
+	_unit=[_unit,_unitType] call AES_setEquipment;
 	///////////////////////////////////////////////////////////////
 };
 

@@ -8,7 +8,7 @@ waitUntil { time > 1};
 private _headlessClients = entities "HeadlessClient_F";
 private _humanPlayers = allPlayers - _headlessClients;
 _Nro_Jugadores = count _humanPlayers;
-// Activo la zona ESA
+// Activo la zona AES
 //_markers,_waves,_jugadores,_angle
-[["marker_2"],1,_Nro_Jugadores,180] execVM "scripts\esa\OpenMe.sqf";
+[["marker_2"],1,_Nro_Jugadores,180] execVM "scripts\AES\OpenMe.sqf";
 

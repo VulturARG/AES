@@ -1,11 +1,11 @@
-# ESA
+# AES
 
-## Enemy System ArgA
+## ArgA Enemy System
 
-ESA is a modernization and adaptation of [BangaBob's Enemy Occupation System (EOS) v1.98](https://www.armaholic.com/page.php?id=20262), to the usage requirements of the [ArgA Clan](http://www.clanarga.com.ar/).
+AES is a modernization and adaptation of [BangaBob's Enemy Occupation System (EOS) v1.98](https://www.armaholic.com/page.php?id=20262), to the usage requirements of the [ArgA Clan](http://www.clanarga.com.ar/).
 
 **Description:**  
-Enemy System Arga (ESA) allows mission designers to create zones to defend or attack on their stages. Simple place markers covering areas of the map and ESA will do the rest.
+ArgA Enemy System (AES) allows mission designers to create zones to defend or attack on their stages. Simple place markers covering areas of the map and AES will do the rest.
   
   
 **Features:**

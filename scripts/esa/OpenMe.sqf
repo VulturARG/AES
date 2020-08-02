@@ -1,7 +1,7 @@
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
-/* ESA based in EOS 1.98 by BangaBob
+/* AES based in EOS 1.98 by BangaBob
 
 GROUP SIZES
  0 = 1
@@ -11,7 +11,7 @@ GROUP SIZES
  4 = 12,16
  5 = 16,20
 
-EXAMPLE CALL - ESA
+EXAMPLE CALL - AES
  null = [["M1","M2","M3"],[2,1,70],[0,1],[1,2,30],[2,60],[2],[1,1,10],[1,1,250,WEST]] call EOS_Spawn;
  
 null=
@@ -60,13 +60,13 @@ null=
 
 params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 
-EOS_Spawn           = compile preprocessfile "scripts\esa\core\eos_launch.sqf";
-Bastion_Spawn       = compile preprocessfile "scripts\esa\core\b_launch.sqf";
-Bastion_Redirect_WP = compile preprocessfile "scripts\esa\core\b_redirijoUnidades.sqf";
+EOS_Spawn           = compile preprocessfile "scripts\AES\core\eos_launch.sqf";
+Bastion_Spawn       = compile preprocessfile "scripts\AES\core\b_launch.sqf";
+Bastion_Redirect_WP = compile preprocessfile "scripts\AES\core\b_redirijoUnidades.sqf";
 
-null=[] execVM "scripts\esa\core\spawn_fnc.sqf";
+null=[] execVM "scripts\AES\core\spawn_fnc.sqf";
 
-onplayerConnected {[] execVM "scripts\esa\Functions\EOS_Markers.sqf";};
+onplayerConnected {[] execVM "scripts\AES\Functions\EOS_Markers.sqf";};
 
 IsVCOM_MOD = true;
 publicVariable "IsVCOM_MOD";
@@ -96,7 +96,7 @@ private _EOS_FACCION = EAST;
 
 //null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
 
-null = [["marker_0"],[[0,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[3,3,300,500]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Bastion_Spawn;
+null = [["marker_0"],[[0,2,150],[0,2,1000],[0,0,1500],[0,1,1500],[0,0,1500],[0,3,1500,600],[0,3,300,500]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Bastion_Spawn;
 
 if (_players > 10 && _players <= 15) then {
 

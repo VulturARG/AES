@@ -2,8 +2,8 @@
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
 
-ESA_enemiesPosition = compile preprocessfile "scripts\esa\functions\ESA_enemiesPosition.sqf";
-ESA_HALO            = compile preprocessfile "scripts\esa\functions\ESA_HALO.sqf";
+AES_enemiesPosition = compile preprocessfile "scripts\AES\functions\AES_enemiesPosition.sqf";
+AES_HALO            = compile preprocessfile "scripts\AES\functions\AES_HALO.sqf";
 
 
 params ["_marker","_unitData","_angle","_vehType","_cargoType","_index","_side","_faction","_typeMessage"];
@@ -17,10 +17,10 @@ private _position     = [];
 //format ["%1",_unitData select 2] call BIS_fnc_log;
 
 for "_counter" from 1 to (_unitData select 0) do {
-	_position = [_marker,_unitData select 2,_angle] call ESA_enemiesPosition;
+	_position = [_marker,_unitData select 2,_angle] call AES_enemiesPosition;
     if (_index < 3) then {
         while {(surfaceiswater _position)} do {
-            _position = [_marker,_unitData,_angle] call ESA_enemiesPosition;
+            _position = [_marker,_unitData,_angle] call AES_enemiesPosition;
         };
 		for "_counter" from 0 to 20 do {
             _newPosition = [_position,0,50,5,0,20,0] call BIS_fnc_findSafePos;
@@ -35,7 +35,7 @@ for "_counter" from 1 to (_unitData select 0) do {
         _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
 		_groups pushBack _grp;
-		if (_index == 6) then {[_grp] call ESA_HALO;};
+		if (_index == 6) then {[_grp] call AES_HALO;};
     };
     /*    
 	_bGroup=[_position,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
@@ -102,7 +102,7 @@ for "_counter" from 1 to _HApatrols do {
 	} forEach units _grp;
 };
 if (_debugLog) then {
-	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call ESA_log;
-	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call ESA_log;
+	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call AES_log;
+	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call AES_log;
 };
 // */

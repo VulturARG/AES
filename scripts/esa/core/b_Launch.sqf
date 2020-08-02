@@ -20,7 +20,7 @@ if (isServer) then {
 		if (isnil "_eosMarkers") then {_eosMarkers=[];};
 		_eosMarkers set [count _eosMarkers,_x];
 		server setvariable ["EOSmarkers",_eosMarkers,true];
-		null = [_x,_unitsArrays,_settings,_basSettings,_angle] execVM "scripts\esa\core\b_core.sqf";
+		null = [_x,_unitsArrays,_settings,_basSettings,_angle] execVM "scripts\AES\core\b_core.sqf";
 	}foreach _JIPmkr;
 
 };

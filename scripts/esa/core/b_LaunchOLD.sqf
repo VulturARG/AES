@@ -49,7 +49,7 @@ if (isServer) then {
 		if (isnil "_eosMarkers") then {_eosMarkers=[];};
 		_eosMarkers set [count _eosMarkers,_x];
 		server setvariable ["EOSmarkers",_eosMarkers,true];
-		null = [_x,[_PApatrols,_PAgroupArray,_PAminDist],[_LVehGroups,_LVgroupArray,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_CHgroupArray,_CHminDist],[_PTGroups,_PTgroupArray,_PTminDist,_PTAltSalto],[_HAGroups,_HAgroupArray,_HAminDist,_HAAltSalto],_settings,_basSettings,_angle] execVM "scripts\esa\core\b_core.sqf";
+		null = [_x,[_PApatrols,_PAgroupArray,_PAminDist],[_LVehGroups,_LVgroupArray,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_CHgroupArray,_CHminDist],[_PTGroups,_PTgroupArray,_PTminDist,_PTAltSalto],[_HAGroups,_HAgroupArray,_HAminDist,_HAAltSalto],_settings,_basSettings,_angle] execVM "scripts\AES\core\b_core.sqf";
 	}foreach _JIPmkr;
 
 };
