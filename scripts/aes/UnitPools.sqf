@@ -192,14 +192,15 @@ if (_type == 8) then {
 };
 
 // CREATE CARGO
-if (_type == 9) then {
+//if (_type == 9) then {
+if (_type == "cargo") then {
     for "_i" from 0 to 4 do {
     	_unit = _InfPool select(floor(random(count _InfPool)));
         _temparray set[count _temparray, _unit];
     };
 };
 
-// CREATE DIVER CARGO
+// CREATE DIVER CARGO (Buzo)
 if (_type == 10) then {
     for "_i" from 0 to 4 do {
         _unit = _diverPool select(floor(random(count _diverPool)));

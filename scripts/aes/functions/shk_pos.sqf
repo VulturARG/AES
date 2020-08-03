@@ -35,7 +35,7 @@
     myPos = [getpos player,random 360,[200,500],false,2] execvm "SHK_pos.sqf";
   
   Example of creating multiple positions:
-    SHK_pos = compile preprocessfile "SHK_pos.sqf";
+    SHK_pos = compile preprocessFileLineNumbers "SHK_pos.sqf";
     for "_i" from 0 to 500 do {
       _p = [getpos player,random 360,random 1000] call SHK_pos;
       if (count _p > 0) then {

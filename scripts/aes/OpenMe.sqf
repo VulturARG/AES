@@ -82,7 +82,7 @@ null=
 params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 
 Launch              = compile preprocessFileLineNumbers "scripts\AES\core\launch.sqf";
-Bastion_Redirect_WP = compile preprocessfile "scripts\AES\core\b_redirijoUnidades.sqf";
+Bastion_Redirect_WP = compile preprocessFileLineNumbers "scripts\AES\core\b_redirijoUnidades.sqf";
 
 call compile preprocessFileLineNumbers "scripts\AES\aes_settings.sqf";
 
@@ -111,11 +111,11 @@ private _EOS_FACCION = EAST;
     ["marker_0"],
     [
       ["patrol",3,500,2],
-      ["light vehicles",2,800,2],
-      ["armor",1,650],
+      ["light vehicles",0,800,2],
+      ["armor",0,650],
       ["attack helo",0,700],
-      ["cargo helo",3,500,1],
-      ["para helo",1,600,5,100],
+      ["cargo helo",0,500,1],
+      ["para helo",0,600,5,100],
       ["halo",3,100,4,3000]
     ],
     [5,1,EAST,false,false,false],

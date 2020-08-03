@@ -36,6 +36,6 @@ if (!isServer) exitWith {};
 		};
 
 		{
-			_x moveincargo _vehicle
+			_x moveInCargo _vehicle
 		}foreach units _grp;
 	};

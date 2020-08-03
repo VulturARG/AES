@@ -19,12 +19,12 @@ if (isServer) then {
 			_x append [_defaultDistance];
 			_x append [1];
 		};
-		_jumpType = AES_DEFAULT_JUMP_HELO select {(_x select 0) == _typeUnit} select 0;
+		_jumpType = AES_DEFAULT_JUMP_PARA select {(_x select 0) == _typeUnit} select 0;
 		_jumpType = if (isNil "_jumpType") then {_isJump = false;[]} else {_isJump = true;_jumpType};
 		if (count(_x) < 5 && _isJump) then {
 			 _x append [_jumpType select 1]; 
 		};
-		format ['%1 %2',count(_x),count(AES_MIN_MAX_SIZE_GROUP) > _x select 3]  call BIS_fnc_log;
+		//format ['%1 %2',count(_x),count(AES_MIN_MAX_SIZE_GROUP) > _x select 3]  call BIS_fnc_log;
 		if (count(_x) >= 4 && count(AES_MIN_MAX_SIZE_GROUP) > _x select 3) then {
 			//format ['%1',_x select 3]  call BIS_fnc_log;
 			_x set [3,AES_MIN_MAX_SIZE_GROUP select (_x select 3)];

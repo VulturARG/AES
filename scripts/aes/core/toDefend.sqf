@@ -13,15 +13,15 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
 //private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[[vehType,cargoType],...]
-private _typeVehicle               = [["patrol",0],["light vehicles",9],["armor",0],["attack helo",0],["cargo helo",9],["para helo",9],["halo",0]]; //[[vehType,cargoType],...]
-private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
+//private _typeVehicle               = [["patrol",0],["light vehicles",9],["armor",0],["attack helo",0],["cargo helo",9],["para helo",9],["halo",0]]; //[[vehType,cargoType],...]
+//private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
 private _groups                    = [];
 
-AES_bastionTrigger    = compile preprocessfile "scripts\AES\functions\AES_bastionTrigger.sqf";
-AES_deleteUnits       = compile preprocessfile "scripts\AES\functions\AES_deleteUnits.sqf";
-AES_b_spawnUnits      = compile preprocessfile "scripts\AES\core\b_spawnUnits.sqf";
+AES_bastionTrigger    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_bastionTrigger.sqf";
+AES_deleteUnits       = compile preprocessFileLineNumbers "scripts\AES\functions\AES_deleteUnits.sqf";
+AES_b_spawnUnits      = compile preprocessFileLineNumbers "scripts\AES\core\b_spawnUnits.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,7 +79,8 @@ _aGroup=[];
 {
 	//format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
 	//mformat ["%1",_x] call BIS_fnc_log;
-	_groups pushBack ([_marker,_x,_angle,_typeVehicle select _forEachIndex select 0,_typeVehicle select _forEachIndex select 1,_forEachIndex,_side,_faction,_typeMessage select _forEachIndex] call AES_b_spawnUnits);
+
+	_groups pushBack ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
 	
 } forEach _unitsArrays;
 
@@ -375,7 +376,7 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 		if (_hints) then  {hint "Reinforcements inbound";};
 		//null = [_marker,[_PApatrols,_PAgroupSize],         [_LVehGroups,_LVgroupSize],           [_AVehGroups],           [_CHGroups,_fSize]                                                                                                      ,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "eos\core\b_core.sqf";
 		//null = [_marker,[_PApatrols,_PAgroupSize,_PAminDist],[_LVehGroups,_LVgroupSize,_LVminDist],[_AVehGroups,_AVminDist],[_CHGroups,_fSize,_CHminDist],[_ptNumGroups,_PTSize,_PTminDist,_PTAltSalto],[_HApatrols,_HAgroupSize,_HAminDist,_HAAltSalto],_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\b_core.sqf";
-		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\b_core.sqf";
+		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\toDefend.sqf";
 	};
 };
 
