@@ -157,16 +157,16 @@ if (_type == 3) then {
     _crew = _heliCrew select(floor(random(count _heliCrew)));
     _temparray set[count _temparray, _crew];
 };
-
+*/
 // CREATE TRANSPORT CHOPPER & CREW
-if (_type == 4) then {
+if (_type == "cargo helo") then {
     _tempUnit = _CHPool select(floor(random(count _CHPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _heliCrew select(floor(random(count _heliCrew)));
     _temparray set[count _temparray, _crew];
     //PLAYER SIDECHAT (format ["_tempUnit: %1, _temparray: %2, _crew: %3",_tempUnit,_temparray,_crew]);
 };
-
+/*
 // CREATE STATIC & CREW
 if (_type == 5) then {
     _tempUnit = _stPool select(floor(random(count _stPool)));

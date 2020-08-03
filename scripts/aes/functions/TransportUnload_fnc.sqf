@@ -1,3 +1,7 @@
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/
+
 params ["_mkr","_veh","_counter"];
 
 private ["_pad","_getToMarker","_cargoGrp","_vehicle"];
@@ -43,3 +47,7 @@ _wp2 setWaypointStatements ["true", "{deleteVehicle _x} forEach crew (vehicle th
 units _grp doFollow leader _grp;
 
 deletevehicle _pad;
+
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/

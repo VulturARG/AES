@@ -110,13 +110,13 @@ private _EOS_FACCION = EAST;
     "toDefend",
     ["marker_0"],
     [
-      ["patrol",0,500,5],
-      ["light vehicle",1,400,2],
+      ["patrol",0,500,3],
+      ["light vehicle",0,400,2],
       ["armor",0,650],
       ["attack helo",0,700],
-      ["cargo helo",0,500,1],
+      ["cargo helo",2,500,1],
       ["para helo",0,600,5,100],
-      ["halo",0,100,4,3000]
+      ["halo",0,100,4,600]
     ],
     [5,1,EAST,false,false,false],
     [1,2,60,false,false],
