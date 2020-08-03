@@ -53,10 +53,11 @@ _vehCrew=[];
 	};
 }foreach _vehPositions;
 
-_return=[_vehicle,_vehCrew,_grp];
+private _return=[_vehicle,_vehCrew,_grp];
 
 _return
 
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
+//format ['SV _return: %1',_return]  call BIS_fnc_log;

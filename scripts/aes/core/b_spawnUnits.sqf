@@ -63,39 +63,31 @@ for "_counter" from 1 to (_unitData select 1) do {
         _troupsNumber = _troupsNumber + count units _grp;
 		_groups pushBack _grp;
 		if (_vehType == "halo") then {[_grp] call AES_HALO;};
-		//format ['SU _grp TR: %1',_grp]  call BIS_fnc_log;
+		
     };
 	if (_vehType == "light vehicle" || _vehType == "cargo helo" || _vehType == "para helo") then {
         
 		private _special = if (["helo",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
-		_grp = [_position,_vehType,_faction,_side,_special]call EOS_fnc_spawnvehicle;
+		_groups = [_position,_vehType,_faction,_side,_special]call EOS_fnc_spawnvehicle;
 
-		_cargoGrp = createGroup _side;
-		//0 = [(_grp select 0),_unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
-		0 = [_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setcargo;
+		_cargoGrp = createGroup _side;		
+		0 = [_groups select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setcargo;
 
-		// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_grouphandlers;
+		// TODO ver esta linea -> 0 = [(_groups select 2),"LIGskill"] call eos_fnc_grouphandlers;
 		_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
-		//(_grp select 2) setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 		_troupsNumber = _troupsNumber + count units _cargoGrp;
-		//_troupsNumber = _troupsNumber + count units (_grp select 2);
-		//_groups set [count _groups,_grp];
 		_groups pushBack _cargoGrp;
+		if (_vehType == "cargo helo") then {
+			format ['SU _groups: %1',_groups]  call BIS_fnc_log;
+			[_marker,_groups,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
+		};
+		// Formato de LV
+		//0 = [(_grp select 0),_unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
+		//(_grp select 2) setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+		//_troupsNumber = _troupsNumber + count units (_grp select 2);
 		//_groups pushBack _grp;
 
-		/*
-		_fGroup=[_newpos,_side,_faction,_vehType,"fly"] call EOS_fnc_spawnvehicle;
-		_CHside=_side;
-		_fGrp set [count _fGrp,_fGroup];
-
-		_cargoGrp = createGroup _side;
-		0=[(_fGroup select 0),_fSize,_cargoGrp,_faction,9] call eos_fnc_setcargo;
-		0=[_cargoGrp,"INFskill"] call eos_fnc_grouphandlers;
-		_cargoGrp setGroupId [format ["%1 HT %2-%3",_marker,_waves,_counter]];
-		_troupsHT = _troupsHT + count units _cargoGrp;
-		_fGroup set [count _fGroup,_cargoGrp];
-		null = [_marker,_fGroup,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
-		*/
+		
 	}
 	
 };
@@ -103,6 +95,8 @@ _groups
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
+//	format ['SU _grp: %1',_grp]  call BIS_fnc_log;
+
 /*
 //SPAWN HELICOPTERS (ataque o transporte)
 _fGrp=[];

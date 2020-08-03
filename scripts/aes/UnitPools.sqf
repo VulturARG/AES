@@ -164,7 +164,6 @@ if (_type == "cargo helo") then {
     _temparray set[count _temparray, _tempUnit];
     _crew = _heliCrew select(floor(random(count _heliCrew)));
     _temparray set[count _temparray, _crew];
-    //PLAYER SIDECHAT (format ["_tempUnit: %1, _temparray: %2, _crew: %3",_tempUnit,_temparray,_crew]);
 };
 /*
 // CREATE STATIC & CREW
