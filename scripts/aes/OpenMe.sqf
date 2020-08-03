@@ -43,8 +43,8 @@ null=
   angle       <-- Last element without comma
 ] call Bastion_Spawn;
 
-Armor and Attack Helo have no units number of units in each group.
-Only Para Helo and HALO jump have jump height
+Armor and Attack chopper have no units number of units in each group.
+Only Para chopper and HALO jump have jump height
 
 Example:
 null=
@@ -55,9 +55,9 @@ null=
     ["patrol",3,500,2],       <---Must go a comma if there is another element, and so on
     ["light vehicle",2,800,2], 
     ["armor",1,650],
-    ["attack helo",0,700],    <-- The unit does not appear if its type is not set or if it is done with zero units.
-    ["cargo helo",3,500,2],
-    ["para helo",1,600,100],
+    ["attack chopper",0,700],    <-- The unit does not appear if its type is not set or if it is done with zero units.
+    ["cargo chopper",3,500,2],
+    ["para chopper",1,600,100],
     ["halo",3,100,3000]       <-- Last element without comma
   ],
   [FACTION,MARKERTYPE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG],
@@ -113,9 +113,9 @@ private _EOS_FACCION = EAST;
       ["patrol",0,500,3],
       ["light vehicle",0,400,2],
       ["armor",0,650],
-      ["attack helo",0,700],
-      ["cargo helo",2,500,1],
-      ["para helo",0,600,5,100],
+      ["attack chopper",0,700],
+      ["cargo chopper",1,500,1],
+      ["para chopper",1,600,5,100],
       ["halo",0,100,4,600]
     ],
     [5,1,EAST,false,false,false],

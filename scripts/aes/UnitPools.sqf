@@ -83,7 +83,7 @@ if (_faction==5) then {
 	_ArmPool=	["LOP_IRA_Infantry_SL","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_AR"];
 	_MotPool=	["LOP_IRA_Offroad_M2"];
 	_ACHPool=	["B_Truck_01_transport_F"];
-	_CHPool=	["I_Heli_Transport_02_F","B_Heli_Light_02_unarmed_F"];
+	_CHPool=	["I_Heli_Transport_02_F"];
 	_uavPool=	[];
 	_stPool=	["LOP_IRA_Static_DSHKM"];
 	_shipPool=	[];
@@ -158,8 +158,10 @@ if (_type == 3) then {
     _temparray set[count _temparray, _crew];
 };
 */
-// CREATE TRANSPORT CHOPPER & CREW
-if (_type == "cargo helo") then {
+// CREATE TRANSPORT CHOPPER & CREW 
+//if (_type == 4) then {
+if (_type == "cargo chopper" || _type == "para chopper") then {
+//if (_type == "para chopper") then {
     _tempUnit = _CHPool select(floor(random(count _CHPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _heliCrew select(floor(random(count _heliCrew)));

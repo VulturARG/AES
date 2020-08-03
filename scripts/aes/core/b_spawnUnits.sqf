@@ -65,9 +65,9 @@ for "_counter" from 1 to (_unitData select 1) do {
 		if (_vehType == "halo") then {[_grp] call AES_HALO;};
 		
     };
-	if (_vehType == "light vehicle" || _vehType == "cargo helo" || _vehType == "para helo") then {
+	if (_vehType == "light vehicle" || _vehType == "cargo chopper" || _vehType == "para chopper") then {
         
-		private _special = if (["helo",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
+		private _special = if (["chopper",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
 		_groups = [_position,_vehType,_faction,_side,_special]call EOS_fnc_spawnvehicle;
 
 		_cargoGrp = createGroup _side;		
@@ -77,10 +77,13 @@ for "_counter" from 1 to (_unitData select 1) do {
 		_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 		_troupsNumber = _troupsNumber + count units _cargoGrp;
 		_groups pushBack _cargoGrp;
-		if (_vehType == "cargo helo") then {
-			format ['SU _groups: %1',_groups]  call BIS_fnc_log;
+		if (_vehType == "cargo chopper") then {
 			[_marker,_groups,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
 		};
+		if (_vehType == "para chopper") then {
+			[_marker,_groups,_counter,_unitData select 4] execvm "scripts\AES\functions\TransportParachute_fnc.sqf";
+		};
+
 		// Formato de LV
 		//0 = [(_grp select 0),_unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
 		//(_grp select 2) setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];

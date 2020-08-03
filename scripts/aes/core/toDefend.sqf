@@ -13,7 +13,7 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
 //private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[[vehType,cargoType],...]
-//private _typeVehicle               = [["patrol",0],["light vehicle",9],["armor",0],["attack helo",0],["cargo helo",9],["para helo",9],["halo",0]]; //[[vehType,cargoType],...]
+//private _typeVehicle               = [["patrol",0],["light vehicle",9],["armor",0],["attack chopper",0],["cargo chopper",9],["para chopper",9],["halo",0]]; //[[vehType,cargoType],...]
 //private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
