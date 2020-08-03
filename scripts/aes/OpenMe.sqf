@@ -81,10 +81,12 @@ null=
 
 params ["_marker",["_waves",0],["_players",1],["_angle",360]];
 
-Launch              = compile preprocessfile "scripts\AES\core\launch.sqf";
+Launch              = compile preprocessFileLineNumbers "scripts\AES\core\launch.sqf";
 Bastion_Redirect_WP = compile preprocessfile "scripts\AES\core\b_redirijoUnidades.sqf";
 
-null=[] execVM "scripts\AES\core\spawn_fnc.sqf";
+call compile preprocessFileLineNumbers "scripts\AES\aes_settings.sqf";
+
+execVM "scripts\AES\core\spawn_fnc.sqf";
 
 onplayerConnected {[] execVM "scripts\AES\Functions\EOS_Markers.sqf";};
 
@@ -98,26 +100,29 @@ bastionColor="colorBLUFOR";	// Colour for bastion marker
 EOS_DAMAGE_MULTIPLIER=1;	// 1 is default
 EOS_KILLCOUNTER=false;		// Counts killed units
 
-//Distances (DIST) in meters
-DEFAULT_INFANTERY_MIN_DIST      =  500;  
-DEFAULT_VEHICLES_MIN_DIST       =  800;
-DEFAULT_ARMOR_MIN_DIST          =  800;
-DEFAULT_ATTACK_CHOPPER_MIN_DIST = 1400;
-DEFAULT_CHOPPER_MIN_DIST        = 1400;
-DEFAULT_CHOPPER_JUMP_MIN_DIST   = 1400;
-DEFAULT_CHOPPER_JUMP_HEIGHT     =  400;
-DEFAULT_HALO_MIN_DIST           =  200;
-DEFAULT_HALO_JUMP_HEIGHT        =  600;
-
-DELETE_DISTANCE                 =  950;  //Delete units outside this distance from marker's center 
-
 //'Open Me' call BIS_fnc_log;
 
 private _EOS_FACCION = EAST;
 
 //null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
 
-null = ["toDefend",["marker_0"],[["patrol",3,500,2],["light vehicles",2,800],["armor",1,650],["attack helo",0,700],["cargo helo",3,500],["para helo",1,600,100],["halo",3,100,3000]],[5,1,EAST,false,false,false],[1,2,60,false,false],360] call Launch;
+[
+    "toDefend",
+    ["marker_0"],
+    [
+      ["patrol",3,500,2],
+      ["light vehicles",2,800,2],
+      ["armor",1,650],
+      ["attack helo",0,700],
+      ["cargo helo",3,500,1],
+      ["para helo",1,600,5,100],
+      ["halo",3,100,4,3000]
+    ],
+    [5,1,EAST,false,false,false],
+    [1,2,60,false,false],
+    360
+] call Launch;
+
 
 if (_players > 10 && _players <= 15) then {
 

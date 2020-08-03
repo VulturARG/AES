@@ -1,7 +1,7 @@
 /*******************************************************************************
                         Realizado por |ArgA|Vultur|Cbo¹
 *******************************************************************************/
-#include "aes_settings.hpp"
+//#include "aes_settings.hpp"
 
 enableDebugConsole = 1;
 
