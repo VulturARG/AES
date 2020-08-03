@@ -8,8 +8,8 @@ params ["_unit","_unitType"];
 
 // Change for your units type and it's elementos with the export of BI Arsenal
 // Cambiar los tipos de unidad y sus elementos con lo exportado del arsenal BI
-switch (_unitType) do {
-  case "LOP_IRA_Infantry_SL": {
+
+if (leader _unit == _unit) then {
     comment "Lider";
     comment "Remove existing items";
     removeAllWeapons _unit;
@@ -37,54 +37,53 @@ switch (_unitType) do {
     _unit addPrimaryWeaponItem "rhs_acc_dtk1983";
     _unit addPrimaryWeaponItem "rhs_acc_2dpZenit"; //Linterna
     _unit enableGunLights "ForceOn";
-  };
-  case "LOP_IRA_Infantry_Rifleman": {
-    comment "Fusilero";
-    comment "Remove existing items";
-    removeAllWeapons _unit;
-    removeAllItems _unit;
-    removeAllAssignedItems _unit;
-    removeUniform _unit;
-    removeVest _unit;
-    removeBackpack _unit;
-    removeHeadgear _unit;
-    removeGoggles _unit;
+} else {
+    if (floor random 7 == 5) then {
+      comment "Ametrallador";
+      comment "Remove existing items";
+      removeAllWeapons _unit;
+      removeAllItems _unit;
+      removeAllAssignedItems _unit;
+      removeUniform _unit;
+      removeVest _unit;
+      removeBackpack _unit;
+      removeHeadgear _unit;
+      removeGoggles _unit;
 
-    comment "Add containers";
-    _unit forceAddUniform "LOP_U_CHR_Citizen_05";
-    _unit addItemToUniform "rhs_30Rnd_545x39_AK";
-    _unit addVest "V_BandollierB_blk";
-    for "_i" from 1 to 8 do {_unit addItemToVest "rhs_30Rnd_545x39_AK";};
-    _unit addHeadgear "LOP_H_Villager_cap";
+      comment "Add containers";
+      _unit forceAddUniform "LOP_U_CHR_Citizen_05";
+      _unit addVest "V_BandollierB_blk";
+      _unit addItemToVest "rhs_100Rnd_762x54mmR";
+      _unit addBackpack "B_FieldPack_blk";
+      for "_i" from 1 to 3 do {_unit addItemToBackpack "rhs_100Rnd_762x54mmR";};
+      _unit addHeadgear "LOP_H_Villager_cap";
 
-    comment "Add weapons";
-    _unit addWeapon "rhs_weap_ak74";
-    _unit addPrimaryWeaponItem "rhs_acc_dtk1983";
-    _unit addPrimaryWeaponItem "rhs_acc_2dpZenit"; //Linterna
-  };
-  case "LOP_IRA_Infantry_AR": {
-    comment "Ametrallador";
-    comment "Remove existing items";
-    removeAllWeapons _unit;
-    removeAllItems _unit;
-    removeAllAssignedItems _unit;
-    removeUniform _unit;
-    removeVest _unit;
-    removeBackpack _unit;
-    removeHeadgear _unit;
-    removeGoggles _unit;
+      comment "Add weapons";
+      _unit addWeapon "rhs_weap_pkm";
+    } else {
+      comment "Fusilero";
+      comment "Remove existing items";
+      removeAllWeapons _unit;
+      removeAllItems _unit;
+      removeAllAssignedItems _unit;
+      removeUniform _unit;
+      removeVest _unit;
+      removeBackpack _unit;
+      removeHeadgear _unit;
+      removeGoggles _unit;
 
-    comment "Add containers";
-    _unit forceAddUniform "LOP_U_CHR_Citizen_05";
-    _unit addVest "V_BandollierB_blk";
-    _unit addItemToVest "rhs_100Rnd_762x54mmR";
-    _unit addBackpack "B_FieldPack_blk";
-    for "_i" from 1 to 3 do {_unit addItemToBackpack "rhs_100Rnd_762x54mmR";};
-    _unit addHeadgear "LOP_H_Villager_cap";
+      comment "Add containers";
+      _unit forceAddUniform "LOP_U_CHR_Citizen_05";
+      _unit addItemToUniform "rhs_30Rnd_545x39_AK";
+      _unit addVest "V_BandollierB_blk";
+      for "_i" from 1 to 8 do {_unit addItemToVest "rhs_30Rnd_545x39_AK";};
+      _unit addHeadgear "LOP_H_Villager_cap";
 
-    comment "Add weapons";
-    _unit addWeapon "rhs_weap_pkm";
-  }
+      comment "Add weapons";
+      _unit addWeapon "rhs_weap_ak74";
+      _unit addPrimaryWeaponItem "rhs_acc_dtk1983";
+      _unit addPrimaryWeaponItem "rhs_acc_2dpZenit"; //Linterna
+    };
 };
 _unit
 

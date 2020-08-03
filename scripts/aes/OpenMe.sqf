@@ -53,7 +53,7 @@ null=
   ["M1","M2","M3"],
   [
     ["patrol",3,500,2],       <---Must go a comma if there is another element, and so on
-    ["light vehicles",2,800,2], 
+    ["light vehicle",2,800,2], 
     ["armor",1,650],
     ["attack helo",0,700],    <-- The unit does not appear if its type is not set or if it is done with zero units.
     ["cargo helo",3,500,2],
@@ -110,13 +110,13 @@ private _EOS_FACCION = EAST;
     "toDefend",
     ["marker_0"],
     [
-      ["patrol",3,500,2],
-      ["light vehicles",0,800,2],
+      ["patrol",0,500,5],
+      ["light vehicle",1,400,2],
       ["armor",0,650],
       ["attack helo",0,700],
       ["cargo helo",0,500,1],
       ["para helo",0,600,5,100],
-      ["halo",3,100,4,3000]
+      ["halo",0,100,4,3000]
     ],
     [5,1,EAST,false,false,false],
     [1,2,60,false,false],

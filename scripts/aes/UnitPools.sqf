@@ -126,26 +126,30 @@ if (_faction==7) then {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
-if (_type == 0) then {
+format ['UP %1 -> %2',typeName _type,_type]  call BIS_fnc_log;
+
+//if (_type == 0) then {
+if (_type == "troop") then {
     for "_i" from 0 to 5 do {
 		_unit = _InfPool select(floor(random(count _InfPool)));
 		_tempArray set[count _tempArray, _unit];
     };
 };
-
+/*
 if (_type == 1) then {
-    _tempArray = _diverPool
+//if (_type == "dive") then {
+    _tempArray = _diverPool;
 };
-
-
+*/
 // CREATE ARMOUR & CREW
+/*
 if (_type == 2) then {
     _tempUnit = _ArmPool select(floor(random(count _ArmPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _crewPool select(floor(random(count _crewPool)));
     _temparray set[count _temparray, _crew];
 };
-
+/*
 // CREATE ATTACK CHOPPER & CREW
 if (_type == 3) then {
     _tempUnit = _ACHPool select(floor(random(count _ACHPool)));
@@ -174,15 +178,16 @@ if (_type == 5) then {
 if (_type == 6) then {
     _tempArray = _uavPool select(floor(random(count _uavPool)));
 };
-
+*/
 // CREATE TRANSPORT & CREW
-if (_type == 7) then {
+//if (_type == 7) then {
+if (_type == "light vehicle") then {
     _tempUnit = _MotPool select(floor(random(count _MotPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _crewPool select(floor(random(count _crewPool)));
     _temparray set[count _temparray, _crew];
 };
-
+/*
 // CREATE BOAT & DIVER CREW
 if (_type == 8) then {
     _tempUnit = _shipPool select(floor(random(count _shipPool)));
@@ -190,7 +195,7 @@ if (_type == 8) then {
     _crew = _diverPool select(floor(random(count _diverPool)));
     _temparray set[count _temparray, _crew];
 };
-
+*/
 // CREATE CARGO
 //if (_type == 9) then {
 if (_type == "cargo") then {
@@ -199,7 +204,7 @@ if (_type == "cargo") then {
         _temparray set[count _temparray, _unit];
     };
 };
-
+/*
 // CREATE DIVER CARGO (Buzo)
 if (_type == 10) then {
     for "_i" from 0 to 4 do {
@@ -207,6 +212,6 @@ if (_type == 10) then {
         _temparray set[count _temparray, _unit];
     };
 };
-
+*/
 //hint format ["%1",_tempArray];
 _tempArray

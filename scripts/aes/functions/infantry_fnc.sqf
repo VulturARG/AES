@@ -1,3 +1,7 @@
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/
+
 params["_pos","_grpSize","_faction","_side"];
 
 if (!isServer) exitWith {};
@@ -5,14 +9,15 @@ if (!isServer) exitWith {};
 private ["_grp","_unit","_pool"];
 
 _grpSize params["_grpMin","_grpMax"];
-_d=_grpMax-_grpMin;
-_r=floor(random _d);
-_grpSize=_r+_grpMin;
+_difference = _grpMax-_grpMin;
+_randomDifference = floor(random _difference);
+_grpSize = _randomDifference + _grpMin;
 
 if (surfaceiswater _pos) then {
-	_pool=[_faction,1] call eos_fnc_getunitpool;
+	_pool=[_faction,"dive"] call eos_fnc_getunitpool;
 }else{
-	_pool=[_faction,0] call eos_fnc_getunitpool;
+	_pool=[_faction,"troop"] call eos_fnc_getunitpool;
+	//_pool=[_faction,1] call eos_fnc_getunitpool;
 };
 
 _grp=createGroup _side;
@@ -20,6 +25,7 @@ _grp=createGroup _side;
 for "_x" from 1 to _grpSize do {
 	_unitType=_pool select (floor(random(count _pool)));
 	_unit = _grp createUnit [_unitType, _pos, [], 6, "FORM"];
+	//format ["IF Lider: %1 Unit: %2",leader _unit, _unit] call BIS_fnc_log;
 	// Vultur /////////////////////////////////////////////////////
 	// Remuevo las granadas de las unidades
 	_unit removeMagazines "HandGrenade";
@@ -32,3 +38,7 @@ for "_x" from 1 to _grpSize do {
 };
 
 _grp
+
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/

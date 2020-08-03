@@ -24,7 +24,8 @@ private _position     = [];
 _unitType = AES_UNIT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
 _unitType = if (isNil "_unitType") then {[]} else {_unitType};
 
-//format ["%1 %2 %3",count(_unitType) > 3,count(_unitType) ,_unitType] call BIS_fnc_log;
+format ["SU _unitType: %1",_unitType] call BIS_fnc_log;
+format ['SU _unitData: %1',_unitData]  call BIS_fnc_log;
 
 if (count(_unitType) > 0) then {
 	_vehType     = _unitType select 0;
@@ -32,9 +33,6 @@ if (count(_unitType) > 0) then {
 	_typeMessage = _unitType select 2;
 	_findSafePosition = if (count(_unitType) > 3 ) then {_unitType select 3} else {true};
 };
-//if (count(_unitType) > 3 ) then {_findSafePosition = _unitType select 3;};
-// */
-//format ['=====================================================>>>>>> %1',_findSafePosition]  call BIS_fnc_log;
 
 for "_counter" from 1 to (_unitData select 1) do {
 	_position = [_marker,_unitData select 2,_angle] call AES_enemiesPosition;
@@ -49,35 +47,36 @@ for "_counter" from 1 to (_unitData select 1) do {
 			};
 		};
 	};
-	if (_vehType == "troops" || _vehType == "halo") then {
+	if (_vehType == "patrol" || _vehType == "halo") then {
 		if (_vehType == "halo") then { 
 			private _HAAltSalto = AES_DEFAULT_JUMP_PARA select {(_x select 0) == _vehType} select 0 select 1;
 			_HAAltSalto = if (isNil "_HAAltSalto") then {0} else {_HAAltSalto};
 			_position = [ _position select 0, _position select 1, (_position select 2) + _HAAltSalto];
-		};		
-        _grp=[_position,_unitData select 1,_faction,_side] call EOS_fnc_spawngroup;
+		};
+		
+		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;		
+        _grp=[_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
         _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
 		_groups pushBack _grp;
 		if (_vehType == "halo") then {[_grp] call AES_HALO;};
     };
-    /*    
-	_bGroup=[_position,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
+	if (_vehType == "light vehicle" ) then {
+        
+		_grp = [_position,_vehType,_faction,_side]call EOS_fnc_spawnvehicle;
 
-	if ((_LVgroupSize select 0) > 0) then{
-		0=[(_bGroup select 0),_LVgroupSize,(_bGroup select 2),_faction,_cargoType] call eos_fnc_setcargo;
-	};
+		0 = [(_grp select 0),unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
 
-	0 = [(_bGroup select 2),"LIGskill"] call eos_fnc_grouphandlers;
-	(_bGroup select 2) setGroupId [format ["%1 LV %2-%3",_marker,_waves,_counter]];
-	_troupsLV = _troupsLV + count units (_bGroup select 2);
-	_groups set [count _groups,_bGroup];
+		0 = [(_grp select 2),"LIGskill"] call eos_fnc_grouphandlers;
+		(_grp select 2) setGroupId [format ["%1 LV %2-%3",_marker,_waves,_counter]];
+		_troupsNumber = _troupsNumber + count units (_grp select 2);
+		_groups set [count _groups,_grp];
 
-	if (_debug) then {
-		systemChat format ["Light Vehicle:%1 - r%2",_counter,_unitData select 0];
-		0= [_marker,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
-	};
-	*/
+		/*if (_debug) then {
+			systemChat format ["Light Vehicle:%1 - r%2",_counter,_unitData select 0];
+			0= [_marker,_counter,"Light Veh",(getpos leader (_grp select 2))] call EOS_debug;
+		};*/
+	}
 };
 _groups
 /*******************************************************************************

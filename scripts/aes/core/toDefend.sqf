@@ -13,7 +13,7 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
 //private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[[vehType,cargoType],...]
-//private _typeVehicle               = [["patrol",0],["light vehicles",9],["armor",0],["attack helo",0],["cargo helo",9],["para helo",9],["halo",0]]; //[[vehType,cargoType],...]
+//private _typeVehicle               = [["patrol",0],["light vehicle",9],["armor",0],["attack helo",0],["cargo helo",9],["para helo",9],["halo",0]]; //[[vehType,cargoType],...]
 //private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
@@ -75,12 +75,16 @@ if (_pause > 0 and !_initialLaunch) then {
 };
 
 //TODO refactor of spawn units
+
+//format ["TD _unitsArrays: %1",_unitsArrays] call BIS_fnc_log;
 _aGroup=[];
 {
 	//format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
-	//mformat ["%1",_x] call BIS_fnc_log;
-
-	_groups pushBack ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
+	//format ["%1",_x] call BIS_fnc_log;
+	if (_x select 1 != 0) then {
+		_groups pushBack ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
+	};
+	
 	
 } forEach _unitsArrays;
 

@@ -2,7 +2,8 @@
                             Modify by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
 
-params ["_position","_side","_faction","_type",["_special","CAN_COLLIDE"]];
+params ["_position","_type","_faction","_side",["_special","CAN_COLLIDE"]];
+
 //systemchat format ["_newpos: %1, _side: %2, _faction: %3, _vehType: %4",_position,_side,_faction,_type];
 
 private ["_vehicleType","_grp","_vehPositions","_vehicle","_vehCrew"];
