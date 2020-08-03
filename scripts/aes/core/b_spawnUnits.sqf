@@ -54,7 +54,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 			_position = [ _position select 0, _position select 1, (_position select 2) + _HAAltSalto];
 		};
 		
-		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;		
+		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;
         _grp=[_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
         _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
@@ -65,7 +65,7 @@ for "_counter" from 1 to (_unitData select 1) do {
         
 		_grp = [_position,_vehType,_faction,_side]call EOS_fnc_spawnvehicle;
 
-		0 = [(_grp select 0),unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
+		0 = [(_grp select 0),_unitData select 3,(_grp select 2),_faction,_cargoType] call eos_fnc_setcargo;
 
 		0 = [(_grp select 2),"LIGskill"] call eos_fnc_grouphandlers;
 		(_grp select 2) setGroupId [format ["%1 LV %2-%3",_marker,_waves,_counter]];

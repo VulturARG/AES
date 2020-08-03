@@ -17,7 +17,6 @@ if (surfaceiswater _pos) then {
 	_pool=[_faction,"dive"] call eos_fnc_getunitpool;
 }else{
 	_pool=[_faction,"troop"] call eos_fnc_getunitpool;
-	//_pool=[_faction,1] call eos_fnc_getunitpool;
 };
 
 _grp=createGroup _side;
@@ -25,18 +24,19 @@ _grp=createGroup _side;
 for "_x" from 1 to _grpSize do {
 	_unitType=_pool select (floor(random(count _pool)));
 	_unit = _grp createUnit [_unitType, _pos, [], 6, "FORM"];
-	//format ["IF Lider: %1 Unit: %2",leader _unit, _unit] call BIS_fnc_log;
+
 	// Vultur /////////////////////////////////////////////////////
 	// Remuevo las granadas de las unidades
+	
 	_unit removeMagazines "HandGrenade";
 	_unit removeMagazines "MiniGrenade";
 	// Vultur /////////////////////////////////////////////////////
 	// Comment this line if you do not want to change the equipment of the AI
 	// Comentar esta línea si no desea cambiar el equipamiento de la IA
+	
 	_unit=[_unit,_unitType] call AES_setEquipment;
 	///////////////////////////////////////////////////////////////
 };
-
 _grp
 
 /*******************************************************************************

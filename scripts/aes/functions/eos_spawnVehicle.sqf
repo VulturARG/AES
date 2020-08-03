@@ -7,8 +7,10 @@ params ["_position","_type","_faction","_side",["_special","CAN_COLLIDE"]];
 //systemchat format ["_newpos: %1, _side: %2, _faction: %3, _vehType: %4",_position,_side,_faction,_type];
 
 private ["_vehicleType","_grp","_vehPositions","_vehicle","_vehCrew"];
+
+["SV _type: %1",_type] call BIS_fnc_logFormat;
 _vehicleType=[_faction,_type] call eos_fnc_getunitpool;
-//systemchat format ["_vehicleType: %1, _faction: %2, _vehType: %3",_vehicleType,_faction,_type];
+
 _grp = createGroup _side;
 _vehPositions=[(_vehicleType select 0)] call BIS_fnc_vehicleRoles;
 _vehicle = createVehicle [(_vehicleType select 0), _position, [], 0, _special];

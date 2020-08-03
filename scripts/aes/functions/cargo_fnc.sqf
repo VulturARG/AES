@@ -17,11 +17,13 @@ if (!isServer) exitWith {};
 	_emptySeats=_vehicle emptyPositions "cargo";
 	if (_debug) then {hint format ["%1",_emptySeats];};
 
+["CF _grpSize: %1",_grpSize] call BIS_fnc_logFormat;
+
 //GET MIN MAX GROUP
-	_grpSize params ["_grpMin","_grpMax"];
-	_d=_grpMax-_grpMin;
-	_r=floor(random _d);
-	_grpSize=_r+_grpMin;
+	_grpSize params["_grpMin","_grpMax"];
+	_difference = _grpMax-_grpMin;
+	_randomDifference = floor(random _difference);
+	_grpSize = _randomDifference + _grpMin;
 
 // IF VEHICLE HAS SEATS
 	if (_emptySeats > 0) then {
