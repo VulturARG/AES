@@ -58,10 +58,10 @@ for "_counter" from 1 to (_unitData select 1) do {
 		
 		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;
         _grp=[_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
-        _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
-        _troupsNumber = _troupsNumber + count units _grp;
+        (_grp select 2) setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+        _troupsNumber = _troupsNumber + count units (_grp select 2);
 		_groups pushBack _grp;
-		if (_vehType == "halo") then {[_grp] call AES_HALO;};
+		if (_vehType == "halo") then {[_grp select 2] call AES_HALO;};
 		
     } else {
 		private _special = if (["chopper",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};

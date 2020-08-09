@@ -94,6 +94,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             };
         };
         if (_aMin > 0) then {
+            //TODO EOS_fnc_spawngroup -> [[],[],_gpr ]old _aGroup = new (_grp select 2)
             _aGroup = [_mPos, _aSize, _faction, _side] call EOS_fnc_spawngroup;
             if (!surfaceiswater _mPos) then {
                 0 = [_mPos, units _aGroup, _mkrX, 0, [0, 20], true, true] call shk_fnc_fillhouse;

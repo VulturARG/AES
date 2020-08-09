@@ -22,7 +22,7 @@ _position = _markerPosition;
 {
 	format ["WP _spawnGroup _x: %1",_x] call BIS_fnc_log;
 	_dir_atk = 0;
-	_unit = _x;
+	_unit = _x select 2;
 	{
 		format ["WP unitType select 1 _x: %1",_x] call BIS_fnc_log;
 		if (_x select 0 == "random") then {
@@ -36,13 +36,13 @@ _position = _markerPosition;
 				_position = [_markerPosition, random _markerSize, random 360] call BIS_fnc_relPos;
 			};
 		};
-/*		if (_kindOfTroop == "light vehicle" && _forEachIndex == 0){
+		if (_kindOfTroop == "light vehicle" && _forEachIndex == 0) then {
 			_dir_atk= _markerPosition getDir (_unit);
 			_position = [_markerPosition, (_mkrX + random 100), _dir_atk] call BIS_fnc_relPos;
 		};
-		if (_kindOfTroop == "light vehicle" && _forEachIndex == 1){
+		if (_kindOfTroop == "light vehicle" && _forEachIndex == 1) then {
 			_position = [_markerPosition, 150, _dir_atk] call BIS_fnc_relPos;
-		};*/
+		};
 		_getToMarker = _unit addWaypoint [_position, 0];
 		_getToMarker setWaypointType (_x select 1);
 		_getToMarker setWaypointSpeed (_x select 2);

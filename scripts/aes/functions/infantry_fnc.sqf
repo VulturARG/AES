@@ -37,7 +37,10 @@ for "_x" from 1 to _grpSize do {
 	_unit=[_unit,_unitType] call AES_setEquipment;
 	///////////////////////////////////////////////////////////////
 };
-_grp
+//_grp
+private _return=[[],[],_grp];
+
+_return
 
 /*******************************************************************************
                             Modify by |ArgA|Vultur|Cbo¹
