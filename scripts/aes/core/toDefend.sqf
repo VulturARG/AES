@@ -28,7 +28,7 @@ AES_b_spawnUnits      = compile preprocessFileLineNumbers "scripts\AES\core\b_sp
 private ["_ptGroup","_fGroup","_cargoType","_vehType","_CHside","_mkrAngle","_pause","_eosZone","_hints","_waves","_aGroup","_side"];
 private ["_enemyFaction","_distance","_grp","_cGroup","_bGroup","_CHType","_time","_timeout","_faction"];
 private ["_troupsPA","_troupsLV","_troupsAV","_troupsHT","_troupsPT","_troupsHA"];
-private ["_enemigos","_unconscious"];
+
 
 _markerPos = getMarkerPos _marker;
 getMarkerSize _marker params ["_mkrX","_mkrY"];

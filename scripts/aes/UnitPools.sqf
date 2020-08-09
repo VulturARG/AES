@@ -80,9 +80,9 @@ if (_faction==4) then {
 // ADD CLASSNAMES
 if (_faction==5) then {
 	_InfPool=	["LOP_IRA_Infantry_SL","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_AR","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_Rifleman"];
-	_ArmPool=	["LOP_IRA_Infantry_SL","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_AR"];
+	_ArmPool=	["rhs_t80a"];
 	_MotPool=	["LOP_IRA_Offroad_M2"];
-	_ACHPool=	["B_Truck_01_transport_F"];
+	_ACHPool=	["LOP_ChDKZ_Mi8MTV3_FAB"];
 	_CHPool=	["I_Heli_Transport_02_F"];
 	_uavPool=	[];
 	_stPool=	["LOP_IRA_Static_DSHKM"];
@@ -142,22 +142,24 @@ if (_type == 1) then {
 };
 */
 // CREATE ARMOUR & CREW
-/*
-if (_type == 2) then {
+
+//if (_type == 2) then {
+if (_type == "armor") then {
     _tempUnit = _ArmPool select(floor(random(count _ArmPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _crewPool select(floor(random(count _crewPool)));
     _temparray set[count _temparray, _crew];
 };
-/*
+
 // CREATE ATTACK CHOPPER & CREW
-if (_type == 3) then {
+//if (_type == 3) then {
+if (_type == "attack chopper") then {
     _tempUnit = _ACHPool select(floor(random(count _ACHPool)));
     _temparray set[count _temparray, _tempUnit];
     _crew = _heliCrew select(floor(random(count _heliCrew)));
     _temparray set[count _temparray, _crew];
 };
-*/
+
 // CREATE TRANSPORT CHOPPER & CREW 
 //if (_type == 4) then {
 if (_type == "cargo chopper" || _type == "para chopper") then {
