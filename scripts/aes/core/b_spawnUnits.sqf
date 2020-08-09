@@ -57,16 +57,20 @@ for "_counter" from 1 to (_unitData select 1) do {
 		};
 		
 		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;
-        _grp=[_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
-        (_grp select 2) setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
-        _troupsNumber = _troupsNumber + count units (_grp select 2);
+        _groups = [[],[]];
+		_grp = [_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
+		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
+        _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+        _troupsNumber = _troupsNumber + count units _grp;
 		_groups pushBack _grp;
-		if (_vehType == "halo") then {[_grp select 2] call AES_HALO;};
+		//format ['SU _groups: %1 ',_groups]  call BIS_fnc_log;
+		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
+		if (_vehType == "halo") then {[_grp] call AES_HALO;};
 		
     } else {
 		private _special = if (["chopper",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
 		_groups = [_position,_vehType,_faction,_side,_special]call EOS_fnc_spawnvehicle;
-
+		//format ['SU _groups: %1 ',_groups]  call BIS_fnc_log;
 		/*if (_vehType == "armor" || _vehType == "attack chopper" || _vehType == "light vehicle") then {
 			//_groups setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 		};*/
@@ -79,6 +83,8 @@ for "_counter" from 1 to (_unitData select 1) do {
 			_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 			_troupsNumber = _troupsNumber + count units _cargoGrp;
 			_groups pushBack _cargoGrp;
+			//format ['SU _groups: %1 ',_groups]  call BIS_fnc_log;
+			//format ['SU _cargoGrp: %1 ',_cargoGrp]  call BIS_fnc_log;
 			if (_vehType == "cargo chopper") then {
 				[_marker,_groups,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
 			};

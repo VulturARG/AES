@@ -1,4 +1,7 @@
-//Realizado por Vultur
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/
+
 //TransportUnload_fnc.sqf modificado para largar paracaidas
 params ["_mkr","_veh","_counter","_PTAltSalto"];
 
@@ -36,3 +39,7 @@ _wp2 setWaypointType "MOVE";
 _wp2 setWaypointStatements ["true", "{deleteVehicle _x} forEach crew (vehicle this) + [vehicle this];"];
 
 units _grp doFollow leader _grp;
+
+/*******************************************************************************
+                            Modify by |ArgA|Vultur|Cbo¹
+*******************************************************************************/
