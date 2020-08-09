@@ -111,12 +111,12 @@ private _EOS_FACCION = EAST;
     ["marker_0"],
     [
       ["patrol",1,500,3],
-      ["light vehicle",1,400,2],
-      ["armor",1,650],
-      ["attack chopper",1,700],
-      ["cargo chopper",1,500,1],
-      ["para chopper",1,600,5,100],
-      ["halo",1,100,4,600]
+      ["light vehicle",0,400,2],
+      ["armor",0,650],
+      ["attack chopper",0,700],
+      ["cargo chopper",0,500,1],
+      ["para chopper",0,600,5,100],
+      ["halo",0,100,4,600]
     ],
     [5,1,EAST,false,false,false],
     [1,2,60,false,false],

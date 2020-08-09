@@ -12,16 +12,16 @@ params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialL
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Refactor
-//private _typeVehicle               = [[0,0],[7,9],[2,0],[3,0],[4,9],[4,9],[0,0]]; //[[vehType,cargoType],...]
-//private _typeVehicle               = [["patrol",0],["light vehicle",9],["armor",0],["attack chopper",0],["cargo chopper",9],["para chopper",9],["halo",0]]; //[[vehType,cargoType],...]
-//private _typeMessage               = ["PA","LV","AV","AH","TH","PT","HA"];
+
 private _bastionMarquerAlphaValue  = [1,0,0.5];
 private _multipleMarquerAlphaValue = [0.5,0,0.5];
+private _spawnGroup                = [];
 private _groups                    = [];
 
-AES_bastionTrigger    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_bastionTrigger.sqf";
-AES_deleteUnits       = compile preprocessFileLineNumbers "scripts\AES\functions\AES_deleteUnits.sqf";
-AES_b_spawnUnits      = compile preprocessFileLineNumbers "scripts\AES\core\b_spawnUnits.sqf";
+AES_bastionTrigger = compile preprocessFileLineNumbers "scripts\AES\functions\AES_bastionTrigger.sqf";
+AES_deleteUnits    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_deleteUnits.sqf";
+AES_b_spawnUnits   = compile preprocessFileLineNumbers "scripts\AES\core\b_spawnUnits.sqf";
+AES_waypoints      = compile preprocessFileLineNumbers "scripts\AES\functions\AES_waypoints.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -74,211 +74,19 @@ if (_pause > 0 and !_initialLaunch) then {
 
 };
 
-//TODO refactor of spawn units
-
+// *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //format ["TD _unitsArrays: %1",_unitsArrays] call BIS_fnc_log;
-_aGroup=[];
+
 {
 	//format ["_forEachIndex %1",_forEachIndex] call BIS_fnc_log;
 	//format ["%1",_x] call BIS_fnc_log;
 	if (_x select 1 != 0) then {
-		_groups pushBack ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
+		_spawnGroup = ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
+		[_spawnGroup,_x,_marker] call AES_waypoints;
+		_groups pushBack _spawnGroup;
 	};
-	
-	
 } forEach _unitsArrays;
 
-_aGroup = _groups select 0;
-/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SPAWN PATROLS
-_aGroup=[];
-_troupsPA = 0;
-for "_counter" from 1 to _PApatrols do {
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_PAminDist + random 75);
-	_pos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	while {(surfaceiswater _pos)} do {
-		_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-		_pos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	};
-	for "_counter" from 0 to 20 do {
-		_newpos = [_pos,0,50,5,1,20,0] call BIS_fnc_findSafePos;
-		if ((_pos distance _newpos) < 55)
-			exitWith {
-			_pos = _newpos;
-		};
-	};	
-	_grp=[_pos,_PAgroupSize,_faction,_side] call EOS_fnc_spawngroup;
-	_grp setGroupId [format ["%1 PA %2-%3",_marker,_waves,_counter]];
-	_troupsPA = _troupsPA + count units _grp;
-	_aGroup set [count _aGroup,_grp];
-	if (_debug) then {
-		systemChat (format ["Spawned Patrol: %1",_counter]);
-		0= [_marker,_counter,"patrol",getpos (leader _grp)] call EOS_debug;
-	};
-	
-};
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_Patrullas",_troupsPA,_side]] call AES_log;};
-
-//SPAWN LIGHT VEHICLES
-_bGrp=[];
-_troupsLV = 0;
-for "_counter" from 1 to _LVehGroups do {
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_mkrX + _LVminDist + random 100);
-	_newpos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-
-	while {(surfaceiswater _newpos)} do {
-		_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-		_pos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	};
-	_vehType=7;_cargoType=9;
-	_bGroup=[_newpos,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
-	if ((_LVgroupSize select 0) > 0) then{
-		0=[(_bGroup select 0),_LVgroupSize,(_bGroup select 2),_faction,_cargoType] call eos_fnc_setcargo;
-	};
-	0 = [(_bGroup select 2),"LIGskill"] call eos_fnc_grouphandlers;
-	(_bGroup select 2) setGroupId [format ["%1 LV %2-%3",_marker,_waves,_counter]];
-	_troupsLV = _troupsLV + count units (_bGroup select 2);
-	_bGrp set [count _bGrp,_bGroup];
-	if (_debug) then {
-		systemChat format ["Light Vehicle:%1 - r%2",_counter,_LVehGroups];
-		0= [_marker,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
-	};
-};
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call AES_log;};
-
-//SPAWN ARMOURED VEHICLES
-_cGrp=[];
-_troupsAV = 0;
-for "_counter" from 1 to _AVehGroups do {
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_mkrX + _AVminDist + random 100);
-	_newpos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	while {(surfaceiswater _newpos)} do {
-		_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-		_newpos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	};
-	_vehType=2;
-	_cGroup=[_newpos,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
-	0=[(_cGroup select 2),"ARMskill"] call eos_fnc_grouphandlers;
-	(_cGroup select 2) setGroupId [format ["%1 AV %2-%3",_marker,_waves,_counter]];
-	_troupsAV = _troupsAV + count units (_cGroup select 2);
-	_cGrp set [count _cGrp,_cGroup];
-	if (_debug) then {
-		systemChat format ["Armoured:%1 - r%2",_counter,_AVehGroups];
-		0= [_marker,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
-	};
-};
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call AES_log;};
-
-//SPAWN HELICOPTERS (ataque o transporte)
-_fGrp=[];
-_troupsHT = 0;
-for "_counter" from 1 to _CHGroups do {
-	if ((_fSize select 0) > 0) then {
-		_vehType=4;
-	} else {
-		_vehType=3;
-	};
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_mkrX + _CHminDist + random 100);
-	_newpos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	_fGroup=[_newpos,_side,_faction,_vehType,"fly"] call EOS_fnc_spawnvehicle;
-	_CHside=_side;
-	_fGrp set [count _fGrp,_fGroup];
-	if ((_fSize select 0) > 0) then {
-		_cargoGrp = createGroup _side;
-		0=[(_fGroup select 0),_fSize,_cargoGrp,_faction,9] call eos_fnc_setcargo;
-		0=[_cargoGrp,"INFskill"] call eos_fnc_grouphandlers;
-		_cargoGrp setGroupId [format ["%1 HT %2-%3",_marker,_waves,_counter]];
-		_troupsHT = _troupsHT + count units _cargoGrp;
-		_fGroup set [count _fGroup,_cargoGrp];
-		null = [_marker,_fGroup,_counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
-	} else {
-		_wp1 = (_fGroup select 2) addWaypoint [(markerpos _marker), 0];
-		_wp1 setWaypointSpeed "FULL";
-		_wp1 setWaypointType "SAD";
-		_wp1 setWaypointBehaviour "COMBAT";
-		_wp1 setWaypointCombatMode "RED";
-	};
-	if (_debug) then {
-			systemChat format ["Chopper:%1",_counter];
-			0= [_marker,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
-	};
-};
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call AES_log;};
-
-//SPAWN HELICOPTERS WITH PARATROOPERS (New)
-_ptGrp=[];
-_ptGroup=[];
-_troupsPT = 0;
-for "_counter" from 1 to _ptNumGroups do {
-	_vehType=4;
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_mkrX + _PTminDist + random 100);
-	_newpos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	_ptGroup=[_newpos,_side,_faction,_vehType,"fly"] call EOS_fnc_spawnvehicle;
-	_ptGrp set [count _ptGrp,_ptGroup];
-	_cargoGrpPT = createGroup _side;
-	0=[(_ptGroup select 0),_ptSize,_cargoGrpPT,_faction,9] call eos_fnc_setcargo;
-	0=[_cargoGrpPT,"INFskill"] call eos_fnc_grouphandlers;
-	_cargoGrpPT setGroupId [format ["%1 PT %2-%3",_marker,_waves,_counter]];
-	_troupsPT = _troupsPT + count units _cargoGrpPT;
-	_ptGroup set [count _ptGroup,_cargoGrpPT];
-	null = [_marker,_ptGroup,_counter,_PTAltSalto] execvm "scripts\AES\functions\TransportParachute_fnc.sqf";
-	if (_debug) then {
-			systemChat format ["Chopper:%1",_counter];
-			0= [_marker,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
-	};
-};
-if (_debugLog) then {[[_marker,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call AES_log;};
-
-// SPAWN HALO (New)
-_HAGroup=[];
-_troupsHA = 0;
-
-for "_counter" from 1 to _HApatrols do {
-	_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-	_Place=(_HAminDist + random 100);
-	_pos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	while {(surfaceiswater _pos)} do {
-		_dir_atk=_mkrAngle+(random _angle)-_angle/2;
-		_pos = [_markerPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	};
-	for "_counter" from 0 to 20 do {
-	_newpos = [_pos,0,50,5,1,20,0] call BIS_fnc_findSafePos;
-		if ((_pos distance _newpos) < 55)
-			exitWith {
-			_pos = [ _newpos select 0, _newpos select 1,_pos select 2];
-		};
-	};
-	_pos = [ _pos select 0, _pos select 1, (_pos select 2) + _HAAltSalto];
-	_grp=[_pos,_HAgroupSize,_faction,_side] call EOS_fnc_spawngroup;
-	_grp setGroupId [format ["%1 HA %2-%3",_marker,_waves,_counter]];
-	_troupsHA = _troupsHA + count units _grp;
-	_HAGroup set [count _HAGroup,_grp];
-	if (_debug) then {
-		systemChat (format ["Spawned HALO: %1",_counter]);
-		0= [_marker,_counter,"HALO",getpos (leader _grp)] call EOS_debug;
-	};
-	
-	{
-		_inv = name _x;// Get Unique name for Unit's loadout.
-		[_x, [missionNamespace, format["%1%2", "Inventory",_inv]]] call BIS_fnc_saveInventory;// Save Loadout
-		removeBackpack _x;
-		_x allowdamage false;// Trying to prevent damage.
-		_x addBackPack "B_parachute";
-	} forEach units _grp;
-
-	{
-		[_x,50] spawn paraLandSafeHA;
-	} forEach units _grp;
-};
-if (_debugLog) then {
-	[[_marker,"Wave",_waves,"Total_Tropas_HALO",_troupsHA,_side]] call AES_log;
-	[[_marker,"Wave",_waves,"Total_Tropas_Desplegadas",_troupsPA+_troupsLV+_troupsAV+_troupsHT+_troupsPT+_troupsHA,_side]] call AES_log;
-};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 

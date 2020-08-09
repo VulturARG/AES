@@ -8,9 +8,9 @@ params ["_position","_type","_faction","_side",["_special","CAN_COLLIDE"]];
 
 private ["_vehicleType","_grp","_vehPositions","_vehicle","_vehCrew"];
 
-["SV _type: %1",_type] call BIS_fnc_logFormat;
+//["SV _type: %1",_type] call BIS_fnc_logFormat;
 _vehicleType=[_faction,_type] call eos_fnc_getunitpool;
-["SV _vehicleType: %1",_vehicleType] call BIS_fnc_logFormat;
+//["SV _vehicleType: %1",_vehicleType] call BIS_fnc_logFormat;
 
 _grp = createGroup _side;
 _vehPositions=[(_vehicleType select 0)] call BIS_fnc_vehicleRoles;

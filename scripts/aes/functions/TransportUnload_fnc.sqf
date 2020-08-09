@@ -10,7 +10,7 @@ _mPos=getMarkerPos _mkr;
 _debug=false;
 _veh params ["_vehicle","_nada","_grp","_cargoGrp"];
 
-format ['TU _veh: %1',_veh]  call BIS_fnc_log;
+//format ['TU _veh: %1',_veh]  call BIS_fnc_log;
 
 //Modificado por Vultur
 _dir_atk= _mPos getDir _vehicle;

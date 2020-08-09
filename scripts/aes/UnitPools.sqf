@@ -126,7 +126,7 @@ if (_faction==7) then {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
-format ['UP %1 -> %2',typeName _type,_type]  call BIS_fnc_log;
+//format ['UP %1 -> %2',typeName _type,_type]  call BIS_fnc_log;
 
 //if (_type == 0) then {
 if (_type == "troop") then {

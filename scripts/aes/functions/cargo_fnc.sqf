@@ -17,7 +17,7 @@ if (!isServer) exitWith {};
 	_emptySeats=_vehicle emptyPositions "cargo";
 	if (_debug) then {hint format ["%1",_emptySeats];};
 
-["CF _grpSize: %1",_grpSize] call BIS_fnc_logFormat;
+//["CF _grpSize: %1",_grpSize] call BIS_fnc_logFormat;
 
 //GET MIN MAX GROUP
 	_grpSize params["_grpMin","_grpMax"];
