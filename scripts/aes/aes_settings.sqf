@@ -27,7 +27,7 @@ AES_WAYPOINT_TYPE = [
                         ["patrol",[["center","SAD","LIMITED","AWARE",_troopFormation,15,"RED"]]],
                         ["light vehicle",[["center","UNLOAD","LIMITED","SAFE","NO CHANGE",15,"RED"],["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]]],
                         ["armor",[["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]]],
-                        ["attack chopper",[]],
+                        ["attack chopper",[["center","SAD","FULL","COMBAT","NO CHANGE",15,"RED"]]],
                         ["cargo chopper",[]],
                         ["para chopper",[]],
                         ["halo",[["center","SAD","LIMITED","AWARE",_troopFormation,15,"RED"]]]
@@ -44,40 +44,3 @@ AES_MIN_MAX_SIZE_GROUP = [[1,1],[2,4],[4,8],[8,12],[12,16],[16,20]];
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
-/*
-["_destination","center"],["_wpType","SAD"],["_wpSpeed","LIMITED"],["_wpBehaviourVehicle","SAFE"],["_wpBehaviourUnit","AWARE"],["_wpFormation","NO CHANGE"],["_wpCombatMode","RED"]
-	["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]
-
-	_getToMarker setWaypointType ;
-	_getToMarker setWaypointSpeed ;
-	_getToMarker setWaypointBehaviour ;
-	_getToMarker setWaypointFormation ;
-	_getToMarker setWaypointCompletionRadius ;
-	_getToMarker setWaypointCombatMode ;
-
-    // ADD WAYPOINTS LIGHT VEHICLES
-{
-	_dir_atk= _markerPos getDir (_x select 0);
-	_pos = [_markerPos, (_mkrX + random 100), _dir_atk] call BIS_fnc_relPos;
-	_
-	_pos = [_markerPos, 150, _dir_atk] call BIS_fnc_relPos;
-	_
-}foreach _bGrp;
-
-// ADD WAYPOINTS ARMOURED VEHICLES
-{
-	_dir_atk= _markerPos getDir (_x select 0);
-	_pos = [_markerPos, (_mkrX + random 100), _dir_atk] call BIS_fnc_relPos;
-	_group = (_x select 2);
-	_leader = leader _group;
-	_leader doMove _pos;
-	_getToMarker = (_x select 2) addWaypoint [_pos, 0];
-
-}foreach _cGrp;
-
-// ADD WAYPOINTS HALO
-{
-	_getToMarker = _x addWaypoint [_markerPos, 0];
-
-}foreach _HAGroup;
-// */
