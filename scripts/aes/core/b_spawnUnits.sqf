@@ -27,7 +27,7 @@ _unitType = AES_UNIT_TYPE select {(_x select 0) == (_unitData select 0) } select
 _unitType = if (isNil "_unitType") then {[]} else {_unitType};
 
 //format ["SU _unitType: %1",_unitType] call BIS_fnc_log;
-format ['SU _unitData: %1',_unitData]  call BIS_fnc_log;
+//format ['SU _unitData: %1',_unitData]  call BIS_fnc_log;
 
 if (count(_unitType) > 0) then {
 	_vehType     = _unitType select 0;
@@ -77,7 +77,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 			0 = [_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setCargo;
 
 			// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
-			//_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+			_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 			_troupsNumber = _troupsNumber + count units _cargoGrp;
 			_grp pushBack _cargoGrp;
 			//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
@@ -88,11 +88,11 @@ for "_counter" from 1 to (_unitData select 1) do {
 			if (_vehType == "para chopper") then {
 				[_marker,_grp,_counter,_unitData select 4] execVM "scripts\AES\functions\TransportParachute_fnc.sqf";
 			};
-			_groups pushBack _grp;
 		};
+		_groups pushBack _grp;
 	};
 };
-format ['SU _groups: %1',_groups]  call BIS_fnc_log;
+//format ['SU _groups: %1',_groups]  call BIS_fnc_log;
 _groups
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
