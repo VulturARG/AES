@@ -4,15 +4,20 @@
 
 params ["_spawnGroup","_unitData","_marker"];
 
-private ["_markerPosition","_mkrX","_mkrY","_markerSize","_position","_unitType","_kindOfTroop","_dir_atk","_getToMarker","_group","_wpRoute"];
+private ["_markerPosition","_mkrX","_mkrY","_markerSize","_position","_unitType","_kindOfTroop","_dir_atk","_getToMarker","_group","_wpRoute","_wpParameters"];
+
+format ["WP _spawnGroup: %1",_spawnGroup] call BIS_fnc_log;
+format ["WP _unitData: %1",_unitData] call BIS_fnc_log;
+
+_unitType     = AES_WAYPOINT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
+_unitType     = if (isNil "_unitType") then {[]} else {_unitType};
+_kindOfTroop  = _unitType select 0;
+_wpParameters = _unitType select 1;
 
 
-_unitType = AES_WAYPOINT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
-_unitType = if (isNil "_unitType") then {[]} else {_unitType};
-_kindOfTroop = _unitType select 0;
 
-//format ["WP _spawnGroup: %1",_spawnGroup] call BIS_fnc_log;
-//format ["WP _unitType: %1",_unitType select 1] call BIS_fnc_log;
+
+//format ["WP _wpParameters: %1",_wpParameters] call BIS_fnc_log;
 //format ['WP _kindOfTroop: %1',typeName _kindOfTroop]  call BIS_fnc_log;
 
 _markerPosition = markerpos _marker;
@@ -21,12 +26,15 @@ _markerSize = 0;
 _position = _markerPosition;
 
 
-format ["WP Tipo: %1 _spawnGroup: %2",_unitData select 0,_spawnGroup] call BIS_fnc_log;
+//format ["WP Tipo: %1 _spawnGroup: %2",_unitData select 0,_spawnGroup] call BIS_fnc_log;
 
 _dir_atk = 0;
 
 {
-	_group = _x select 2;
+	format ["WP _x: %1",_x] call BIS_fnc_log;
+	//_group = _x select 2;
+	_group = if (count(_x) > 2) then {_x select 2} else {_x select 0};
+	
 	_wpRoute = [];
 	{
 		//format ["WP _group _x: %1",_group] call BIS_fnc_log;
@@ -57,23 +65,16 @@ _dir_atk = 0;
 		_getToMarker setWaypointCombatMode (_x select 6);
 		
 		_wpRoute pushBack _getToMarker;
-		format ["WP Tipo: %1 _wpRoute: %2",_unitData select 0,_wpRoute] call BIS_fnc_log;
-	} forEach (_unitType select 1);
+		//format ["WP Tipo: %1 _wpRoute: %2",_unitData select 0,_wpRoute] call BIS_fnc_log;
+	} forEach (_wpParameters);
+
+	if (count(_x) > 3) then {
+		[[[_x select 3]],["patrol",1],_marker] call AES_setWaypoint;
+	};
 	units _group doFollow leader _group;
 } forEach _spawnGroup;
 	
-
-
-
-
-
-
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
-/*
-[
-	[O Alpha 1-3,1],[O Alpha 1-3,2],
-	[O Alpha 1-5,1],[O Alpha 1-5,2],
-	[O Alpha 2-1,1],[O Alpha 2-1,2]
-]*/
+

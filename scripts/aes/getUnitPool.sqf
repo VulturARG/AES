@@ -81,7 +81,8 @@ if (_faction==4) then {
 if (_faction==5) then {
 	_InfPool=	["LOP_IRA_Infantry_SL","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_AR","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_Rifleman","LOP_IRA_Infantry_Rifleman"];
 	_ArmPool=	["rhs_t80a"];
-	_MotPool=	["LOP_IRA_Offroad_M2","LOP_NK_BTR80","LOP_NK_BTR80","LOP_NK_BTR80"];
+	//_MotPool=	["LOP_IRA_Offroad_M2","LOP_NK_BTR80","LOP_NK_BTR80","LOP_NK_BTR80"];
+	_MotPool=	["LOP_NK_BTR80"];
 	_ACHPool=	["LOP_ChDKZ_Mi8MTV3_FAB"];
 	_CHPool=	["I_Heli_Transport_02_F"];
 	_uavPool=	[];

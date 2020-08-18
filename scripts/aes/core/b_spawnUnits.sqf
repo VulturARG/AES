@@ -92,7 +92,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 		_groups pushBack _grp;
 	};
 };
-//format ['SU _groups: %1',_groups]  call BIS_fnc_log;
+format ['SU _groups: %1',_groups]  call BIS_fnc_log;
 _groups
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
