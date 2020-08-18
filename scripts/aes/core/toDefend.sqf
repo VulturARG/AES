@@ -21,7 +21,7 @@ private _groups                    = [];
 AES_bastionTrigger = compile preprocessFileLineNumbers "scripts\AES\functions\AES_bastionTrigger.sqf";
 AES_deleteUnits    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_deleteUnits.sqf";
 AES_b_spawnUnits   = compile preprocessFileLineNumbers "scripts\AES\core\b_spawnUnits.sqf";
-AES_waypoints      = compile preprocessFileLineNumbers "scripts\AES\functions\AES_waypoints.sqf";
+AES_setWaypoint      = compile preprocessFileLineNumbers "scripts\AES\functions\AES_setWaypoint.sqf";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,7 +82,7 @@ if (_pause > 0 and !_initialLaunch) then {
 	//format ["%1",_x] call BIS_fnc_log;
 	if (_x select 1 != 0) then {
 		_spawnGroup = ([_marker,_x,_angle,_side,_faction] call AES_b_spawnUnits);
-		[_spawnGroup,_x,_marker] call AES_waypoints;
+		[_spawnGroup,_x,_marker] call AES_setWaypoint;
 		_groups pushBack _spawnGroup;
 	};
 } forEach _unitsArrays;

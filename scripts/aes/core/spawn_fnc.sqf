@@ -16,7 +16,7 @@ SHK_pos               = compile preprocessFileLineNumbers "scripts\AES\functions
 shk_fnc_fillhouse     = compile preprocessFileLineNumbers "scripts\AES\Functions\SHK_buildingpos.sqf";
 eos_fnc_getUnitPool   = compile preprocessFileLineNumbers "scripts\AES\getUnitPool.sqf";
 AES_setEquipment      = compile preprocessFileLineNumbers "scripts\AES\functions\AES_setEquipment.sqf";
-AES_newWaypoint       = compile preprocessFileLineNumbers "scripts\AES\functions\AES_newWaypoint.sqf";
+AES_setNewWaypoint    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_setNewWaypoint.sqf";
 AES_log               = compile preprocessFileLineNumbers "scripts\AES\functions\AES_log.sqf";
 
 ///////////////////////////////////////////////////////////////
