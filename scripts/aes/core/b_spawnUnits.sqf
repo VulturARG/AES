@@ -58,7 +58,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 		
 		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;
         //_groups = [[],[]];
-		_grp = [_position,_unitData select 3,_faction,_side] call EOS_fnc_spawngroup;
+		_grp = [_position,_unitData select 3,_faction,_side] call eos_fnc_spawnInfantry;
 		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
         //_grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
@@ -69,14 +69,14 @@ for "_counter" from 1 to (_unitData select 1) do {
 		
     } else {
 		private _special = if (["chopper",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
-		_grp = [_position,_vehType,_faction,_side,_special]call EOS_fnc_spawnvehicle;
+		_grp = [_position,_vehType,_faction,_side,_special]call eos_fnc_spawnVehicle;
 		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
 
 		if (_vehType == "light vehicle" || _vehType == "cargo chopper" || _vehType == "para chopper") then {
 			_cargoGrp = createGroup _side;		
-			0 = [_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setcargo;
+			0 = [_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setCargo;
 
-			// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_grouphandlers;
+			// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
 			//_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 			_troupsNumber = _troupsNumber + count units _cargoGrp;
 			_grp pushBack _cargoGrp;

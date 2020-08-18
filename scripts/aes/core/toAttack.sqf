@@ -94,7 +94,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             };
         };
         if (_aMin > 0) then {
-            _aGroup = [_mPos, _aSize, _faction, _side] call EOS_fnc_spawngroup;
+            _aGroup = [_mPos, _aSize, _faction, _side] call eos_fnc_spawnInfantry;
             if (!surfaceiswater _mPos) then {
                 0 = [_mPos, units _aGroup, _mkrX, 0, [0, 20], true, true] call shk_fnc_fillhouse;
             } else {
@@ -102,7 +102,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             };
             _aGroup setGroupId[format["%1 HP %2", _mkr, _counter]];
             _aGrp set[count _aGrp, _aGroup];
-            0 = [_aGroup, "INFskill"] call eos_fnc_grouphandlers;
+            0 = [_aGroup, "INFskill"] call eos_fnc_setSkill;
             if (_debug) then {
                 PLAYER SIDECHAT(format["Spawned House Patrol: %1", _counter]);
                 0 = [_mkr, _counter, "House Patrol", getpos(leader _aGroup)] call EOS_debug
@@ -128,12 +128,12 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
         if (_bMin > 0) then {
             _pos = [_mkr, true] call SHK_pos;
             //_pos = [[_mkr], []] call BIS_fnc_randomPos;	//	maff.
-            _bGroup = [_pos, _bSize, _faction, _side] call EOS_fnc_spawngroup;
+            _bGroup = [_pos, _bSize, _faction, _side] call eos_fnc_spawnInfantry;
             0 = [_bGroup, _mkr] call EOS_fnc_taskpatrol;
             _bGroup setGroupId[format["%1 MP %2", _mkr, _counter]]; //MP Mobil Patrol
             _bGrp set[count _bGrp, _bGroup];
 
-            0 = [_bGroup, "INFskill"] call eos_fnc_grouphandlers;
+            0 = [_bGroup, "INFskill"] call eos_fnc_setSkill;
             if (_debug) then {
                 PLAYER SIDECHAT(format["Spawned Patrol: %1", _counter]);
                 0 = [_mkr, _counter, "patrol", getpos(leader _bGroup)] call EOS_debug
@@ -148,7 +148,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _cGrp = [];
         };
 
-        _newpos = [_mkr, 50] call EOS_fnc_findSafePos;
+        _newpos = [_mkr, 50] call eos_fnc_findSafePos;
         if (surfaceiswater _newpos) then {
             _vehType = 8;
             _cargoType = 10;
@@ -157,12 +157,12 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _cargoType = 9;
         };
 
-        _cGroup = [_newpos, _side, _faction, _vehType] call EOS_fnc_spawnvehicle;
+        _cGroup = [_newpos, _side, _faction, _vehType] call eos_fnc_spawnVehicle;
         if ((_cSize select 0) > 0) then {
-            0 = [(_cGroup select 0), _cSize, (_cGroup select 2), _faction, _cargoType] call eos_fnc_setcargo;
+            0 = [(_cGroup select 0), _cSize, (_cGroup select 2), _faction, _cargoType] call eos_fnc_setCargo;
         };
 
-        0 = [(_cGroup select 2), "LIGskill"] call eos_fnc_grouphandlers;
+        0 = [(_cGroup select 2), "LIGskill"] call eos_fnc_setSkill;
         0 = [(_cGroup select 2), _mkr] call EOS_fnc_taskpatrol;
 		[format ["_cGroup: %1", _cGroup]] call BIS_fnc_logFormat;
         (_cGroup select 2) setGroupId[format["%1 LV %2", _mkr, _counter]]; //LV Light vehicles
@@ -181,16 +181,16 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _dGrp = [];
         };
 
-        _newpos = [_mkr, 50] call EOS_fnc_findSafePos;
+        _newpos = [_mkr, 50] call eos_fnc_findSafePos;
         if (surfaceiswater _newpos) then {
             _vehType = 8;
         } else {
             _vehType = 2;
         };
 
-        _dGroup = [_newpos, _side, _faction, _vehType] call EOS_fnc_spawnvehicle;
+        _dGroup = [_newpos, _side, _faction, _vehType] call eos_fnc_spawnVehicle;
 
-        0 = [(_dGroup select 2), "ARMskill"] call eos_fnc_grouphandlers;
+        0 = [(_dGroup select 2), "ARMskill"] call eos_fnc_setSkill;
         0 = [(_dGroup select 2), _mkr] call EOS_fnc_taskpatrol;
         (_dGroup select 2) setGroupId[format["%1 AV %2", _mkr, _counter]]; //AV Armoured vehicles
         _dGrp set[count _dGrp, _dGroup];
@@ -209,11 +209,11 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _eGrp = [];
         };
 
-        _newpos = [_mkr, 50] call EOS_fnc_findSafePos;
+        _newpos = [_mkr, 50] call eos_fnc_findSafePos;
 
-        _eGroup = [_newpos, _side, _faction, 5] call EOS_fnc_spawnvehicle;
+        _eGroup = [_newpos, _side, _faction, 5] call eos_fnc_spawnVehicle;
 
-        0 = [(_eGroup select 2), "STAskill"] call eos_fnc_grouphandlers;
+        0 = [(_eGroup select 2), "STAskill"] call eos_fnc_setSkill;
         (_eGroup select 2) setGroupId[format["%1 SP %2", _mkr, _counter]]; //AV Static Placements
         _eGrp set[count _eGrp, _eGroup];
 
@@ -235,14 +235,14 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _vehType = 3
         };
         _newpos = [(markerpos _mkr), 1500, random 360] call BIS_fnc_relPos;
-        _fGroup = [_newpos, _side, _faction, _vehType, "fly"] call EOS_fnc_spawnvehicle;
+        _fGroup = [_newpos, _side, _faction, _vehType, "fly"] call eos_fnc_spawnVehicle;
         _fGrp set[count _fGrp, _fGroup];
 
 
         if ((_fSize select 0) > 0) then {
             _cargoGrp = createGroup _side;
-            0 = [(_fGroup select 0), _fSize, _cargoGrp, _faction, 9] call eos_fnc_setcargo;
-            0 = [_cargoGrp, "INFskill"] call eos_fnc_grouphandlers;
+            0 = [(_fGroup select 0), _fSize, _cargoGrp, _faction, 9] call eos_fnc_setCargo;
+            0 = [_cargoGrp, "INFskill"] call eos_fnc_setSkill;
             _cargoGrp setGroupId[format["%1 CP %2", _mkr, _counter]]; //AV Chopper patrol
             _fGroup set[count _fGroup, _cargoGrp];
             null = [_mkr, _fGroup, _counter] execvm "scripts\AES\functions\TransportUnload_fnc.sqf";
@@ -252,7 +252,7 @@ if (!(getmarkercolor _mkr == "colorblack")) then {
             _wp1 setWaypointType "SAD";
         };
 
-        0 = [(_fGroup select 2), "AIRskill"] call eos_fnc_grouphandlers;
+        0 = [(_fGroup select 2), "AIRskill"] call eos_fnc_setSkill;
 
         if (_debug) then {
             player sidechat format["Chopper:%1", _counter];

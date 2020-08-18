@@ -25,7 +25,7 @@ private _troopFormation = ["STAG COLUMN", "WEDGE", "ECH LEFT", "ECH RIGHT", "VEE
 
 AES_WAYPOINT_TYPE = [
                         ["patrol",[["center","SAD","LIMITED","AWARE",_troopFormation,15,"RED"]]],
-                        ["light vehicle",[["center","UNLOAD","LIMITED","SAFE","NO CHANGE",15,"RED"],["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]]],
+                        ["light vehicle",[["center","TR UNLOAD","LIMITED","SAFE","NO CHANGE",15,"RED"],["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]]],
                         ["armor",[["center","SAD","LIMITED","AWARE","NO CHANGE",15,"RED"]]],
                         ["attack chopper",[["center","SAD","FULL","COMBAT","NO CHANGE",15,"RED"]]],
                         ["cargo chopper",[]],

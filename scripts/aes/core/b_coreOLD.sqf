@@ -125,7 +125,7 @@ for "_counter" from 1 to _PApatrols do {
 			_pos = _newpos;
 		};
 	};	
-	_grp=[_pos,_PAgroupSize,_faction,_side] call EOS_fnc_spawngroup;
+	_grp=[_pos,_PAgroupSize,_faction,_side] call eos_fnc_spawnInfantry;
 	_grp setGroupId [format ["%1 PA %2-%3",_mkr,_waves,_counter]];
 	_troupsPA = _troupsPA + count units _grp;
 	_aGroup set [count _aGroup,_grp];
@@ -150,11 +150,11 @@ for "_counter" from 1 to _LVehGroups do {
 		_pos = [_mPos, _Place, _dir_atk] call BIS_fnc_relPos;
 	};
 	_vehType=7;_cargoType=9;
-	_bGroup=[_newpos,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
+	_bGroup=[_newpos,_side,_faction,_vehType]call eos_fnc_spawnVehicle;
 	if ((_LVgroupSize select 0) > 0) then{
-		0=[(_bGroup select 0),_LVgroupSize,(_bGroup select 2),_faction,_cargoType] call eos_fnc_setcargo;
+		0=[(_bGroup select 0),_LVgroupSize,(_bGroup select 2),_faction,_cargoType] call eos_fnc_setCargo;
 	};
-	0 = [(_bGroup select 2),"LIGskill"] call eos_fnc_grouphandlers;
+	0 = [(_bGroup select 2),"LIGskill"] call eos_fnc_setSkill;
 	(_bGroup select 2) setGroupId [format ["%1 LV %2-%3",_mkr,_waves,_counter]];
 	_troupsLV = _troupsLV + count units (_bGroup select 2);
 	_bGrp set [count _bGrp,_bGroup];
@@ -177,8 +177,8 @@ for "_counter" from 1 to _AVehGroups do {
 		_newpos = [_mPos, _Place, _dir_atk] call BIS_fnc_relPos;
 	};
 	_vehType=2;
-	_cGroup=[_newpos,_side,_faction,_vehType]call EOS_fnc_spawnvehicle;
-	0=[(_cGroup select 2),"ARMskill"] call eos_fnc_grouphandlers;
+	_cGroup=[_newpos,_side,_faction,_vehType]call eos_fnc_spawnVehicle;
+	0=[(_cGroup select 2),"ARMskill"] call eos_fnc_setSkill;
 	(_cGroup select 2) setGroupId [format ["%1 AV %2-%3",_mkr,_waves,_counter]];
 	_troupsAV = _troupsAV + count units (_cGroup select 2);
 	_cGrp set [count _cGrp,_cGroup];
@@ -201,13 +201,13 @@ for "_counter" from 1 to _CHGroups do {
 	_dir_atk=_mkrAgl+(random _angle)-_angle/2;
 	_Place=(_mkrX + _CHminDist + random 100);
 	_newpos = [_mPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	_fGroup=[_newpos,_side,_faction,_vehType,"fly"] call EOS_fnc_spawnvehicle;
+	_fGroup=[_newpos,_side,_faction,_vehType,"fly"] call eos_fnc_spawnVehicle;
 	_CHside=_side;
 	_fGrp set [count _fGrp,_fGroup];
 	if ((_fSize select 0) > 0) then {
 		_cargoGrp = createGroup _side;
-		0=[(_fGroup select 0),_fSize,_cargoGrp,_faction,9] call eos_fnc_setcargo;
-		0=[_cargoGrp,"INFskill"] call eos_fnc_grouphandlers;
+		0=[(_fGroup select 0),_fSize,_cargoGrp,_faction,9] call eos_fnc_setCargo;
+		0=[_cargoGrp,"INFskill"] call eos_fnc_setSkill;
 		_cargoGrp setGroupId [format ["%1 HT %2-%3",_mkr,_waves,_counter]];
 		_troupsHT = _troupsHT + count units _cargoGrp;
 		_fGroup set [count _fGroup,_cargoGrp];
@@ -235,11 +235,11 @@ for "_counter" from 1 to _ptNumGroups do {
 	_dir_atk=_mkrAgl+(random _angle)-_angle/2;
 	_Place=(_mkrX + _PTminDist + random 100);
 	_newpos = [_mPos, _Place, _dir_atk] call BIS_fnc_relPos;
-	_ptGroup=[_newpos,_side,_faction,_vehType,"fly"] call EOS_fnc_spawnvehicle;
+	_ptGroup=[_newpos,_side,_faction,_vehType,"fly"] call eos_fnc_spawnVehicle;
 	_ptGrp set [count _ptGrp,_ptGroup];
 	_cargoGrpPT = createGroup _side;
-	0=[(_ptGroup select 0),_ptSize,_cargoGrpPT,_faction,9] call eos_fnc_setcargo;
-	0=[_cargoGrpPT,"INFskill"] call eos_fnc_grouphandlers;
+	0=[(_ptGroup select 0),_ptSize,_cargoGrpPT,_faction,9] call eos_fnc_setCargo;
+	0=[_cargoGrpPT,"INFskill"] call eos_fnc_setSkill;
 	_cargoGrpPT setGroupId [format ["%1 PT %2-%3",_mkr,_waves,_counter]];
 	_troupsPT = _troupsPT + count units _cargoGrpPT;
 	_ptGroup set [count _ptGroup,_cargoGrpPT];
@@ -271,7 +271,7 @@ for "_counter" from 1 to _HApatrols do {
 		};
 	};
 	_pos = [ _pos select 0, _pos select 1, (_pos select 2) + _HAAltSalto];
-	_grp=[_pos,_HAgroupSize,_faction,_side] call EOS_fnc_spawngroup;
+	_grp=[_pos,_HAgroupSize,_faction,_side] call eos_fnc_spawnInfantry;
 	_grp setGroupId [format ["%1 HA %2-%3",_mkr,_waves,_counter]];
 	_troupsHA = _troupsHA + count units _grp;
 	_HAGroup set [count _HAGroup,_grp];
