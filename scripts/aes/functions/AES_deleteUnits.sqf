@@ -6,6 +6,7 @@ params ["_side","_debugLog","_marker","_waves"];
 
 private _unconscious = [];
 private _enemies     = [];
+private _markerPos = getMarkerPos _marker;
 
 _unconscious = allUnits select {_x getVariable "ACE_isUnconscious" isEqualTo true && !isPlayer _x && (side _x == _side)};
 if (_debugLog) then {[[_marker,"Wave", _waves,"Inconscientes",count _unconscious,_side]] call AES_log;};
