@@ -5,7 +5,6 @@
 AES_enemiesPosition = compile preprocessFileLineNumbers "scripts\AES\functions\AES_enemiesPosition.sqf";
 AES_HALO            = compile preprocessFileLineNumbers "scripts\AES\functions\AES_HALO.sqf";
 
-
 params ["_marker","_unitData","_angle","_side","_faction"];
 
 //AES_UNIT_TYPE [["patrol",0,"PA",findSafePos(default true)]

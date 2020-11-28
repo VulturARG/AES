@@ -12,7 +12,7 @@ GROUP SIZES
  5 = 16,20
 
 EXAMPLE CALL - AES
- null = [["M1","M2","M3"],[[2,1,70],[0,1],[1,2,30],[2,60],[2],[1,1,10]],[1,1,250,WEST]] call EOS_Spawn;
+
  
 null=
 [
@@ -32,7 +32,7 @@ null=
 
 null=
 [
-  ["type"],            <- Must be toAttack or toDefend
+  ["type"],            <- Must be toAttack or toDefend. toAttack: the player attacks a position. toDefend: the player defends a position
   ["M1","M2","M3"],
   [
     ["type",quantity,spawn distance (m), (number of units in each group,(jump height meters))], <---Must go a comma if there is another element
@@ -90,6 +90,9 @@ execVM "scripts\AES\core\spawn_fnc.sqf";
 
 onplayerConnected {[] execVM "scripts\AES\Functions\EOS_Markers.sqf";};
 
+// Check if ACE is running
+//if (isClass (configfile >> "CfgPatches" >> "ace_common")) then {KP_liberation_ace = true; diag_log "[KP LIBERATION] ACE detected. Deactivating resupply and weather scripts from Liberation."} else {KP_liberation_ace = false};
+//TODO Adaptar para el VCOM
 IsVCOM_MOD = true;
 publicVariable "IsVCOM_MOD";
 
@@ -103,9 +106,7 @@ EOS_KILLCOUNTER=false;		// Counts killed units
 //'Open Me' call BIS_fnc_log;
 
 private _EOS_FACCION = EAST;
-
-//null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
-
+/*
 [
     "toDefend",
     ["marker_0"],
@@ -121,6 +122,38 @@ private _EOS_FACCION = EAST;
     [5,1,EAST,false,false,false],
     [1,1,60,false,false],
     360
+] call Launch;
+*/
+/*
+null=
+[
+  ["M1","M2","M3"],
+  [
+    [HOUSE GROUPS,SIZE OF GROUPS,PROBABILITY],
+    [PATROL GROUPS,SIZE OF GROUPS,PROBABILITY],
+    [LIGHT VEHICLES,SIZE OF CARGO,PROBABILITY],
+    [ARMOURED VEHICLES,PROBABILITY],
+    [STATIC VEHICLES,PROBABILITY],
+    [HELICOPTERS,SIZE OF HELICOPTER CARGO,PROBABILITY]
+  ],
+  [FACTION,MARKERTYPE,DISTANCE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG]
+] call EOS_Spawn;
+*/
+//null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
+
+[
+    "toAttack",
+    ["marker_0"],
+    [
+      ["house",0,100,2],
+      ["patrol",1,100,2],
+      ["light vehicle",0,100,4],
+      ["cargo chopper",0,100,1],
+      ["armor",0,100],
+      ["attack chopper",0,100],
+      ["static vehicle",0,100]
+    ],
+    [5,1,200,EAST,false,false,false]
 ] call Launch;
 
 
