@@ -20,7 +20,7 @@ _pos = [_mPos, _Place, _dir_atk] call BIS_fnc_relPos;
 /////////////////////////////////////////////////////////////////////////////////
 
 _pad = createVehicle ["Land_HelipadEmpty_F", _pos, [], 0, "NONE"];
-if (_debug) then {0= [_mkr,_counter,"Unload Pad",(getpos _pad)] call EOS_debug;};
+if (_debug) then {[_mkr,_counter,"Unload Pad",(getpos _pad)] call EOS_debug;};
 
 {_x allowFleeing 0} forEach units _grp;
 {_x allowFleeing 0} forEach units _cargoGrp;

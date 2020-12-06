@@ -73,7 +73,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 
 		if (_vehType == "light vehicle" || _vehType == "cargo chopper" || _vehType == "para chopper") then {
 			_cargoGrp = createGroup _side;		
-			0 = [_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setCargo;
+			[_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setCargo;
 
 			// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
 			_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];

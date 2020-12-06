@@ -131,7 +131,7 @@ for "_counter" from 1 to _PApatrols do {
 	_aGroup set [count _aGroup,_grp];
 	if (_debug) then {
 		systemChat (format ["Spawned Patrol: %1",_counter]);
-		0= [_mkr,_counter,"patrol",getpos (leader _grp)] call EOS_debug;
+		[_mkr,_counter,"patrol",getpos (leader _grp)] call EOS_debug;
 	};
 	
 };
@@ -154,13 +154,13 @@ for "_counter" from 1 to _LVehGroups do {
 	if ((_LVgroupSize select 0) > 0) then{
 		0=[(_bGroup select 0),_LVgroupSize,(_bGroup select 2),_faction,_cargoType] call eos_fnc_setCargo;
 	};
-	0 = [(_bGroup select 2),"LIGskill"] call eos_fnc_setSkill;
+	[(_bGroup select 2),"LIGskill"] call eos_fnc_setSkill;
 	(_bGroup select 2) setGroupId [format ["%1 LV %2-%3",_mkr,_waves,_counter]];
 	_troupsLV = _troupsLV + count units (_bGroup select 2);
 	_bGrp set [count _bGrp,_bGroup];
 	if (_debug) then {
 		systemChat format ["Light Vehicle:%1 - r%2",_counter,_LVehGroups];
-		0= [_mkr,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
+		[_mkr,_counter,"Light Veh",(getpos leader (_bGroup select 2))] call EOS_debug;
 	};
 };
 if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_LightVehicles",_troupsLV,_side]] call AES_log;};
@@ -184,7 +184,7 @@ for "_counter" from 1 to _AVehGroups do {
 	_cGrp set [count _cGrp,_cGroup];
 	if (_debug) then {
 		systemChat format ["Armoured:%1 - r%2",_counter,_AVehGroups];
-		0= [_mkr,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
+		[_mkr,_counter,"Armour",(getpos leader (_cGroup select 2))] call EOS_debug;
 	};
 };
 if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ArmoredVehicles",_troupsAV,_side]] call AES_log;};
@@ -221,7 +221,7 @@ for "_counter" from 1 to _CHGroups do {
 	};
 	if (_debug) then {
 			systemChat format ["Chopper:%1",_counter];
-			0= [_mkr,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
+			[_mkr,_counter,"Chopper",(getpos leader (_fGroup select 2))] call EOS_debug;
 	};
 };
 if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_TranspotHeli",_troupsHT,_side]] call AES_log;};
@@ -246,7 +246,7 @@ for "_counter" from 1 to _ptNumGroups do {
 	null = [_mkr,_ptGroup,_counter,_PTAltSalto] execvm "scripts\AES\functions\TransportParachute_fnc.sqf";
 	if (_debug) then {
 			systemChat format ["Chopper:%1",_counter];
-			0= [_mkr,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
+			[_mkr,_counter,"Chopper",(getpos leader (_ptGroup select 2))] call EOS_debug;
 	};
 };
 if (_debugLog) then {[[_mkr,"Wave",_waves,"Total_Tropas_ParatroopersHeli",_troupsPT,_side]] call AES_log;};
@@ -277,7 +277,7 @@ for "_counter" from 1 to _HApatrols do {
 	_HAGroup set [count _HAGroup,_grp];
 	if (_debug) then {
 		systemChat (format ["Spawned HALO: %1",_counter]);
-		0= [_mkr,_counter,"HALO",getpos (leader _grp)] call EOS_debug;
+		[_mkr,_counter,"HALO",getpos (leader _grp)] call EOS_debug;
 	};
 	
 	{
