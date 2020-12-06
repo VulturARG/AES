@@ -24,7 +24,7 @@ _settings params["_faction","_markerType","_distance","_side",["_heightLimit",fa
 
 private ["_newpos","_cargoType","_vehType","_dGrp","_mkrAgl","_bGroup","_civZone","_bGrp",
 		 "_eGrp","_fGrp","_aMin","_aGrp","_bMin","_units","_trig","_cache","_grp","_crew",
-		 "_vehicle","_actCond","_mAN","_mAH","_markerType","_cGrp","_taken","_clear","_enemyFaction",
+		 "_vehicle","_actCond","_mAN","_mAH","_cGrp","_taken","_clear","_enemyFaction",
 		 "_n","_eosAct","_eosActivated","_mPos","_mkrX","_mkrY"
 		];
 //TODO chequear cache

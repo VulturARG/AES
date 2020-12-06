@@ -54,7 +54,7 @@ EOS_debug = {
 	1: ALTITUDE - (optional) the altitude where the group will open their parachute (number)
 
    Example:
-   0 = [vehicle, altitude] execVM "eject.sqf"
+   [vehicle, altitude] execVM "eject.sqf"
 */
 
 /*******************************************************************************

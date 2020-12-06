@@ -75,7 +75,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 			_cargoGrp = createGroup _side;		
 			[_grp select 0,_unitData select 3,_cargoGrp,_faction,_cargoType] call eos_fnc_setCargo;
 
-			// TODO ver esta linea -> 0 = [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
+			// TODO ver esta linea -> [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
 			_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 			_troupsNumber = _troupsNumber + count units _cargoGrp;
 			_grp pushBack _cargoGrp;
