@@ -3,13 +3,13 @@ branches:
    - development
 language: python
 python:
-- '3.5'
+  - '3.5'
 before_script:
-- pip3 install git+https://github.com/TheWreckingCrewUK/sqf.git
+  - pip3 install git+https://github.com/TheWreckingCrewUK/sqf.git
 script:
-- python3 tools/sqf_validator.py
-- python3 tools/sqf_linter.py
-- python3 tools/config_validator.py
+  - python3 tools/sqf_validator.py
+  - python3 tools/sqf_linter.py
+  - python3 tools/config_validator.py
 notifications:
   email:
     on_success: never
@@ -21,4 +21,4 @@ after_success:
 after_failure:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
-- ./send.sh failure $WEBHOOK_URL
+  - ./send.sh failure $WEBHOOK_URL
