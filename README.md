@@ -1,4 +1,4 @@
-# AES
+# AES   [![Build Status](https://travis-ci.org/VulturARG/AES.svg?branch=development)](https://travis-ci.org/VulturARG/AES)
 
 ## ArgA Enemy System
 
