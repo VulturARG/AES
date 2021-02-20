@@ -1,5 +1,5 @@
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/
 /* AES based in EOS 1.98 by BangaBob
 
@@ -100,13 +100,29 @@ VictoryColor="colorBLUFOR";	// Colour of marker after completion
 hostileColor="colorOPFOR";	// Default colour when enemies active
 bastionColor="colorBLUFOR";	// Colour for bastion marker
 
-EOS_DAMAGE_MULTIPLIER=1;	// 1 is default
-EOS_KILLCOUNTER=false;		// Counts killed units
+AES_DAMAGE_MULTIPLIER = 1;	// 1 is default
+AES_KILLCOUNTER = false;		// Counts killed units
 
 //'Open Me' call BIS_fnc_log;
 
-private _EOS_FACCION = EAST;
+private _AES_FACCION = EAST;
 /*
+
+[
+    "toDefend",
+    ["marker_0"],
+    [
+      ["house",0,100,2],
+      ["patrol",1,100,2],
+      ["light vehicle",0,100,4],
+      ["cargo chopper",0,100,1],
+      ["armor",0,100],
+      ["attack chopper",0,100],
+      ["static vehicle",0,100]
+    ],
+    [5,1,200,EAST,false,false,false]
+] call Launch;
+
 [
     "toDefend",
     ["marker_0"],
@@ -139,21 +155,24 @@ null=
   [FACTION,MARKERTYPE,DISTANCE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG]
 ] call EOS_Spawn;
 */
-//null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_EOS_FACCION,false]] call EOS_Spawn;
+
+// null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_AES_FACCION,false]] call EOS_Spawn;
 
 [
-    "toAttack",
+    "toDefend",
     ["marker_0"],
     [
-      ["house",0,100,2],
-      ["patrol",1,100,2],
-      ["light vehicle",0,100,4],
-      ["cargo chopper",0,100,1],
-      ["armor",0,100],
-      ["attack chopper",0,100],
-      ["static vehicle",0,100]
+      ["patrol"        ,5,300,3],
+      ["light vehicle" ,0,400,3],
+      ["armor"         ,0,650],
+      ["attack chopper",0,700],
+      ["cargo chopper" ,0,500,1],
+      ["para chopper"  ,0,600,5,100],
+      ["halo"          ,0,100,2,300]
     ],
-    [5,1,200,EAST,false,false,false]
+    [5,1,EAST,false,false,false],
+    [1,1,60,false,false],
+    360
 ] call Launch;
 
 
@@ -174,5 +193,5 @@ if (_players > 30) then {
 };
 
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/

@@ -2,6 +2,8 @@
                             Modify by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
 
+// Defend a position against enemy
+
 if (!isServer) exitWith {};
 
 params ["_marker","_unitsArrays","_settings","_basSettings","_angle",["_initialLaunch",false]];

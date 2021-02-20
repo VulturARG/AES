@@ -14,9 +14,9 @@ _randomDifference = floor(random _difference);
 _grpSize = _randomDifference + _grpMin;
 
 if (surfaceiswater _pos) then {
-	_pool=[_faction,"dive"] call eos_fnc_getUnitPool;
+	_pool=[_faction,"dive"] call AES_fnc_getUnitPool;
 }else{
-	_pool=[_faction,"troop"] call eos_fnc_getUnitPool;
+	_pool=[_faction,"troop"] call AES_fnc_getUnitPool;
 };
 
 _grp=createGroup _side;

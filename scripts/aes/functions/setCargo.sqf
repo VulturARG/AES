@@ -6,7 +6,7 @@ if (!isServer) exitWith {};
 
 	_debug=false;
 
-	_cargoPool=[_faction,_cargoType] call eos_fnc_getUnitPool;
+	_cargoPool=[_faction,_cargoType] call AES_fnc_getUnitPool;
 	//_side=side (leader _grp);
 
 //systemChat format ["%1, %2, %3, %4, %5", _vehicle, _grpSize, _grp, _faction, _cargoType];

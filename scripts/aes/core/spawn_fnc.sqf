@@ -1,5 +1,5 @@
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/
 
 if (isnil "server") then {hint "YOU MUST PLACE A GAME LOGIC NAMED SERVER!";};
@@ -14,7 +14,7 @@ eos_fnc_setCargo      = compile preprocessFileLineNumbers "scripts\AES\functions
 eos_fnc_taskpatrol    = compile preprocessFileLineNumbers "scripts\AES\functions\shk_patrol.sqf";
 SHK_pos               = compile preprocessFileLineNumbers "scripts\AES\functions\shk_pos.sqf";
 shk_fnc_fillhouse     = compile preprocessFileLineNumbers "scripts\AES\Functions\SHK_buildingpos.sqf";
-eos_fnc_getUnitPool   = compile preprocessFileLineNumbers "scripts\AES\getUnitPool.sqf";
+AES_fnc_getUnitPool   = compile preprocessFileLineNumbers "scripts\AES\getUnitPool.sqf";
 AES_setEquipment      = compile preprocessFileLineNumbers "scripts\AES\functions\AES_setEquipment.sqf";
 AES_setNewWaypoint    = compile preprocessFileLineNumbers "scripts\AES\functions\AES_setNewWaypoint.sqf";
 AES_log               = compile preprocessFileLineNumbers "scripts\AES\functions\AES_log.sqf";
@@ -58,5 +58,5 @@ EOS_debug = {
 */
 
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/

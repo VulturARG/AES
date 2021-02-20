@@ -1,25 +1,23 @@
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/
 
 params ["_position","_type","_faction","_side",["_special","CAN_COLLIDE"]];
 
-//systemchat format ["_newpos: %1, _side: %2, _faction: %3, _vehType: %4",_position,_side,_faction,_type];
-
 private ["_vehicleType","_grp","_vehPositions","_vehicle","_vehCrew"];
 
 //["SV _type: %1",_type] call BIS_fnc_logFormat;
-_vehicleType=[_faction,_type] call eos_fnc_getUnitPool;
+_vehicleType = [_faction,_type] call AES_fnc_getUnitPool;
 //["SV _vehicleType: %1",_vehicleType] call BIS_fnc_logFormat;
 
 _grp = createGroup _side;
-_vehPositions=[(_vehicleType select 0)] call BIS_fnc_vehicleRoles;
+_vehPositions = [(_vehicleType select 0)] call BIS_fnc_vehicleRoles;
 _vehicle = createVehicle [(_vehicleType select 0), _position, [], 0, _special];
-_vehCrew=[];
+_vehCrew = [];
 
 {
 	//["_currentPosition: %1",_x] call BIS_fnc_logFormat;
-	_currentPosition=_x;
+	_currentPosition =_x;
 	if (_currentPosition select 0 == "driver")then {
 		_unit = _grp createUnit [(_vehicleType select 1), _position, [], 0, "CAN_COLLIDE"];
 		_unit assignAsDriver _vehicle;
@@ -54,11 +52,11 @@ _vehCrew=[];
 	};
 }foreach _vehPositions;
 
-private _return=[_vehicle,_vehCrew,_grp];
+private _return = [_vehicle,_vehCrew,_grp];
 
 _return
 
 /*******************************************************************************
-                            Modify by |ArgA|Vultur|Cbo¹
+                            Modify by |ArgA|Vultur|Sgt
 *******************************************************************************/
 //format ['SV _return: %1',_return]  call BIS_fnc_log;

@@ -18,9 +18,10 @@ private ["_vehType","_cargoType","_typeMessage","_findSafePosition"];
 
 private _groups       = [];
 private _grp          = [];
-private _troupsNumber = 0;
+private _troupsNumber =  0;
 private _position     = [];
 private _cargoGrp     = [];
+private _sleepTime    = 10;
 
 _unitType = AES_UNIT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
 _unitType = if (isNil "_unitType") then {[]} else {_unitType};
@@ -36,9 +37,15 @@ if (count(_unitType) > 0) then {
 };
 
 for "_counter" from 1 to (_unitData select 1) do {
-	_position = [_marker,_unitData select 2,_angle] call AES_enemiesPosition;
+	_position = [_marker, _unitData select 2, _angle] call AES_enemiesPosition;
     if (_findSafePosition) then {
-        while {(surfaceiswater _position)} do {
+        private _safeDistance = (_unitData select 2);
+		while { count (allPlayers select { _x distance _position <= (_unitData select 2) }) > 0} do {
+			_safeDistance  = _safeDistance + 25;
+			_newData       = [_marker ,(_unitData select 2) + _safeDistance, _angle];
+			_position      = _newData call AES_enemiesPosition;
+		};
+		while {(surfaceiswater _position)} do {
             _position = [_marker,_unitData select 2,_angle] call AES_enemiesPosition;
         };		
 		for "_counter" from 0 to 20 do {
@@ -90,6 +97,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 		};
 		_groups pushBack _grp;
 	};
+	sleep _sleepTime;
 };
 //format ['SU _groups: %1',_groups]  call BIS_fnc_log;
 _groups
