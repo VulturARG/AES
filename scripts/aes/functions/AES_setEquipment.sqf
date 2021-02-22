@@ -4,7 +4,7 @@
 
 if (!isServer) exitWith {};
 
-if (CHANGE_EQUIPMENT) exitWith {};
+if (!CHANGE_EQUIPMENT) exitWith {};
 
 // SINGLE INFANTRY GROUP
 params ["_unit","_unitType"];
