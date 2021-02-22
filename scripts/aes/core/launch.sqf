@@ -8,11 +8,7 @@ private _isJump   = false;
 private _jumpType = [];
 private _typeUnit = "";
 
-//'launch' call BIS_fnc_log;
-
 if (!isServer) exitWith {};
-
-//format ['%1',_unitsArrays]  call BIS_fnc_log;
 
 {
 	if (_typeMission isEqualTo "playerDefend") then {

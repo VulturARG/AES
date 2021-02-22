@@ -85,8 +85,7 @@ Launch              = compile preprocessFileLineNumbers "scripts\AES\core\launch
 Bastion_Redirect_WP = compile preprocessFileLineNumbers "scripts\AES\core\b_redirijoUnidades.sqf";
 
 call compile preprocessFileLineNumbers "scripts\AES\aes_settings.sqf";
-
-execVM "scripts\AES\core\spawn_fnc.sqf";
+call compile preprocessFileLineNumbers "scripts\AES\core\spawn_fnc.sqf";
 
 onplayerConnected {[] execVM "scripts\AES\Functions\EOS_Markers.sqf";};
 
@@ -107,6 +106,8 @@ private _AES_FACCION         = EAST;
 private _initial_delay       = 1;
 private _delay_between_waves = 120;
 
+//[["[AES_log]","OpenMe", _distance]] call AES_log;
+
 _waves = 2;
 
 [
@@ -123,7 +124,7 @@ _waves = 2;
     ],
     [5,1,_AES_FACCION,false,false,true],
     [1,_waves,_delay_between_waves,false,false],
-    360
+    _angle
 ] call Launch;
 
 

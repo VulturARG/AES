@@ -13,5 +13,5 @@ private _headlessClients = entities "HeadlessClient_F";
 private _humanPlayers = allPlayers - _headlessClients;
 _playersNumber = count _humanPlayers;
 
-[_markers,_waves,_playersNumber,_angle] execVM "scripts\AES\OpenMe.sqf";
+[_markers,_waves,_playersNumber,_angle,100] execVM "scripts\AES\OpenMe.sqf";
 
