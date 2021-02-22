@@ -112,7 +112,7 @@ _waves = 2;
 
 [
     "playerDefend",
-    ["marker_0"],
+    _marker,
     [
       ["patrol"        ,5,300,3],
       ["light vehicle" ,0,400,3],
@@ -123,7 +123,7 @@ _waves = 2;
       ["halo"          ,0,100,2,300]
     ],
     [5,1,_AES_FACCION,false,false,true],
-    [1,_waves,_delay_between_waves,false,false],
+    [_initial_delay,_waves,_delay_between_waves,false,false],
     _angle
 ] call Launch;
 
