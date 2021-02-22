@@ -60,7 +60,7 @@ null=
     ["para chopper",1,600,100],
     ["halo",3,100,3000]       <-- Last element without comma
   ],
-  [FACTION,MARKERTYPE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG],
+  [FACTION,MARKERTYPE,SIDE,HEIGHTLIMIT,hint_DEBUG,debugLog],
   [INITIAL PAUSE, NUMBER OF WAVES, DELAY BETWEEN WAVES, INTEGRATE EOS, SHOW HINTS],
   angle    <-- Last element without comma
 ] call Bastion_Spawn;
@@ -103,60 +103,11 @@ bastionColor="colorBLUFOR";	// Colour for bastion marker
 AES_DAMAGE_MULTIPLIER = 1;	// 1 is default
 AES_KILLCOUNTER = false;		// Counts killed units
 
-//'Open Me' call BIS_fnc_log;
+private _AES_FACCION         = EAST;
+private _initial_delay       = 1;
+private _delay_between_waves = 120;
 
-private _AES_FACCION = EAST;
-/*
-
-[
-    "playerDefend",
-    ["marker_0"],
-    [
-      ["house",0,100,2],
-      ["patrol",1,100,2],
-      ["light vehicle",0,100,4],
-      ["cargo chopper",0,100,1],
-      ["armor",0,100],
-      ["attack chopper",0,100],
-      ["static vehicle",0,100]
-    ],
-    [5,1,200,EAST,false,false,false]
-] call Launch;
-
-[
-    "playerDefend",
-    ["marker_0"],
-    [
-      ["patrol",0,300,3],
-      ["light vehicle",1,400,3],
-      ["armor",0,650],
-      ["attack chopper",0,700],
-      ["cargo chopper",0,500,1],
-      ["para chopper",0,600,5,100],
-      ["halo",0,100,2,300]
-    ],
-    [5,1,EAST,false,false,false],
-    [1,1,60,false,false],
-    360
-] call Launch;
-*/
-/*
-null=
-[
-  ["M1","M2","M3"],
-  [
-    [HOUSE GROUPS,SIZE OF GROUPS,PROBABILITY],
-    [PATROL GROUPS,SIZE OF GROUPS,PROBABILITY],
-    [LIGHT VEHICLES,SIZE OF CARGO,PROBABILITY],
-    [ARMOURED VEHICLES,PROBABILITY],
-    [STATIC VEHICLES,PROBABILITY],
-    [HELICOPTERS,SIZE OF HELICOPTER CARGO,PROBABILITY]
-  ],
-  [FACTION,MARKERTYPE,DISTANCE,SIDE,HEIGHTLIMIT,hint_DEBUG,BIS_fnc_logFormat_DEBUG]
-] call EOS_Spawn;
-*/
-
-// null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_AES_FACCION,false]] call EOS_Spawn;
+_waves = 2;
 
 [
     "playerDefend",
@@ -170,8 +121,8 @@ null=
       ["para chopper"  ,0,600,5,100],
       ["halo"          ,0,100,2,300]
     ],
-    [5,1,EAST,false,false,false],
-    [1,1,60,false,false],
+    [5,1,_AES_FACCION,false,false,true],
+    [1,_waves,_delay_between_waves,false,false],
     360
 ] call Launch;
 

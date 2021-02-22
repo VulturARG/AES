@@ -13,6 +13,8 @@ _difference       = _grpMax - _grpMin;
 _randomDifference = floor(random _difference);
 _grpSize          = _randomDifference + _grpMin;
 
+_pool=[_faction,"troop"] call AES_fnc_getUnitPool;
+
 _grp = createGroup _side;
 
 for "_x" from 1 to _grpSize do {
@@ -29,7 +31,7 @@ for "_x" from 1 to _grpSize do {
 
 };
 
-[_grp] call compile preprocessFileLineNumbers 'scripts\eos\functions\AES_transferGroups.sqf';
+[_grp] call compile preprocessFileLineNumbers 'scripts\aes\functions\AES_transferGroups.sqf';
 
 _grp
 

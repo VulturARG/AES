@@ -41,19 +41,19 @@ if (!isNil "HC_3") then {
 	};
 };
 
-["GET_HC","_hcData_0:", _hcData] call MIV_fnc_log;
-["GET_HC","_minimun_0:", _minimun] call MIV_fnc_log;
+// ["GET_HC","_hcData_0:", _hcData] call MIV_fnc_log;
+// ["GET_HC","_minimun_0:", _minimun] call MIV_fnc_log;
 
 {
-	["GET_HC","_x:", _x] call MIV_fnc_log;
+	// ["GET_HC","_x:", _x] call MIV_fnc_log;
 	if (_minimun select 1 > _x select 1) then {
 		_minimun = _x;
 	};
 	
 } forEach _hcData;
 
-["GET_HC","_hcData_1:", _hcData] call MIV_fnc_log;
-["GET_HC","_minimun_1:", _minimun] call MIV_fnc_log;
+// ["GET_HC","_hcData_1:", _hcData] call MIV_fnc_log;
+// ["GET_HC","_minimun_1:", _minimun] call MIV_fnc_log;
 
 _minimun
 

@@ -8,7 +8,7 @@ params ["_enemyUnit"];
 
 private["_isMan","_waitTime","_coordX","_coordY","_coordZ","_waitTimeUnit"];
 
-private _waitTimeMan     = getMissionConfigValue ["RB_TIEMPO_ESPERA_HOMBRES", 120];
+private _waitTimeMan     = getMissionConfigValue ["RB_TIEMPO_ESPERA_HOMBRES", 12];
 private _waitTimeVehicle = getMissionConfigValue ["RB_TIEMPO_ESPERA_VEHICULOS", 0];
 private _waitTimeArmor   = getMissionConfigValue ["RB_TIEMPO_ESPERA_BLINDADOS", 0];
 private _waitTimeAir     = getMissionConfigValue ["RB_TIEMPO_ESPERA_AEREOS", 0];

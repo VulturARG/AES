@@ -61,7 +61,7 @@ if (_pause > 0 and !_initialLaunch) then {
 
 waituntil {triggeractivated _bastActive};
 
-_waves=(_waves - 1);
+_waves = (_waves - 1);
 if (_waves >= 1) then {
 	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
