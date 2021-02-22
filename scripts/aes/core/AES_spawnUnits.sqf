@@ -21,7 +21,6 @@ private _grp          = [];
 private _troupsNumber =  0;
 private _position     = [];
 private _cargoGrp     = [];
-private _sleepTime    = 10;
 
 _unitType = AES_UNIT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
 _unitType = if (isNil "_unitType") then {[]} else {_unitType};
@@ -97,7 +96,7 @@ for "_counter" from 1 to (_unitData select 1) do {
 		};
 		_groups pushBack _grp;
 	};
-	sleep _sleepTime;
+	sleep UNIT_SPAWN_WAIT_TIME;
 };
 //format ['SU _groups: %1',_groups]  call BIS_fnc_log;
 _groups

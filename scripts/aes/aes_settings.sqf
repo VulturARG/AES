@@ -2,6 +2,10 @@
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
 
+// Change regular troop equipmets (AES_setEquipment.sqf)
+CHANGE_EQUIPMENT                             = false;
+////////////////////////////////////////////////////////////////////////////////
+
 //Distances (DIST) in meters
 private _AES_DEFAULT_INFANTERY_MIN_DIST      =  500;  
 private _AES_DEFAULT_VEHICLES_MIN_DIST       =  800;
@@ -14,7 +18,8 @@ private _AES_DEFAULT_HALO_MIN_DIST           =  200;
 private _AES_DEFAULT_HALO_JUMP_HEIGHT        =  600;
 ////////////////////////////////////////////////////////////////////////////////
 
-AES_DELETE_DISTANCE                          =  950;  //Delete units outside this distance from marker's center 
+// Delete units outside this distance from marker's center 
+AES_DELETE_DISTANCE                          =  950;
 ////////////////////////////////////////////////////////////////////////////////
 
 // [["name unit", cargo type, "Short Name",findSafePos(default true)],...]
@@ -39,6 +44,10 @@ AES_DEFAULT_JUMP_PARA        = [["para chopper",_AES_DEFAULT_CHOPPER_JUMP_HEIGHT
 ////////////////////////////////////////////////////////////////////////////////
 
 AES_MIN_MAX_SIZE_GROUP = [[1,1],[2,4],[4,8],[8,12],[12,16],[16,20]];
+////////////////////////////////////////////////////////////////////////////////
+
+// Tiempo de espera entre cada creación de grupos
+UNIT_SPAWN_WAIT_TIME    = 10;
 ////////////////////////////////////////////////////////////////////////////////
 
 /*******************************************************************************
