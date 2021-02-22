@@ -15,7 +15,7 @@ if (!isServer) exitWith {};
 //format ['%1',_unitsArrays]  call BIS_fnc_log;
 
 {
-	if (_typeMission isEqualTo "toDefend") then {
+	if (_typeMission isEqualTo "playerDefend") then {
 		_typeUnit = toLower(_x select 0);
 		if (count(_x) < 2) then { 
 			_defaultDistance = AES_DEFAULT_MINIMUM_DISTANCE select {(_x select 0) == _typeUnit} select 0 select 1;

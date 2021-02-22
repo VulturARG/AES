@@ -125,7 +125,7 @@ for "_counter" from 1 to _PApatrols do {
 			_pos = _newpos;
 		};
 	};	
-	_grp=[_pos,_PAgroupSize,_faction,_side] call eos_fnc_spawnInfantry;
+	_grp=[_pos,_PAgroupSize,_faction,_side] call AES_fnc_spawnInfantry;
 	_grp setGroupId [format ["%1 PA %2-%3",_mkr,_waves,_counter]];
 	_troupsPA = _troupsPA + count units _grp;
 	_aGroup set [count _aGroup,_grp];
@@ -271,7 +271,7 @@ for "_counter" from 1 to _HApatrols do {
 		};
 	};
 	_pos = [ _pos select 0, _pos select 1, (_pos select 2) + _HAAltSalto];
-	_grp=[_pos,_HAgroupSize,_faction,_side] call eos_fnc_spawnInfantry;
+	_grp=[_pos,_HAgroupSize,_faction,_side] call AES_fnc_spawnInfantry;
 	_grp setGroupId [format ["%1 HA %2-%3",_mkr,_waves,_counter]];
 	_troupsHA = _troupsHA + count units _grp;
 	_HAGroup set [count _HAGroup,_grp];

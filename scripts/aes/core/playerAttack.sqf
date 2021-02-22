@@ -111,7 +111,7 @@ if (!(getmarkercolor _marker == "colorblack")) then {
             };
         };
         if (_aMin > 0) then {
-            _aGroup = [_mPos, _aSize, _faction, _side] call eos_fnc_spawnInfantry;
+            _aGroup = [_mPos, _aSize, _faction, _side] call AES_fnc_spawnInfantry;
             if (!surfaceiswater _mPos) then {
                 [_mPos, units _aGroup, _mkrX, 0, [0, 20], true, true] call shk_fnc_fillhouse;
             } else {
@@ -145,7 +145,7 @@ if (!(getmarkercolor _marker == "colorblack")) then {
         if (_bMin > 0) then {
             _pos = [_marker, true] call SHK_pos;
             //_pos = [[_marker], []] call BIS_fnc_randomPos;	//	maff.
-            _bGroup = [_pos, _bSize, _faction, _side] call eos_fnc_spawnInfantry;
+            _bGroup = [_pos, _bSize, _faction, _side] call AES_fnc_spawnInfantry;
             [_bGroup, _marker] call EOS_fnc_taskpatrol;
             _bGroup setGroupId[format["%1 MP %2", _marker, _counter]]; //MP Mobil Patrol
             _bGrp set[count _bGrp, _bGroup];

@@ -28,7 +28,7 @@ _wp1 setWaypointStatements ["true", "[(vehicle this),150] execvm 'scripts\AES\fu
 
 if (_debug) then {hint "Transport unloaded";};
 
-[_cargoGrp,_mkr,"center"] call AES_setNewWaypoint;
+[_cargoGrp,_mkr,"center"] call AES_fnc_setNewWaypoint;
 
 _dir_atk=random 360;
 _Place= 1300;

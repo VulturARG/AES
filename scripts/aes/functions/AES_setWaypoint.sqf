@@ -65,7 +65,7 @@ _dir_atk = 0;
 		_getToMarker setWaypointCombatMode (_x select 6);
 		/*if (count(_x) > 7) then {
 			//_group setVariable ["EOS_GROUP_CARGO", _cargo];
-			_unitCommand = format["[[thisList-[this]],['patrol',1],%2] call compile preprocessFileLineNumbers 'scripts\AES\functions\AES_setNewWaypoint.sqf'",_marker]; 
+			_unitCommand = format["[[thisList-[this]],['patrol',1],%2] call compile preprocessFileLineNumbers 'scripts\AES\functions\AES_fnc_setNewWaypoint.sqf'",_marker]; 
 			//_unitCommand = "hint str(this getVariable 'EOS_GROUP_CARGO')";
 			//_unitCommand = "hint format['%1 %2 %3',this, thisList,thisList-[this]]";
 			_getToMarker setWaypointStatements ["true", _unitCommand];

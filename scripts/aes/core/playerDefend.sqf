@@ -98,7 +98,7 @@ if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1
 }else{
 	if (_waves >= 1) then {
 		if (_hints) then  {hint "Reinforcements inbound";};
-		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\toDefend.sqf";
+		null = [_marker,_unitsArrays,_settings,[_pause,_waves,_timeout,_eosZone,_hints],_angle,true] execVM "scripts\AES\core\playerDefend.sqf";
 	};
 };
 

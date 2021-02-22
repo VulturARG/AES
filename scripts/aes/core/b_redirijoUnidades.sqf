@@ -24,12 +24,12 @@ private _remanentes = [];
           doStop _x;
         }forEach units _x;*/
         _azarMarker = _nuevosWP call BIS_fnc_selectRandom;
-        [_x,_azarMarker,"random"] call AES_setNewWaypoint;
+        [_x,_azarMarker,"random"] call AES_fnc_setNewWaypoint;
         //units _x doFollow leader _x;
       }else{
         if (count _secundarioWP > 0) then {
           //[format ["count _secundarioWP: %1",count _secundarioWP]] call BIS_fnc_logFormat;
-          [_x,_secundarioWP,"random"] call AES_setNewWaypoint;
+          [_x,_secundarioWP,"random"] call AES_fnc_setNewWaypoint;
         };
       };
   } forEach _escuadronIA; // */
@@ -46,7 +46,7 @@ _remanentes = _todos - _listaApoyo;
   }forEach units _x;
   */
   _azarMarker = _nuevosWP call BIS_fnc_selectRandom;
-  [_x,_azarMarker,"random"] call AES_setNewWaypoint;
+  [_x,_azarMarker,"random"] call AES_fnc_setNewWaypoint;
   //units _x doFollow leader _x;
 }forEach _remanentes;
 

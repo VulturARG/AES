@@ -32,7 +32,7 @@ null=
 
 null=
 [
-  ["type"],            <- Must be toAttack or toDefend. toAttack: the player attacks a position. toDefend: the player defends a position
+  ["type"],            <- Must be playerAttack or playerDefend. playerAttack: the player attacks a position. playerDefend: the player defends a position
   ["M1","M2","M3"],
   [
     ["type",quantity,spawn distance (m), (number of units in each group,(jump height meters))], <---Must go a comma if there is another element
@@ -49,7 +49,7 @@ Only Para chopper and HALO jump have jump height
 Example:
 null=
 [
-  "toDefend",
+  "playerDefend",
   ["M1","M2","M3"],
   [
     ["patrol",3,500,2],       <---Must go a comma if there is another element, and so on
@@ -109,7 +109,7 @@ private _AES_FACCION = EAST;
 /*
 
 [
-    "toDefend",
+    "playerDefend",
     ["marker_0"],
     [
       ["house",0,100,2],
@@ -124,7 +124,7 @@ private _AES_FACCION = EAST;
 ] call Launch;
 
 [
-    "toDefend",
+    "playerDefend",
     ["marker_0"],
     [
       ["patrol",0,300,3],
@@ -159,7 +159,7 @@ null=
 // null = [["patrullas_H"],[0,2,100],[10,1,100],[0,0,0],[0,0],[0],[0,0,00],[5,0,200,_AES_FACCION,false]] call EOS_Spawn;
 
 [
-    "toDefend",
+    "playerDefend",
     ["marker_0"],
     [
       ["patrol"        ,5,300,3],

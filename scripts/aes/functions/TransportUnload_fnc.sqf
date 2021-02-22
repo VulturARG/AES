@@ -36,7 +36,7 @@ _cargoGrp leaveVehicle _vehicle;
 waitUntil{sleep 0.2; {_x in _vehicle} count units _cargoGrp == 0};
 if (_debug) then {hint "Transport unloaded";};
 
-[_cargoGrp,_mkr,"center","SAD","LIMITED","SAFE","COMBAT"] call AES_setNewWaypoint;
+[_cargoGrp,_mkr,"center","SAD","LIMITED","SAFE","COMBAT"] call AES_fnc_setNewWaypoint;
 
 _dir_atk=random 360;
 _Place= 1300;
