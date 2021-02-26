@@ -65,7 +65,7 @@ for "_counter" from 1 to (_unitData select 1) do {
         //_groups = [[],[]];
 		_grp = [_position,_unitData select 3,_faction,_side] call AES_fnc_spawnInfantry;
 		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
-        //_grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+        _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
         _troupsNumber = _troupsNumber + count units _grp;
 		_groups pushBack [[],[],_grp];
 		//format ['SU _groups: %1 ',_groups]  call BIS_fnc_log;
@@ -99,6 +99,8 @@ for "_counter" from 1 to (_unitData select 1) do {
 	sleep UNIT_SPAWN_WAIT_TIME;
 };
 //format ['SU _groups: %1',_groups]  call BIS_fnc_log;
+if (_debugLog) then {[["[AES_log]","_troupsNumber", _troupsNumber]] call AES_log;};
+
 _groups
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹

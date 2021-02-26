@@ -104,17 +104,15 @@ AES_KILLCOUNTER = false;		// Counts killed units
 
 private _AES_FACCION         = EAST;
 private _initial_delay       = 1;
-private _delay_between_waves = 120;
+private _delay_between_waves = 10;
 
 //[["[AES_log]","OpenMe", _distance]] call AES_log;
-
-_waves = 2;
 
 [
     "playerDefend",
     _marker,
     [
-      ["patrol"        ,5,300,3],
+      ["patrol"        ,1,300,3],
       ["light vehicle" ,0,400,3],
       ["armor"         ,0,650],
       ["attack chopper",0,700],

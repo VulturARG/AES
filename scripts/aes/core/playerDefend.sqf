@@ -36,7 +36,7 @@ _bastionTriggerReturn params ["_bastActive","_bastclear","_basActivated"];
 
 // PAUSE IF REQUESTED
 if (_pause > 0 and !_initialLaunch) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call AES_log;};
+	if (_debugLog) then {[["[AES_log]",_marker,"Wave", _waves,"Inicio_Espera_Inicial","-",_side]] call AES_log;};
 	_watingTime = time + _pause;
 	_counter = 1;
 	waitUntil { 
@@ -45,7 +45,7 @@ if (_pause > 0 and !_initialLaunch) then {
 		_counter = _counter +1;
 		time > _watingTime
 	};
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call AES_log;};
+	if (_debugLog) then {[["[AES_log]",_marker,"Wave", _waves,"Fin_Espera_Inicial","-",_side]] call AES_log;};
 
 	[_side,_debugLog,_marker,_waves] call AES_deleteUnits;
 
@@ -63,7 +63,7 @@ waituntil {triggeractivated _bastActive};
 
 _waves = (_waves - 1);
 if (_waves >= 1) then {
-	if (_debugLog) then {[[_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call AES_log;};
+	if (_debugLog) then {[["[AES_log]",_marker,"Wave", _waves,"Inicio_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
 	_watingTime = time + _timeout;
 	waitUntil { 
@@ -85,13 +85,13 @@ if (_waves >= 1) then {
 		};
 		time > _watingTime
 	};
-	if (_debugLog) then { [[_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call AES_log;};
+	if (_debugLog) then { [["[AES_log]",_marker,"Wave", _waves,"Fin_Espera_proximo_ataque","-",_side]] call AES_log;};
 	
 	[_side,_debugLog,_marker,_waves] call AES_deleteUnits;
 };
 
 if (triggeractivated _bastActive and triggeractivated _bastClear and (_waves < 1) ) then{
-		if (_debugLog) then {[[_marker,"Wave", _waves,"Fin_ataques"]] call AES_log;};
+		if (_debugLog) then {[["[AES_log]",_marker,"Wave", _waves,"Fin_ataques"]] call AES_log;};
 		if (_hints) then  {hint "Waves complete";};
 		_marker setmarkercolor VictoryColor;
 		_marker setmarkeralpha (_multipleMarquerAlphaValue select _markerType);
