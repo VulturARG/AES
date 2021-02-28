@@ -7,12 +7,9 @@ AES_HALO            = compile preprocessFileLineNumbers "scripts\AES\functions\A
 
 params ["_marker","_unitData","_angle","_side","_faction"];
 
-//AES_UNIT_TYPE [["patrol",0,"PA",findSafePos(default true)]
+// AES_UNIT_TYPE [["patrol",0,"PA",findSafePos(default true)]
 //      "_vehType","_cargoType","_typeMessage"
-
 // _unitData -> ["patrol",3,500,[2,4]]
-
-//format ["afuera %1 %2 %3",_marker,_unitData,_angle] call BIS_fnc_log;
 
 private ["_vehType","_cargoType","_typeMessage","_findSafePosition"];
 
@@ -24,9 +21,6 @@ private _cargoGrp     = [];
 
 _unitType = AES_UNIT_TYPE select {(_x select 0) == (_unitData select 0) } select 0;
 _unitType = if (isNil "_unitType") then {[]} else {_unitType};
-
-//format ["SU _unitType: %1",_unitType] call BIS_fnc_log;
-//format ['SU _unitData: %1',_unitData]  call BIS_fnc_log;
 
 if (count(_unitType) > 0) then {
 	_vehType     = _unitType select 0;
@@ -61,21 +55,22 @@ for "_counter" from 1 to (_unitData select 1) do {
 			_position = [ _position select 0, _position select 1, (_position select 2) + _HAAltSalto];
 		};
 		
-		//format ['SU |%1|%2|%3|%4|',_position,_unitData select 3,_faction,_side]  call BIS_fnc_log;
-        //_groups = [[],[]];
 		_grp = [_position,_unitData select 3,_faction,_side] call AES_fnc_spawnInfantry;
-		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
-        _grp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+        _grp setGroupIdGlobal [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+		_grp setVariable ["AES_GROUP_NAME", format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter], true];
+
         _troupsNumber = _troupsNumber + count units _grp;
+		if (_debugLog) then {[["[AES_log]",groupId _grp,"_troupsNumber", _troupsNumber]] call AES_log;};
+
 		_groups pushBack [[],[],_grp];
-		//format ['SU _groups: %1 ',_groups]  call BIS_fnc_log;
-		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
+
 		if (_vehType == "halo") then {[_grp] call AES_HALO;};
 		
     } else {
 		private _special = if (["chopper",_vehType]call BIS_fnc_inString) then {"FLY"} else {"CAN_COLLIDE"};
 		_grp = [_position,_vehType,_faction,_side,_special]call eos_fnc_spawnVehicle;
-		//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
+		_grp setGroupIdGlobal [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
+		_grp setVariable ["AES_GROUP_NAME", format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter], true];
 
 		if (_vehType == "light vehicle" || _vehType == "cargo chopper" || _vehType == "para chopper") then {
 			_cargoGrp = createGroup _side;		
@@ -84,9 +79,10 @@ for "_counter" from 1 to (_unitData select 1) do {
 			// TODO ver esta linea -> [(_grp select 2),"LIGskill"] call eos_fnc_setSkill;
 			_cargoGrp setGroupId [format ["%1 %2 %3-%4",_marker,_typeMessage,_waves,_counter]];
 			_troupsNumber = _troupsNumber + count units _cargoGrp;
+			if (_debugLog) then {[["[AES_log]",groupId _grp,"_troupsNumber", _troupsNumber]] call AES_log;};
+			
 			_grp pushBack _cargoGrp;
-			//format ['SU _grp: %1 ',_grp]  call BIS_fnc_log;
-			//format ['SU _cargoGrp: %1 ',_cargoGrp]  call BIS_fnc_log;
+
 			if (_vehType == "cargo chopper") then {
 				[_marker,_grp,_counter] execVM "scripts\AES\functions\TransportUnload_fnc.sqf";
 			};
@@ -98,13 +94,8 @@ for "_counter" from 1 to (_unitData select 1) do {
 	};
 	sleep UNIT_SPAWN_WAIT_TIME;
 };
-//format ['SU _groups: %1',_groups]  call BIS_fnc_log;
-if (_debugLog) then {[["[AES_log]","_troupsNumber", _troupsNumber]] call AES_log;};
 
 _groups
 /*******************************************************************************
                             Created by |ArgA|Vultur|Cbo¹
 *******************************************************************************/
-//	format ['SU _grp: %1',_grp]  call BIS_fnc_log;
-
-// */

@@ -52,6 +52,8 @@ _vehCrew = [];
 	};
 }foreach _vehPositions;
 
+[_grp] call compile preprocessFileLineNumbers 'scripts\aes\functions\AES_transferGroups.sqf';
+
 private _return = [_vehicle,_vehCrew,_grp];
 
 _return

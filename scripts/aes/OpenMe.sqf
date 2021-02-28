@@ -113,7 +113,7 @@ private _delay_between_waves = 10;
     _marker,
     [
       ["patrol"        ,1,300,3],
-      ["light vehicle" ,0,400,3],
+      ["light vehicle" ,1,400,2],
       ["armor"         ,0,650],
       ["attack chopper",0,700],
       ["cargo chopper" ,0,500,1],
